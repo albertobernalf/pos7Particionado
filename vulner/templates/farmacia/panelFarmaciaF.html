@@ -1,0 +1,810 @@
+{% extends "farmacia/menuFarmaciaF.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelFarmacia.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsFarmacia.js' %} defer >         </script>
+
+<!-- Datatable extension SELECT 
+<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+-->
+
+
+<div class="marco">
+    <ul class="tabs">
+	<li><a href="#Farmacia"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Panel Farmacia </a></li>
+        <li><a href="#Despachos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>Despachos Pendientes </a></li>
+        <li><a href="#DespachosRealizados"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>Despachos Realizados </a></li>
+	<li><a href="#Ordenados"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>Ordenados</a></li>
+        <li><a href="#Devoluciones"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>Recepcion Devoluciones</a></li>
+
+    </ul>
+</div>
+
+
+<style>
+
+</style>
+
+<script>
+
+function RefrescarPantalla() {
+ 	 	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+        var username = document.getElementById("username").value;
+        var nombreSede = document.getElementById("nombreSede").value;
+    	var sede = document.getElementById("sede").value;
+        var username_id = document.getElementById("username_id").value;
+         var data =  {}   ;
+        data['username'] = username;
+        data['sedeSeleccionada'] = sedeSeleccionada;
+        data['nombreSede'] = nombreSede;
+        data['sede'] = sede;
+        data['username_id'] = username_id;
+ 	    data = JSON.stringify(data);
+
+	alert("sede = " + sede);
+
+        arrancaFarmacia(1,data);
+	    dataTablePanelFarmaciaInitialized = true;
+
+}
+</script>
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+	<article id="Farmacia">
+
+  	<form action="/PanelFarmacia/" method="get" id="FormPanelFarmacia">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+		<input type="text" id="farmaciaId" name="farmaciaId" value="" readonly>
+		<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
+            </form>
+
+  <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaPanelFarmacia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+					<caption>Ordenes de Farmacia </caption>
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					     <th>Sel</th>    
+					     <th>Estado</th>                                                                                          
+ 						  <th>OrdenFarmacia #</th>                             
+					 <th>tipoDoc</th>                                              
+					 <th>Documento</th>                                              
+					 <th>Paciente</th>                                              
+					 <th>Servicio</th>                                              
+					 <th>Cama</th>                                             
+						 <th>tipoOrigen</th>                                        
+						 <th>tipoMovimiento</th>  
+						 <th>Servicio</th>  					
+					 <th>Historia</th>     
+					 <th>Estado</th>       
+					                                      
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+                <!-- Creacion Modal Cambio estado despacho -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="postFormModalEstadoFarmacia" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="creaModalEstadoFarmacia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog  modal-dialog-scrollable  modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                           <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Actualiza Estado Despacho</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row row-cols-1 mt-3">
+                                            <div class="col">
+                                                <label for="estadoFarmaciaDespacho"  class="col-sm-10 col-form-label col-form-label-sm">Estado:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="estadoFarmaciaDespacho" name="estadoFarmaciaDespacho">
+                                                    {% for farmaciaEstadosLimitados in FarmaciaEstadosLimitados %}
+                                                    <option value="{{farmaciaEstadosLimitados.id}}"> {{farmaciaEstadosLimitados.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- Cierra row -->
+
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+
+	<textarea id="mensajesErrorModalEstado" name="mensajesErrorModalEstado" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                                         <input type="button" class="btn btn-primary" value="save"  onclick="CambiaEstadoDespacho()"> 
+                                        
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal estado Despachoo  -->
+
+	</article>
+
+
+<article id="Devoluciones">
+  	<div class="container my-2" style="width:100%">
+
+
+		<div align="left" height="15px" width="50px">
+			TipoDoc: <span id="nombreTipoDocDev"></span>
+			Doc: <span id="documentoDev"></span>
+			Paciente: <span id="pacienteDev"></span>
+			Ingreso: <span id="consecutivoAdmisionDev"></span>
+			Servicio: <span id="servicioDev"></span>
+			Hab: <span id="habitacionDev"></span>
+			<input type="text" id="devolucionFarmaciaId" name="devolucionFarmaciaId" disabled></input>
+		</div>
+
+
+
+           		<div class="row" style="width:100%">
+                                        <table id= "tablaDevolucionesFarmacia" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			    <th>S1</th>
+					    <th>S2</th>  
+				        <th>id</th>
+				        <th>Fecha de Registro</th>
+				        <th>ServicioDevuelve</th>
+                                	<th>Usuario Devuelve</th>
+                                	<th>Servicio Recibe</th>
+	                                <th>Usuario Recibe</th>
+	                        
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+                        </div>
+
+
+           		<div class="row" style="width:100%">
+                                        <table id= "tablaDevolucionesDetalleFarmacia" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			 	<th>S1</th>
+				        <th>id</th>
+				        <th>Medicamento</th>
+				        <th>dosis</th>
+				        <th>Medida</th>
+				        <th>Via</th>
+				        <th>cantidad</th>
+				        <th>Cantidad Devuelta</th>
+	                               	<th>Observaciones</th>
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+                        </div>
+
+
+
+                </div>
+
+      	<!-- MODALES -->
+
+<!-- Creacion Modal Devolucion  farmacia  -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="postFormRecibirDevolucionFarmacia" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="ModalRecibirDevolucionFarmacia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog  modal-dialog-scrollable  modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                           <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Recibir Devolucion Farmacia</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row row-cols-1 mt-3">
+                                            <div class="col">
+						devolucionNo: <span id="devolucionNo"></span>
+						SolicitudFarmacia: <span id="solicitudNo"></span>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="servicioRecibe"  class="col-sm-10 col-form-label col-form-label-sm">Servicio Recibe:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="servicioRecibe" name="servicioRecibe">
+                                                    {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                    <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col">
+                                                <label for="plantaRecibe"  class="col-sm-10 col-form-label col-form-label-sm">Recibe:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="plantaRecibe" name="plantaRecibe">
+                                                    {% for plantaUsuarios in PlantaUsuarios %}
+                                                    <option value="{{plantaUsuarios.id}}"> {{plantaUsuarios.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+
+
+                                        </div> <!-- Cierra row -->
+
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+
+	<textarea id="mensajesErrorModalDevolucionFarmacia" name="mensajesErrorModalDevolucionFarmacia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>                                
+       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                                         <input type="button" class="btn btn-primary" value="save"  onclick="RecibirDevolucionFarmacia()"> 
+                                        
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal Devolucion Farmacia  -->
+
+
+  <!-- Creacion Modal Devolucion Detalle farmacia  -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="postFormRecibirDevolucionDetalleFarmacia" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="ModalRecibirDevolucionDetalleFarmacia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog  modal-dialog-scrollable  modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                           <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Devolucion Detalle Farmacia</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row row-cols-1 mt-3">
+					   <div class="col">
+						devolucionDetalleNo: <span id="devolucionDetalleNo"></span>
+						SolicitudFarmacia: <span id="solicitudDetalleNo"></span>
+                                            </div>
+
+                                            <div class="col">
+						<input type="text" id="cantidadDevueltaY" name="cantidadDevueltaY" value="" readonly>
+                                            </div>
+                                            <div class="col">
+						<input type="text" id="cantidadDevueltaRecibidaY" name="cantidadDevueltaRecibidaY"  >                                         
+                                            </div>                                        
+
+                                        </div> <!-- Cierra row -->
+
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+
+        	<textarea id="mensajesErrorModalDevolucionDetalleFarmacia" name="mensajesErrorModalDevolucionDetalleFarmacia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>                                                       
+	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                                         <input type="button" class="btn btn-primary" value="save"  onclick="RecibirDevolucionDetalleFarmacia()"> 
+                                        
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal Devolucion Detalle Farmacia  -->
+
+
+
+	<!-- FIN MODALES -->
+
+
+
+</article>
+
+
+<article id="DespachosRealizados">
+        	
+ <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+			<div align="left" height="10px" width="100px">
+			Orden :  <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="ordenFarmaciaX"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="nombreTipoDocNX"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="documentoNX"></span>
+			<span  style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="pacienteX"></span>
+			Ing#: <span id="consecutivoAdmisionX"></span>
+			Servicio: <span id="servicioX"></span>
+			Hab: <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="habitacionX"></span>
+			</div>
+
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaDespachosFarmacia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					     <th>Sel</th>    
+					     <th>Despacho #</th>   
+						 <th>Despacho Id</th>                                                                                             
+ 						  <th>ServEntrega</th>                             
+						 <th>Entrega</th>                                        
+						 <th>SerRecibe</th>  
+						 <th>Recibe</th>  
+						 <th>Sel</th>     					
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaDespachosDetalleFarmacia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					     <th>Sel</th>    
+					     <th>Despacho Dispensa Detalle #</th>                                                                                          
+ 						                  
+						 <th>Dosis</th>                                        
+						 <th>UMedida</th>  
+						 <th>Dispensado</th>  					
+					 <th>Insumo</th>     
+
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+
+</article>
+
+
+<article id="Ordenados">
+
+
+  <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+		<div align="left" height="2px" width="150px">
+
+			Orden :  <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="ordenFarmacia"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="nombreTipoDocN"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="documentoN"></span>
+			<span  style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="paciente"></span>
+			Ing#: <span id="consecutivoAdmision"></span>
+			Servicio: <span id="servicio"></span>
+			Hab: <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="habitacion"></span>
+
+		</div>
+
+
+	   <div class="row">
+				
+                                        <table  id= "tablaFarmaciaDetalleOrdenados" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					    	 <th>Sel</th>                                               
+ 						 <th>Orden Detalle Farma #</th>  
+						 <th>Dosis</th>  
+						 <th>UnidadDosis</th>  	                           
+						 <th>Suministro</th>                                        				
+						 <th>Via Administ.</th>                                        				
+					 <th>cantidad Ordenada</th>                                                 
+					 <th>Indicador Despachado</th>  
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+
+
+		</div>
+	</div>
+
+</article>
+
+
+        <article id="Despachos">
+      
+	
+            <form action="/EnfermeriaHistoriaClinica/" method="get" id="FormHistoriaClinica">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+
+
+
+  <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+		<div align="left" height="2px" width="150px">
+
+			Orden :  <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="ordenFarmacia"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="nombreTipoDocN"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="documentoN"></span>
+			<span  style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="paciente"></span>
+			Ing#: <span id="consecutivoAdmision"></span>
+			Servicio: <span id="servicio"></span>
+			Hab: <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="habitacion"></span>
+			<input type="text" id="farmaciaDetalle" name="farmaciaDetalle" size="3" value="" readonly>
+
+ 							   Entrega:               
+                                                        <select  class="select-css" id="servicioAdmonEntregaF"
+                                                                name="servicioAdmonEntregaF" >
+                                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                            <option value="{{serviciosAdministrativos.id}}">
+                                                                {{serviciosAdministrativos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+
+                                                        <select  class="select-css" id="plantaEntregaF"
+                                                                name="plantaEntregaF" >
+                                                            {% for plantaUsuarios in PlantaUsuarios %}
+                                                            <option value="{{plantaUsuarios.id}}">
+                                                                {{plantaUsuarios.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+
+							Recibe: 							                  
+                                                        <select  class="select-css"  id="servicioAdmonRecibeF"
+                                                                name="servicioAdmonRecibeF" >
+                                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                            <option value="{{serviciosAdministrativos.id}}">
+                                                                {{serviciosAdministrativos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+
+                                                        <select class="select-css"  id="plantaRecibeF"
+                                                                name="plantaRecibeF"  >
+                                                            {% for plantaUsuarios in PlantaUsuarios %}
+                                                            <option value="{{plantaUsuarios.id}}">
+                                                                {{plantaUsuarios.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+
+
+				               <input type="button" style="height:30px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="10px" id="BtnAdicionarDespachosDispensa"  name="BtnAdicionarDespachosDispensa" value="Dispensar" onclick= "AdicionarDespachosDispensa()" >				    
+
+		</div>
+
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaFarmaciaDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					    	 <th>Sel</th>                                               
+ 						 <th>Orden Detalle #</th>  
+						 <th>Dosis</th>  
+						 <th>UnidadDosis</th>  	                           
+						 <th>Suministro</th>                                        				
+						 <th>Via</th>                                        				
+					 <th>cantidad</th>                                                 
+					 <th>Despachado</th>  
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+					
+                                        <table  id= "tablaFarmaciaDespachosDispensa" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					     <th>Sel</th>                                               
+ 						  <th>Despacho Detalle #</th>                             
+						 <th>despacho</th>                                        
+						 <th>suministro</th>  
+						 <th>dosis</th>  					
+					 <th>unidadDosis</th>                                                 
+					 <th>via</th>                                                 
+					 <th>cantidad</th>                                                 				                                           
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div> <!-- cierrra el row  -->
+               
+
+
+		<!--   estop viene de clinico -->
+           <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearFormulacionDef/" method="POST"
+                              id="FormaFormulacion">
+
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header" style="height:65px;">
+                                            <center>
+                                                <div class="row">
+                                                    
+                                                   <div class="col-sm-3"> 
+						<!-- <label  for="medicamentos">Medicamentos:</label>   -->
+                    							    
+                                                        <select class="select-css" id="medicamentos"
+                                                                name="medicamentos">
+                                                            {% for medicamentos in Medicamentos %}
+                                                            <option value="{{medicamentos.id}}">
+                                                                {{medicamentos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                   </div> 
+                                                    <div class="col-sm-1"> 
+					                  
+                                                        <input type="text" id="dosis" name="dosis" placeholder="Dosis" value="">
+                                                   </div> 
+
+						  <div class="col-sm-2"> 
+ 							                  
+                                                        <select class="select-css" id="uMedidaDosis"
+                                                                name="uMedidaDosis" placeholder="UMedida">
+                                                            {% for uMedidaDosis in UMedidaDosis %}
+                                                            <option value="{{uMedidaDosis.id}}">
+                                                                {{uMedidaDosis.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                   </div> 
+                                                   
+                                                   
+
+						 <div class="col-sm-1"> 
+							                        
+                                                        <select class="select-css" id="vias"
+                                                                name="vias" placeholder="Vias Adm">
+                                                            {% for viasAdministracion in ViasAdministracion %}
+                                                            <option value="{{viasAdministracion.id}}">
+                                                                {{viasAdministracion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div> 
+
+
+						                           <div class="col-sm-1"> 
+							                        Cantidad:
+                                                        <input type="text" id="cantidadMedicamento" name="cantidadMedicamento" value="" placeholder="Cantidad">
+                                                   </div> 
+							 <div class="col-sm-1"> 
+								 </div> 
+                                                   <div class="col-sm-1 text-end"> 
+                                                        <span class="text-secondary">Adicionar</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="BtnAdicionarFormulacion"> <i class="fa fa-plus"></i></a>
+                                                    </div> 
+                                                </div>
+                                            </center>
+                                        </div>
+                                        <div class="card-body" style="height:5px;">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="tablaFormulacion"
+                                                           class="display nowrap table table table-bordered  tablaFormulacion table-hover table-sm dtr-inline">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:5%;"></th>
+                                                            <th style="width:5%;">Medicamento</th>
+                                                            <th style="width:5%;">Dosis</th>
+                                                           <th style="width:1%;">UMedida</th>
+                                           					
+                                                            <th style="width:5%;">ViasAdmon</th>
+                                                            <th style="width:5%;">Cant</th>
+                                                        
+                                                            <th style="width:3%;">Borrar</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align:bottom">
+                                                        <tr style="height:10%">
+                                                            <td></td>
+                                           
+                                                            <td></td>
+                                                            <td></td>
+                                                             <td></td>
+                                                              <td></td>
+								<td></td>
+                                                              <td></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+		<div align="left" height="10px" width="30px">
+
+		</div>
+
+                          </div>  
+                         </div> <!-- cierrra el row  -->
+                        </div> <!-- cierrra el body  -->
+                       </div> <!-- cierrra el card  -->
+                                </div> <!-- cierrra col   -->
+                            </div> <!-- cierrra row  -->
+                            <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+  
+             <!-- HASTA AQUI DATATABLE -->
+
+             
+		<!-- lo borro CERRA DIV  -->
+
+             </div>     <!-- CIERRA DIV CONTAINER -->
+
+		<!-- finaliza lo que viene de clinico -->      	
+
+
+           <!-- Modales Historia CLinica -->
+
+     <!-- FIN Espacio Modales  -->
+
+   </article>
+
+
+
+
+
+
+
+
+
+     
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+
+</div>
+{% endblock %}
+
+
+
+{% block footer %}
+<div class="marco">
+    <ul class="tabs">
+
+ </ul>
+</div>
+
+
+{% endblock %}
+
+
+
+
+

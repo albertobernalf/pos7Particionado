@@ -1,0 +1,1425 @@
+{% extends "tarifarios/menuTarifariosF.html" %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsTarifarios.js' %} defer >         </script>
+ <link rel="stylesheet" type="text/css" href={% static 'css/panelTarifarios.css' %} >
+
+
+<!-- Datatable extension SELECT 
+<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+-->
+
+
+<div class="marco">
+    <ul class="tabs">
+
+        <li><a href="#TarifariosDescripcionProcedimientos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> TarifariosProcedimientos </a></li>
+        <li><a href="#TarifariosDescripcionSum"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> TarifariosSuministros</a></li>
+
+
+    </ul>
+</div>
+
+<style>
+div.dataTables_wrapper  div.dataTables_filter input {
+   height: 2px;
+   padding:10px;
+   border-radius:8px;
+}
+
+div.dataTables_filter input {
+    width: 50px;
+  }
+#tablaTarifariosDescripcionProcedimientos {
+     /*    font-family: 'Verdana', sans-serif;  */  /* Times*/
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+        font-size: 50px;
+	 padding: 1px;
+	 /* Alto de las celdas */
+	  height: 1px;
+    }
+
+table.dataTable tbody tr {
+  min-height: 60px;
+}
+
+
+.my-row-class {
+    height: 30px;
+}
+</style>
+<script>
+
+function RefrescarPantalla() {
+ 	 
+    	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+        var username = document.getElementById("username").value;
+        var nombreSede = document.getElementById("nombreSede").value;
+    	var sede = document.getElementById("sede").value;
+        var username_id = document.getElementById("username_id").value;
+         var data =  {}   ;
+        data['username'] = username;
+        data['sedeSeleccionada'] = sedeSeleccionada;
+        data['nombreSede'] = nombreSede;
+        data['sede'] = sede;
+        data['username_id'] = username_id;
+	tiposTarifa_id = 1
+        data['tiposTarifa_id'] = tiposTarifa_id;
+        data['tiposTarifaSuministros_id'] = 8;
+
+ 	    data = JSON.stringify(data);
+
+        arrancaTarifarios(4,data);
+	    dataTableTarifariosDescripcionProcedimientosInitialized = true;
+
+        arrancaTarifarios(1,data);
+	    dataTableTarifariosProcedimientosInitialized = true;
+
+}
+</script>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+
+<article id="TarifariosDescripcionProcedimientos">
+
+            <form  method="get" id="FormTarifariosDescripcionProcedimientos">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+		<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
+            </form>
+
+        <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+ 		<div class="container my-2">
+
+				<div class="col-12">
+		        	       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnCrearTarifarioProcedimientos"  name="BtnCrearTarifarioProcedimientos" value="Crear Sabana Procedimientos" onclick= "ModalCrearTarifarioProcedimientos()" >				    
+		        	       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnCrearDescripcionProcedimiento"  name="BtnCrearDescripcionProcedimiento" value="Adicionar Descripcion" onclick= "ModalDescripcionProcedimiento()" >				    
+
+                                </div>
+
+   		
+                                        <table  id= "tablaTarifariosDescripcionProcedimientos" class=" display table table-striped  table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr style="height:2px;" >    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>tipoTarId</th>
+
+                                                <th>Tipo</th>
+						<th>Tipo Tarifa</th>
+                                                <th>Columna</th>                                       
+                                                 <th>Descripcion</th>                                 
+	                                        <th>Seleccionar</th> 
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+					
+				   </table>
+
+
+
+			<!--  desde aqui -->
+
+		<div align="right" height="5px" width="650px">
+
+  			  <form id="postFormCrearItemTarifario" name="postFormCrearItemTarifario">
+
+	                                <input type="hidden" name="post_id" id="post_id">
+
+	                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3" height="5px" width="650px">
+
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+
+	  <div class="col-12">
+                                        <label for="serviciosAdministrativosX" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosX"  tabindex= "0"
+                                                    name="serviciosAdministrativosX"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+
+				  <div class="col-12">
+				           		                         
+				 <label  for="codigoHomologadoItem">Codigo Homologado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="codigoHomologadoItem" name="codigoHomologadoItem" value="0" placeholder="codigoHomologado:" ></input>
+                                </div>
+
+				<div class="col-12">
+                                    TiposTarifa:
+				<select class="select-css"  id="tiposTarifaItem_id"
+                                                                name="tiposTarifaItem_id">
+                                                            {% for tiposTarifa in TiposTarifa %}
+                                                            <option value="{{tiposTarifa.id}}">
+                                                                {{tiposTarifa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+
+				<div class="col-12">
+                                    Cups:
+				<select class="select-css"  id="codigoCupsItem_id"
+                                                                name="codigoCupsItem_id">
+                                                            {% for cups in Cups %}
+                                                            <option value="{{cups.id}}">
+                                                                {{cups.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+				
+		
+	                        
+				<div class="col-12">
+				  <label for="colValorBaseItem">Valor Base:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValorBaseItem" name="colValorBaseItem" placeholder="colValorBase"  >
+                                </div>
+
+				<div class="col-12">
+		        	       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnCrearItemTarifario"  name="BtnCrearItemTarifario" value="Adicionar Tarifa" onclick= "CrearItemTarifario()" >				    
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+
+		</div>  <!-- cierra el antes del Form -->
+			<!--  Hasta Aquip -->
+  	
+
+                                        <table  id= "tablaTarifariosProcedimientos" class=" display table table-striped  table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr >    
+						<bold>                                  
+ 
+ 						  <th>id</th>
+				                <th>tipoTarifa</th>
+				                <th>cups</th>
+				                <th>codigoHomologado</th>
+				                <th>exaNombre</th>
+				                <th>colValorBase</th>
+				                <th>colValor1</th>
+				                <th>colValor2</th>
+				                <th>colValor3</th>
+				                <th>colValor4</th>
+				                <th>colValor5</th>
+				                <th>colValor6</th>
+				                <th>colValor7</th>
+				                <th>colValor8</th>
+				                <th>colValor9</th>
+				                <th>colValor10</th>
+	                                        <th>Seleccionar</th> 
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+			
+   </table>
+
+	
+
+
+
+
+
+	</div> <!--  Cierra el Div -->
+
+            <!-- Espacio Modales  Descripcion Procedimientos -->
+
+
+            <div class="modal fade" id="crearModelDescripcionProcedimientos" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-bs-backdrop="static">
+ <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+  <div  class="modal-title" id="modelHeadingDescripcionProcedimientos" style="text-align:center;"><font gont-family="Times New roman" size=5"></font> </div>
+			 <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+
+
+                        </div>
+                        <div class="modal-body">
+                         
+			
+  			  <form id="postFormDescripcionProcedimientos" name="postFormDescripcionProcedimientos">
+
+                                <input type="hidden" name="post_id" id="post_id">
+
+
+			<div id="flex-container-descripcionProcedimientos">
+			 <div>
+
+
+                                       <label for="serviciosAdministrativos" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos"  tabindex= "0"
+                                                    name="serviciosAdministrativos"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                        
+
+			
+			
+				<select class="select-css"  id="tiposTarifa_id"
+                                                                name="tiposTarifa_id">
+                                                            {% for tiposTarifa in TiposTarifa %}
+                                                            <option value="{{tiposTarifa.id}}">
+                                                                {{tiposTarifa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+            
+
+
+                
+				  <label for="columna">Columna:</label>                              
+
+						<select class="select-css"  id="columna"        name="columna">
+
+							 
+							   <option value="colValor1">Valor1</option>
+							   <option value="colValor2">Valor2</option>
+							   <option value="colValor3">Valor3</option>
+							   <option value="colValor4">Valor4</option>
+							   <option value="colValor5">Valor5</option>
+							   <option value="colValor6">Valor6</option>
+							   <option value="colValor7">Valor7</option>
+							   <option value="colValor8">Valor8</option>
+							   <option value="colValor9">Valor8</option>
+							   <option value="colValor10">Valor10</option>
+
+                                                        </select>			
+
+              
+
+
+				  <label for="descripcion">Descripcion:</label>                              
+					 <input type="text"   id="descripcion" name="descripcion" placeholder="descripcion"  >
+                        
+
+
+
+				 <label  for="estadoReg">EstadoRegistro:</label>
+                                    
+                                    <input type="text"  id="estadoReg" name="estadoReg" value="A" placeholder="CantidadRechazadas:"  readonly> </input>
+          
+
+
+                   
+                                    Usuario:
+                                    <input type="text" id="usuarioRegistro_id" name="usuarioRegistro_id" value="{{Username_id}}" readonly > </input>
+                    
+
+
+                         
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnDescripcionProcedimientos"   value="create" onclick="GuardarDescripcionProcedimientos()">Guardar </button> 
+					</center> 
+                      
+
+      					  </div>
+                                </div> <!-- CIERRA flex-container  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelDescripcionProcedimientos" name="mensajesErrorcrearModelDescripcionProcedimientos" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+
+
+			<!-- </div>  CIERRA DIV TAMANO -->	
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->           
+
+		<!-- Otra Modal -->
+
+
+         <div class="modal fade" id="crearModelCrearTarifarioProcedimientos" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+		 <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                  <div  class="modal-title" id="modelHeadingCrearTarifarioProcedimiento" style="text-align:center;"><font gont-family="Times New roman" size=5"></font>Tarifario Procedimientos </div>
+	     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearTarifarioProcedimientos" onclick="CrearTarifarioProcedimientos()">Grabar!</button> 
+                
+		        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                       
+			
+  			  <form id="postFormCrearTarifarioProcedimientos" name="postFormCrearTarifarioProcedimientos">
+
+                                <input type="hidden" name="post_id" id="post_id">
+               <input type="hidden" id="username2_id" name="username2_id" value="{{Username_id}}">
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+					  <div class="col-12">
+                                        <label for="serviciosAdministrativosC" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosC"  tabindex= "0"
+                                                    name="serviciosAdministrativosC"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+				<div class="col-12">
+			
+				<select class="select-css"  id="tiposTarifa1_id"
+                                                                name="tiposTarifa1_id">
+                                                            {% for tiposTarifa in TiposTarifa %}
+                                                            <option value="{{tiposTarifa.id}}">
+                                                                {{tiposTarifa.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+			    <div class="col-12">
+                                    Ruta Archivo:
+                                    <input type="text" id="rutaArchivo" name="rutaArchivo" value="" > </input>
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnCrearTarifarioProcedimientos"   value="create" onclick="CrearTarifarioProcedimientos()">Guardar </button> 
+					</center> 
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+		   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelCrearTarifarioProcedimientos" name="mensajesErrorcrearModelCrearTarifarioProcedimientos" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->   
+
+
+		<!-- Fin Otra Modal -->
+
+
+      		<!-- Modal Aplicar Tarifarios -->
+
+            <div class="modal fade" id="crearModelAplicarTarifario" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+			  <div  class="modal-title" id="modelHeadingAplicarTarifario" style="text-align:center;"><font gont-family="Times New roman" size=5">Aplicar tarifarios Descripcion</font> </div>
+			  <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+
+
+                        </div>
+		
+                        <div class="modal-body">
+                            
+			
+  			  <form id="postFormAplicarTarifario" name="postFormAplicarTarifario">
+
+                                <input type="text" name="post_idProcedimientosDesc" id="post_idProcedimientosDesc" readonly >
+
+				<input type="text" name="descripcionTarifario" id="descripcionTarifario">
+				<input type="text" name="tiposTarifaTarifario_id" id="tiposTarifaTarifario_id" readonly>
+
+              
+
+		      <div id="flex-container-descripcionProcedimientos">			
+			<div>
+
+
+                              Servicio administrativo:
+                                            <select class="select-css" id="serviciosAdministrativosO_id"  
+                                                    name="serviciosAdministrativosO_id"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+				H A C I A   T A R I F A :
+
+
+                                    Cups Desde:
+				<select class="select-css"  id="codigoCups_id"
+                                                                name="codigoCups_id">
+                                                            {% for cups in Cups %}
+                                                            <option value="{{cups.id}}">
+                                                                {{cups.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+
+
+
+                                    Cups Hasta:
+				<select class="select-css"  id="codigoCupsHasta_id"
+                                                                name="codigoCupsHasta_id">
+                                                            {% for cups in Cups %}
+                                                            <option value="{{cups.id}}">
+                                                                {{cups.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+
+
+
+				Porcentaje:
+					 <input type="text"   id="porcentaje" name="porcentaje" placeholder="Porcentaje"  size="10px" >
+
+
+				  Valor:
+				 <input type="text"   id="valorAplicar" name="valorAplicar" placeholder="Valor"  size="20px" >
+
+
+                          
+
+				  Columna:
+
+						<select class="select-css"  id="columnaAplicar"        name="columnaAplicar">
+
+							   <option value="colValorBase">Valor Base</option>
+							   <option value="colValor1">Valor1</option>
+							   <option value="colValor2">Valor2</option>
+							   <option value="colValor3">Valor3</option>
+							   <option value="colValor4">Valor4</option>
+							   <option value="colValor5">Valor5</option>
+							   <option value="colValor6">Valor6</option>
+							   <option value="colValor7">Valor7</option>
+							   <option value="colValor8">Valor8</option>
+							   <option value="colValor9">Valor8</option>
+							   <option value="colValor10">Valor10</option>
+
+                                                        </select>			
+
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnAplicarTarifarios"   value="create" onclick="AplicarTarifario()">Guardar </button> 
+					</center> 
+
+
+
+                                </div> <!--   -->
+				</div> <!-- CIERRA FLEX-CONTAINER  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+	   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelAplicarTarifari" name="mensajesErrorcrearModelAplicarTarifari" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                     <!--   </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->                 
+
+
+		<!-- Fin Otra Modal  -->
+
+		<!--  Otra Modal  crearModelEditarTarifarioProcedimientos -->
+
+         <div class="modal fade" id="crearModelEditarTarifarioProcedimientos" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+	<div  class="modal-title" id="modelHeadingEditarTarifarioProcedimientos" style="text-align:center;"><font gont-family="Times New roman" size=5">Editar Tarifa Procedimientos</font> </div>
+     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnEditarTarifarioProcedimientos" onclick="GuardarEditarTarifarioProcedimientos()">Grabar!</button> 
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                          
+			
+  			  <form id="postFormEditarTarifarioProcedimientos" name="postFormEditarTarifarioProcedimientos">
+
+                                <input type="text" name="postEditar1_id" id="postEditar1_id">
+		               <input type="hidden" id="username2_id" name="username2_id" value="{{Username_id}}">
+
+	                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+				<div class="col-12">
+
+				  <label for="tiposTarifaU">TipoTarifa:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="tiposTarifaU" name="tiposTarifaU" readonly   >
+                                </div>
+
+
+
+				<div class="col-12">
+
+				  <label for="codigoCupsU">Cups:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="codigoCupsU" name="codigoCupsU" readonly   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="exaNombre">Examen:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="exaNombre" name="exaNombre"  readonly  >
+                                </div>
+
+
+				<div class="col-12">
+				  <label for="codigoHomologadoEditar">hOMOLOGADO:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="codigoHomologadoEditar" name="codigoHomologadoEditar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValorBaseEditar">colValorBase:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValorBaseEditar" name="colValorBaseEditar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor1Editar">colValor1:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor1Editar" name="colValor1Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor2Editar">colValor2:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor2Editar" name="colValor2Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor3Editar">colValor3:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor3Editar" name="colValor3Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor4Editar">colValor4:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor4Editar" name="colValor4Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor5Editar">colValor5:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor5Editar" name="colValor5Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor6Editar">colValor6:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor6Editar" name="colValor6Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor7Editar">colValor7:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor7Editar" name="colValor7Editar"   >
+                                </div>
+
+		
+				<div class="col-12">
+
+				  <label for="colValor8Editar">colValor8:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor8Editar" name="colValor8Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor9Editar">colValor9:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor9Editar" name="colValor9Editar"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor10Editar">colValor10:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor10Editar" name="colValor10Editar"   >
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnEditarTarifarioProcedimientos"   value="create" onclick="GuardarEditarTarifarioProcedimientos()">Guardar </button> 
+					</center> 
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelEditarTarifarioProcedimiento" name="mensajesErrorcrearModelEditarTarifarioProcedimiento" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->   
+
+
+		<!-- Fin Otra Modal -->
+
+     <!-- FIN Espacio Modales  -->
+
+</article>
+
+<article id="TarifariosDescripcionSum">
+	
+      
+
+        <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+ 		<div class="container my-2">
+
+				<div class="col-12">
+		        	       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnCrearTarifarioSuministros"  name="BtnCrearTarifarioSuministros" value="Crear Sabana Suministros" onclick= "ModalCrearTarifarioSuministros()" >				    
+		        	       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnCrearDescripcionSuministros"  name="BtnCrearDescripcionSuministros" value="Adicionar Descripcion Suministros" onclick= "ModalDescripcionSuministros()" >				    
+
+                                </div>
+
+   		
+                                        <table  id= "tablaTarifariosDescripcionSuministros" class=" display table table-striped  table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr style="height:2px;" >    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>Tipo</th>
+						<th>Tipo Tarifa</th>
+                                                <th>Columna</th>                                       
+                                                 <th>Descripcion</th>                                 
+	                                        <th>Seleccionar</th> 
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+					
+				   </table>
+
+
+
+			<!--  desde aqui -->
+
+		<div align="right" height="5px" width="650px">
+
+  			  <form id="postFormCrearItemTarifarioSuministros" name="postFormCrearItemTarifarioSuministros">
+
+	                                <input type="hidden" name="postSuministros_id" id="postSuministros_id">
+
+	                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3" height="5px" width="650px">
+
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+				  <div class="col-12">
+				  </div>
+
+				 <div class="col-12">
+                                        <label for="serviciosAdministrativosIt_id" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosIt_id"  tabindex= "0"
+                                                    name="serviciosAdministrativosIt_id"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+				  <div class="col-12">
+				           		                         
+				 <label  for="codigoHomologadoItemSuministros">Codigo Homologado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="codigoHomologadoItemSuministros" name="codigoHomologadoItemSuministros" value="0" placeholder="codigoHomologado:" ></input>
+                                </div>
+
+				<div class="col-12">
+                                    TiposTarifa:
+				<select class="select-css"  id="tiposTarifaItemSuministros_id"
+                                                                name="tiposTarifaItemSuministros_id">
+                                                            {% for tiposTarifaSuministros in TiposTarifaSuministros %}
+                                                            <option value="{{tiposTarifaSuministros.id}}">
+                                                                {{tiposTarifaSuministros.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+
+				<div class="col-12">
+                                    Cums:
+				<select class="select-css"  id="codigoCumsItem_id"
+                                                                name="codigoCumsItem_id">
+                                                            {% for cums in Cums %}
+                                                            <option value="{{cums.id}}">
+                                                                {{cums.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+				
+		
+	                        
+				<div class="col-12">
+				  <label for="colValorBaseItemSuministros">Valor Base:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValorBaseItemSuministros" name="colValorBaseItemSuministros" placeholder="colValorBase"  >
+                                </div>
+
+				<div class="col-12">
+		        	       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnCrearItemTarifarioSuministros"  name="BtnCrearItemTarifarioSuministros" value="Adicionar Tarifa" onclick= "CrearItemTarifarioSuministros()" >				    
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+
+		</div>
+
+
+
+			<!--  Hasta Aquip -->
+
+
+   	
+
+                                        <table  id= "tablaTarifariosSuministros" class=" display table table-striped  table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr >    
+						<bold>                                  
+ 
+ 						  <th>id</th>
+				                <th>tipoTarifa</th>
+				                <th>cums</th>
+				                <th>codigoHomologado</th>
+				                <th>exaNombre</th>
+				                <th>colValorBase</th>
+				                <th>colValor1</th>
+				                <th>colValor2</th>
+				                <th>colValor3</th>
+				                <th>colValor4</th>
+				                <th>colValor5</th>
+				                <th>colValor6</th>
+				                <th>colValor7</th>
+				                <th>colValor8</th>
+				                <th>colValor9</th>
+				                <th>colValor10</th>
+	                                        <th>Seleccionar</th> 
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+				
+   </table>
+
+	
+
+
+
+
+
+	</div> <!--  Cierra el Div -->
+
+            <!-- Espacio Modales  Descripcion Suministros -->
+
+
+            <div class="modal fade" id="crearModelDescripcionSuministros" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static>
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+     <div  class="modal-title" id="modelHeadingDescripcionSuministros" style="text-align:center;"><font gont-family="Times New roman" size=5">Descripcion Suinistros</font> </div>
+     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnDescripcionSuministros" onclick="GuardarDescripcionSuministros()">Grabar!</button> 
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormDescripcionSuministros" name="postFormDescripcionSuministros">
+
+                                <input type="hidden" name="postSuministros1_id" id="postSuministros1_id">
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+				
+				 <div class="col-12">
+                                        <label for="serviciosAdministrativosS" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosS"  tabindex= "0"
+                                                    name="serviciosAdministrativosS"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+				<div class="col-12">			
+				<select class="select-css"  id="tiposTarifaSuministros1_id"
+                                                                name="tiposTarifaSuministros1_id">
+                                                            {% for tiposTarifaSuministros in TiposTarifaSuministros %}
+                                                            <option value="{{tiposTarifaSuministros.id}}">
+                                                                {{tiposTarifaSuministros.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+
+                          
+				<div class="col-12">
+				  <label for="columnaSuministros0">Columna:</label>                              
+
+						<select class="select-css"  id="columnaSuministros0"        name="columnaSuministros0">
+
+							 
+							   <option value="colValor1">Valor1</option>
+							   <option value="colValor2">Valor2</option>
+							   <option value="colValor3">Valor3</option>
+							   <option value="colValor4">Valor4</option>
+							   <option value="colValor5">Valor5</option>
+							   <option value="colValor6">Valor6</option>
+							   <option value="colValor7">Valor7</option>
+							   <option value="colValor8">Valor8</option>
+							   <option value="colValor9">Valor8</option>
+							   <option value="colValor10">Valor10</option>
+
+                                                        </select>			
+
+                                </div>
+
+
+				<div class="col-12">
+				  <label for="descripcionSuministros">Descripcion:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="descripcionSuministros" name="descripcionSuministros" placeholder="descripcion"  >
+                                </div>
+
+
+
+                                <div class="col-12">
+				 <label  for="estadoRegSuministros">EstadoRegistro:</label>
+                                    
+                                    <input type="text" class="form-control form-control-sm" id="estadoRegSuministros" name="estadoRegSuministros" value="A" placeholder="estadoRegSuministros:" > </input>
+                                </div>
+
+
+                                <div class="col-12">
+                                    Usuario:
+                                    <input type="text" id="usuarioRegistroSuministros_id" name="usuarioRegistroSuministros_id" value="{{Username_id}}" readonly > </input>
+                                </div>
+
+
+                                <div class="col-12">
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnDescripcionSuministros"   value="create" onclick="GuardarDescripcionSuministros()">Guardar </button> 
+					</center> 
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+		   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelDescripcionSuministr" name="mensajesErrorcrearModelDescripcionSuministr" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+
+
+			</div> <!-- CIERRA DIV TAMANO -->	
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->           
+
+		<!-- Otra Modal -->
+
+
+         <div class="modal fade" id="crearModelCrearTarifarioSuministros" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+		   <div  class="modal-title" id="modelHeadingCrearTarifarioSuministros" style="text-align:center;"><font gont-family="Times New roman" size=5">Tarifario suministros</font> </div>
+		     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearTarifarioSuministros" onclick="CrearTarifarioSuministros()">Grabar!</button> 
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormCrearTarifarioSuministros" name="postFormCrearTarifarioSuministros">
+
+                                <input type="hidden" name="postSuministros2_id" id="postSuministros2_id">
+               <input type="hidden" id="username2_id" name="username2_id" value="{{Username_id}}">
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+			 <div class="col-12">
+                                        <label for="serviciosAdministrativosY" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosY"  tabindex= "0"
+                                                    name="serviciosAdministrativosY"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+
+				
+				<div class="col-12">
+			
+				<select class="select-css"  id="tiposTarifaSuministros2_id"
+                                                                name="tiposTarifaSuministros2_id">
+                                                            {% for tiposTarifaSuministros in TiposTarifaSuministros %}
+                                                            <option value="{{tiposTarifaSuministros.id}}">
+                                                                {{tiposTarifaSuministros.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+	
+			    <div class="col-12">
+                                    Ruta Archivo:
+                                    <input type="text" id="rutaArchivoSuministros" name="rutaArchivoSuministros" value="" > </input>
+                                </div>
+
+
+
+
+                                <div class="col-12">
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnCrearTarifarioSuministros"   value="create" onclick="CrearTarifarioSuministros()">Guardar </button> 
+					</center> 
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+		   <div class="modal-footer">
+			<textarea id="mensajesErrorcrearModelCrearTarifarioSuministro" name="mensajesErrorcrearModelCrearTarifarioSuministro" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                               </div>
+
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->   
+
+
+		<!-- Fin Otra Modal -->
+
+
+      		<!-- Modal Aplicar Tarifarios -->
+
+            <div class="modal fade" id="crearModelAplicarTarifarioSuministros" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                 <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+modelHeadingAplicarTarifarioSuministrosexampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Editar Admision</font> </div>
+		     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnAplicarTarifarioSuministros" onclick="AplicarTarifarioSuministros()">Grabar!</button> 
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormAplicarTarifarioSuministros" name="postFormAplicarTarifarioSuministros">
+
+                                <input type="text" name="postSuministros4_id" id="postSuministros4_id">
+				<input type="text" name="descripcionTarifarioSuministros" id="descripcionTarifarioSuministros">
+				<input type="text" name="tiposTarifaTarifarioSuministros_id" id="tiposTarifaTarifarioSuministros_id">
+
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+				
+				H A C I A   T A R I F A :
+
+				<div class="col-12">
+                                    Cums Desde:
+				<select class="select-css"  id="codigoCums_id"
+                                                                name="codigoCums_id">
+                                                            {% for cums in Cums %}
+                                                            <option value="{{cums.id}}">
+                                                                {{cums.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+				<div class="col-12">
+                                    Cums Hasta:
+				<select class="select-css"  id="codigoCumsHasta_id"
+                                                                name="codigoCumsHasta_id">
+                                                            {% for cums in Cums %}
+                                                            <option value="{{cums.id}}">
+                                                                {{cums.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+
+
+				<div class="col-12">
+				  <label for="porcentajeSuministros">Porcentaje:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="porcentajeSuministros" name="porcentajeSuministros" placeholder="Porcentaje"  >
+                                </div>
+
+
+				<div class="col-12">
+				  <label for="valorAplicarSuministros">Valor:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="valorAplicarSuministros" name="valorAplicarSuministros" placeholder="Valor"  >
+                                </div>
+
+                          
+				<div class="col-12">
+				  <label for="columnaAplicarSuministros">Columna:</label>                              
+
+						<select class="select-css"  id="columnaAplicarSuministros"        name="columnaAplicarSuministros">
+
+							   <option value="colValorBase">Valor Base</option>
+							   <option value="colValor1">Valor1</option>
+							   <option value="colValor2">Valor2</option>
+							   <option value="colValor3">Valor3</option>
+							   <option value="colValor4">Valor4</option>
+							   <option value="colValor5">Valor5</option>
+							   <option value="colValor6">Valor6</option>
+							   <option value="colValor7">Valor7</option>
+							   <option value="colValor8">Valor8</option>
+							   <option value="colValor9">Valor8</option>
+							   <option value="colValor10">Valor10</option>
+
+                                                        </select>			
+
+                                </div>
+
+                                <div class="col-12">
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnAplicarTarifarios"   value="create" onclick="AplicarTarifarioSuministros()">Guardar </button> 
+					</center> 
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+  <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelAplicarTarifarioSuministro" name="mensajesErrorcrearModelAplicarTarifarioSuministros" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->                 
+
+
+		<!-- Fin Otra Modal  -->
+
+		<!--  Otra Modal  crearModelEditarTarifarioSuministros -->
+
+         <div class="modal fade" id="crearModelEditarTarifarioSuministros" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+			     <div  class="modal-title" id="modelHeadingEditarTarifarioSuministrosl" style="text-align:center;"><font gont-family="Times New roman" size=5">Editar Admision</font> </div>
+			     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnEditarTarifarioSuministros" onclick="GuardarEditarTarifarioSuministros()">Grabar!</button> 
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormEditarTarifarioSuministros" name="postFormEditarTarifarioSuministros">
+
+                                <input type="text" name="postEditar1Suministros_id" id="postEditar1Suministros_id">
+		               <input type="hidden" id="username2Suministros_id" name="username2Suministros_id" value="{{Username_id}}">
+
+	                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+				<div class="col-12">
+
+				  <label for="tiposTarifaUSuministros">TipoTarifa:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="tiposTarifaUSuministros" name="tiposTarifaUSuministros" readonly   >
+                                </div>
+
+
+
+				<div class="col-12">
+
+				  <label for="codigoCumsUSuministros">Cums:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="codigoCumsUSuministros" name="codigoCumsUSuministros" readonly   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="exaNombreSuministros">Examen:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="exaNombreSuministros" name="exaNombreSuministros"  readonly  >
+                                </div>
+
+
+				<div class="col-12">
+				  <label for="codigoHomologadoEditarSuministros">hOMOLOGADO:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="codigoHomologadoEditarSuministros" name="codigoHomologadoEditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValorBaseEditarSuministros">colValorBase:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValorBaseEditarSuministros" name="colValorBaseEditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor1EditarSuministros">colValor1:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor1EditarSuministros" name="colValor1EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor2EditarSuministros">colValor2:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor2EditarSuministros" name="colValor2EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor3EditarSuministros">colValor3:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor3EditarSuministros" name="colValor3EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor4EditarSuministros">colValor4:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor4EditarSuministros" name="colValor4EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor5EditarSuministros">colValor5:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor5EditarSuministros" name="colValor5EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor6EditarSuministros">colValor6:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor6EditarSuministros" name="colValor6EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor7EditarSuministros">colValor7:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor7EditarSuministros" name="colValor7EditarSuministros"   >
+                                </div>
+
+		
+				<div class="col-12">
+
+				  <label for="colValor8EditarSuministros">colValor8:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor8EditarSuministros" name="colValor8EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor9EditarSuministros">colValor9:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor9EditarSuministros" name="colValor9EditarSuministros"   >
+                                </div>
+
+				<div class="col-12">
+
+				  <label for="colValor10EditarSuministros">colValor10:</label>                              
+					 <input type="text"  class="form-control form-control-sm" id="colValor10EditarSuministros" name="colValor10EditarSuministros"   >
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnEditarTarifarioSuministros"   value="create" onclick="GuardarEditarTarifarioSuministros()">Guardar </button> 
+					</center> 
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+		   <div class="modal-footer">
+			
+			<textarea id="mensajescrearModelEditarTarifarioSuministro" name="mensajesErrorcrearModelEditarTarifarioSuministros" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->   
+
+
+		<!-- Fin Otra Modal -->
+
+     <!-- FIN Espacio Modales  -->
+
+
+
+</article>
+
+
+
+  
+    </div> <!-- Fin Secciones -->
+</div>  <!-- Fin Marco -->
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+</div>
+{% endblock %}
+

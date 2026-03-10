@@ -1,0 +1,75 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/grupos.css' %}">
+</head>
+<!-- desde AQUI SI SEÑORES                      -->
+
+<body style="margin: 0; padding: 0; background-color: #eee !important;">
+    <nav class="navbar">
+        <div class="row nav-bar-1"
+            style="display: flex; justify-content: space-between; align-items: center;  height: 100%; padding: 0 50px; max-height: none !important;">
+            <div class="col home">
+                <img src="{% static '/IMG/logoMedicalBlanco.png' %}"
+                    style="width: 75px; margin-right: 20px; border-right: 3px solid white; padding-right: 20px;"
+                    alt="logo">
+                <p style="color: white;font-weight: 600; font-size: 36px;font-family: sans-serif;"> CLINIREPORT</p>
+                <span class="tooltip-text">Inicio</span>
+            </div>
+            <div class="col home">
+                <h3 style="margin-right: 20px; color: #FFFFFF;">{{Username}} | {{SedeSeleccionada}}</h3>
+                <a id="navbar-login" class="button-link" href="/salir">
+                    <img src="{% static '/IMG/salir-blanco.svg' %}" style="width: 40px; color: white;" alt="Salir">
+                    <span class="tooltip-text">Salir</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%;"
+                class="row col-md-8 align-items-center">
+                <div class="card">
+                    {% for grupos in Grupos %}
+                    <a href="/pantallaSubgrupos/{{Username}}, {{SedeSeleccionada}}, {{grupos.id}} "
+                        style="margin: 20px;" class="image-link">
+                        <img style="width:100%" src="{% static grupos.logo %}" class="btn-outline-primary">
+                    </a>
+                    {% endfor %}
+                    <!--    <img src="../assets/imagenes/image 3.png"> -->
+                    <!-- <img src="{% static '/IMG/image 3.jpg' %}" class="figure-img img-fluid rounded"> -->
+                    <!-- <div style="color:#007BFF;  text-decoration:none; background-color:transparent"
+                        class="col-md text-center">
+
+                    </div> -->
+                </div>
+                <!-- <div style="display: flex; align-items: center; justify-content: center;"  class="row col-md-8 align-items-center">  -->
+
+            </div>
+        </div>
+    </div>
+</body>
+<!--Inicia PantallaGrupos       -->
+       <input type="hidden" id="reporteSeleccionado" name="reporteSeleccionado" value="nada">
+   <input type="hidden" id="username" name="username" value="{{Username}}">
+                                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+                                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada"
+                                       value="{{SedeSeleccionada}}">
+                                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                                <!--  Estos si de la Aplixcacion bse -->
+
+
+                                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                                <input type="hidden" id="permisosGrales" name="permisosGrales"
+                                       value="{{PermisosGrales}}">
+                                <input type="hidden" id="permisosDetalle" name="permisosDetalle"
+                                       value="{{PermisosDetalle}}">
+                                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+
+<!-- </div> -->
+<!--Fin PantallaGrupos       -->

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <root>
+     <tipoDocumento>01</tipoDocumento>
+     <numero>5</numero>
+     <fecha>2026-03-06 08:46:04.063769-05</fecha>
+     <moneda>COP</moneda>
+     <emisor>
+         <nit>830507718-8</nit>
+         <dv>8</dv>
+         <nombreRazonSocial>CLINICA MEDICAL S.A.S</nombreRazonSocial>
+         <tipoPersona>1</tipoPersona>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>Calle 36 Sur 77 -33</direccion>
+             <departamento>CUNDINAMARCA</departamento>
+         </direccion>
+     </emisor>
+     <receptor>
+         <nit>51017</nit>
+         <dv>0</dv>
+         <nombreRazonSocial>luis ernesto bernal romero</nombreRazonSocial>
+         <tipoPersona>2</tipoPersona>
+         <tipoDocumentoIdentificacion>13</tipoDocumentoIdentificacion>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>CALLE 47 / 59-80</direccion>
+             <departamento>CUNDINAMARCA</departamento>
+         </direccion>
+     </receptor>
+     <items>
+         <codigoProducto>903820</codigoProducto>
+         <nombreProducto>CREATIN QUINASA (FRACCION MB) AUTOMATIZADA</nombreProducto>
+         <cantidad>1</cantidad>
+         <unidadMedida>94</unidadMedida>
+         <valorUnitario>53500</valorUnitario>
+         <valorTotal>53500</valorTotal>
+         <impuestos>
+             <tipo>01</tipo>
+             <porcentaje>19</porcentaje>
+             <valor>19000</valor>
+         </impuestos>
+     </items>
+     <totales>
+         <valorBruto>53500</valorBruto>
+         <valorNeto>53500</valorNeto>
+         <valorTotalImpuestos>0</valorTotalImpuestos>
+         <valorTotal>53500</valorTotal>
+     </totales>
+ </root>

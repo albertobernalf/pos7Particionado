@@ -1,0 +1,405 @@
+{% extends "Reportes/pantallaSubGrupos.html" %}
+{% load static %}
+
+{% block content %}
+<!-- desde AQUI SI SEÑORES                      -->
+<!--Inicia PantallaGrupos       -->
+
+<input type="hidden" id="username" name="username" value="{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+
+
+<div class="row" style=" height: 60px;">
+
+    <div class="col-xl-3"></div>
+
+    {% for grupos in Grupos %}
+ {% if grupos.nombreGrupo == 'ASISTENCIAL' %}
+
+    <div class="col-xl-3" style="width:50px;height:10px;">
+        <figure class="figure">
+
+            <img src="{% static '/img/ASISTENCIAL.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/pantallaSubgrupos/{{Username}}, {{SedeSeleccionada}}, {{grupos.id}} ">
+                    {{grupos.nombreGrupo}} </a>
+            </figcaption>
+        </figure>
+        {{grupos.grupo}}
+    </div>
+
+    {% endif %}
+
+
+    {% if grupos.nombreGrupo == 'ADMINISTRATIVO' %}
+
+    <div class="col-xl-3" style="width:50px;height:10px;">
+        <figure class="figure">
+
+            <img src="{% static '/img/ADMINISTRATIVO.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/pantallaSubgrupos/{{Username}}, {{SedeSeleccionada}}, {{grupos.id}} ">
+                    {{grupos.nombreGrupo}} </a>
+            </figcaption>
+        </figure>
+        {{grupos.grupo}}
+    </div>
+
+    {% endif %}
+
+    {% endfor %}
+
+
+    <div class="col-xl-3"></div>
+
+
+</div>
+<br>
+<br>
+<br>
+
+
+<!--Fin PantallaGrupos       -->
+
+<!--Inicia PantallaSubGrupos       -->
+
+
+<div class="row" style=" height: 50px;">
+
+    <div class="col-xl-1"></div>
+
+ {% for subGrupos in SubGrupos %}
+
+
+    <div class="col-xl-2" style="width:50px;height:10px;">
+
+                {% if subGrupos.nombreSubGrupo == 'HOSPITALIZACION' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/HOSPITALIZACION.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+
+        {% if subGrupos.nombreSubGrupo == 'CIRUGIA' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/CIRUGIA.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+        {% if subGrupos.nombreSubGrupo == 'UCI' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/UCI.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+        {% if subGrupos.nombreSubGrupo == 'URGENCIAS' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/URGENCIAS.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+        {% if subGrupos.nombreSubGrupo == 'FARMACIA' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/FARMACIA.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+    </div>
+
+
+        {% if subGrupos.nombreSubGrupo == 'FACTURACION' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/FACTURACION.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+         {% if subGrupos.nombreSubGrupo == 'CARTERA' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/CARTERA.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+         {% if subGrupos.nombreSubGrupo == 'GLOSAS' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/GLOSAS.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+     {% if subGrupos.nombreSubGrupo == 'CALIDAD' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/Calidad.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+     {% if subGrupos.nombreSubGrupo == 'ESTADISTICAS' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/Estadisticas.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+
+
+
+    {% endfor %}
+
+
+
+    <div class="col-xl-1"></div>
+
+
+</div>
+
+<br>
+<br>
+<br>
+
+
+<!--Fin PantallaSubGrupos       -->
+<br>
+<div class="container">
+    <div class="card">
+
+
+        <div class="card-block" align="center">
+            <div id="grilla_data" class="mt-5">
+
+
+            </div>
+
+            <table>
+                <center>
+                    <tr>
+                        <td><font size="7"> Generador de Informes imhotep</font></td>
+
+                    </tr>
+            </table>
+            <br>
+
+            <form method="post">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+
+                <div class="myDiv" id="mensajes"> {{mensaje.mensaje}}</div>
+
+
+                {% for parametrosSeleccionado in ParametrosSeleccionado %}
+
+
+                {{parametrosSeleccionado.param_texto }}
+
+                <input type={{parametrosSeleccionado.param_tipocampo}} id={{parametrosSeleccionado.parametro}}
+                       name={{parametrosSeleccionado.parametro}} value=""/>
+                <br>
+
+                {% endfor %}
+
+                <p>
+                    <br>
+                    Seleccione Tipo de Archivo :<br>
+                    <br>
+                    {% for reporteSeleccionado in ReporteSeleccionado %}
+
+                    {%if reporteSeleccionado.excel == 'A' %}
+                    <input type="radio" name="tipoArchivo" value="excel"> Excel<br>
+                    {% endif %}
+
+                    {%if reporteSeleccionado.pdf == 'A' %}
+                    <input type="radio" name="tipoArchivo" value="pdf"> Pdf<br>
+                    {% endif %}
+
+                    {%if reporteSeleccionado.csv == 'A' %}
+                    <input type="radio" name="tipoArchivo" value="csv"> csv<br>
+                    {% endif %}
+
+                    {%if reporteSeleccionado.grilla == 'A' %}
+                    <input type="radio" name="tipoArchivo" value="grilla"> grilla<br>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+
+                </p>
+                {% for reporteSeleccionado in ReporteSeleccionado %}
+
+                <input type="hidden" id="cuerpoSql" name="cuerpoSql" value="{{reporteSeleccionado.cuerpo_sql}}">
+                <input type="hidden" id="encabezados" name="encabezados" value="{{reporteSeleccionado.encabezados}}">
+                <input type="hidden" id="numReporte" name="numReporte" value="{{reporteSeleccionado.numreporte}}">
+                <input type="hidden" id="nombreReporte" name="nombreReporte" value="{{reporteSeleccionado.reporte}}">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+
+
+                {% endfor %}
+
+                <input type="submit" value="Solicitar" onclick="return mandoEjecutar();"/> <span id="proceso"></span>
+
+
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+
+<br>
+
+<center>
+
+    {% for reporteSeleccionado in ReporteSeleccionado %}
+    Informe: {{reporteSeleccionado.reporte}}
+    {% endfor %}
+    <br>
+
+    {% for nombreUsuario in NombreUsuario %}
+    Usuario: {{nombreUsuario.nom_usuario}}
+    {% endfor %}
+
+</center>
+
+
+<script>
+
+function mandoEjecutar() {
+
+   document.getElementById('proceso').innerHTML='Procesando ...';
+   document.getElementById('proceso').style.color = '#3380FF';
+   return true;
+}
+
+
+    function valida()
+    {
+
+    var datos = new FormData()
+
+    var documento =document.getElementById("documento").value;
+    var tipodoc =  document.getElementById("seleccion").value;
+
+
+        datos.append('tipodoc',tipodoc);
+        datos.append('documento',documento);
+
+    alert("voy ajax");
+
+
+        $.ajax({
+            	   type: 'POST',
+ 	                url: window.location.pathname,
+  	               data: datos ,
+ 	      		success: function (respuesta2) {
+ 	      		          var dato = JSON.parse(respuesta2);
+ 	      		          alert(dato);
+
+                              $("#mensajes").html("Paciente No existe");
+                          		},
+ 	      		error: function (request, status, error) {
+ 	      			alert(request.responseText);
+ 	      			alert (error);
+ 	      			$("#mensajes").html("Error Venta AJAX O RESPUESTA");
+ 	      		},
+ 	      		cache : false,
+ 	      		contentType : false,
+ 	      		processData: false,
+
+ 	        });
+
+
+
+
+    }
+
+
+
+</script>
+
+
+{% endblock %}

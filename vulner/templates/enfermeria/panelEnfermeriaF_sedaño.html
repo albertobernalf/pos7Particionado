@@ -1,0 +1,1269 @@
+{% extends "enfermeria/menuEnfermeriaF.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelEnfermeria.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsEnfermeria.js' %} defer>  </script>
+
+
+<div class="marco">
+    <ul class="tabs">
+	<li><a href="#PanelEnfermeria"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Panel </a></li>
+        <li><a href="#ParaClinicos"><span class="fa-solid fa-user-doctor-message">   </span> <span class="tab-text"> </span> ParaClinicos </a></li>
+        <li><a href="#Medicamentos"><span class="fa-solid fa-user-doctor-message">   </span> <span  class="tab-text"> </span> Medicamentos </a></li>
+        <li><a href="#Liquidos"><span class="fa-solid fa-user-doctor-message"></span><span  class="tab-text"> </span> Liquidos </a></li>
+	<li><a href="#NotasEnfermeria"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> NotasEnf</a></li>
+       <li><a href="#Pedidos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Pedidos </a></li>
+        <li><a href="#Dietas"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Dietas </a></li>
+        <li><a href="#Devoluciones"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Devoluciones </a></li>
+    <li><a href="#Turno"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Turnos </a></li>
+
+    </ul>
+</div>
+
+
+{% endblock %}
+
+{% block encabezado %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+	<article id="PanelEnfermeria">
+
+	  <form action="/PanelEnfermeria/" method="get" id="FormPanelEnfermeria">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+		<input type="text" id="ingresoId" name="ingresoId" value="">
+
+            </form>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+		<div class="container my-2" style="width:100%">
+             
+   			   <div class="row" style="width:100%">
+
+                                        <table id= "tablaPanelEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			    <th>S1</th> 
+				        <th>id</th>
+				        <th>tipoDoc</th>
+                                	<th>Documento</th>
+	                                <th>Nombre</th>
+        	                        <th>Consec</th>
+        	                        <th>Edad</th>
+        	                        <th>Empresa</th>
+	                                <th>Ingreso</th>
+                	                <th>Servicio</th>
+                        	        <th>Cama</th>
+        	                        <th>Salida</th>
+                                	<th>DxActual</th>
+	                                <th>Conv</th>
+        	                        <th>numAbonos</th>                                                               
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+	</article>
+
+
+<article id="Turno">     	
+		<div class="container my-2" style="width:100%">
+           		<div class="row" style="width:100%">
+                                        <table id= "tablaTurnosEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			    <th>S1</th> 
+				        <th>id</th>
+				        <th>Servicio</th>
+                                	<th>Tipo Turno</th>
+                                	<th>Enfermera</th>
+	                                <th>Horario</th>
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+                        </div>
+                </div>
+	
+</article>
+
+<article id="Dietas">
+        	
+		 <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+		<div class="container my-2" style="width:100%">
+
+		<div align="left" height="15px" width="50px">
+			TipoDoc: <span id="nombreTipoDocD"></span>
+			Doc: <span id="documentoD"></span>
+			Paciente: <span id="pacienteD"></span>
+			Ingreso: <span id="consecutivoAdmisionD"></span>
+			Servicio: <span id="servicioD"></span>
+			Hab: <span id="habitacionD"></span>
+
+		</div>
+
+   			 <div class="row">
+
+ 					 <div class="col-sm-2">
+						 <label  for="serviciosAdministrativosD">Medicamentos:</label>   
+                    							    
+                                                        <select class="select-css" id="serviciosAdministrativosD"
+                                                                name="serviciosAdministrativosD">
+                                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                            <option value="{{serviciosAdministrativos.id}}">
+                                                                {{serviciosAdministrativos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+                                                    
+                                                    <div class="col-sm-2">
+						 <label  for="tiposDietasD">Medicamentos:</label>   
+                    							    
+                                                        <select class="select-css" id="tiposDietasD"
+                                                                name="tiposDietasD">
+                                                            {% for tiposDietas in TipoDietas %}
+                                                            <option value="{{tiposDietas.id}}">
+                                                                {{tiposDietas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+						<div class="col-sm-6">
+						<label for="observacionesD">Descripción:</label>
+						<textarea id="observacionesD" name="observacionesD" rows="6" cols="80" placeholder="Ingrese Dieta detallada..." required wrap="hard"></textarea>
+
+						</div>
+						    <div class="col-sm-2">
+       						 <input type="button" class="btn btn-primary" value="Guardar"  onclick="GuardarDietas()"> 
+						</div>
+	</div>
+
+
+             
+   			   <div class="row" style="width:100%">
+
+                                        <table id= "tablaDietasEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			    <th>S1</th> 
+				        <th>id</th>
+				        <th>Consecutivo</th>
+				        <th>Folio</th>
+                                	<th>tipoDieta</th>
+                                	<th>Observaciones</th>
+	                                <th>Profesional</th>
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+	<!-- Espacio modales Dietas  Enfermeria -->
+
+	
+
+</article>
+
+
+<article id="Devoluciones">
+        	
+<div class="container my-2" style="width:100%">
+
+		<div align="left" height="15px" width="50px">
+			TipoDoc: <span id="nombreTipoDocDev"></span>
+			Doc: <span id="documentoDev"></span>
+			Paciente: <span id="pacienteDev"></span>
+			Ingreso: <span id="consecutivoAdmisionDev"></span>
+			Servicio: <span id="servicioDev"></span>
+			Hab: <span id="habitacionDev"></span>
+
+		</div>
+
+            	   <div class="row" style="width:100%">
+
+                                        <table id="tablaDevolucionEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			<th style="width:5px">S1</th> 	
+			        	                 		                              
+				        <th>id</th>
+				        <th style="width:150px">tipoDoc</th>
+                                	<th>Documento</th>
+	                                <th>Paciente</th>
+        	                        <th>Folio</th>
+        	                        <th>Consecutivo</th>
+        	                        <th>Dosis</th>
+        	                        <th>Cantidad</th>
+	                                <th>Medida</th>
+                	                <th>Medicamento</th>
+                	                <th>via</th>
+                	                <th>Frecuencia</th>
+                	                <th>Dias</th>
+			
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+			</div>
+
+	<!-- aqui viene el datattable dinamico desde clinica -- >
+
+		<!--   estop viene de clinico -->
+           <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearFormulacionDef/" method="POST"
+                              id="FormaFormulacion">
+
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header" style="height:70px;">
+                                            <center>
+                                                <div class="row">
+                                                    
+                                                    <div class="col-sm-3">
+						<!-- <label  for="medicamentos">Medicamentos:</label>   -->
+                    							    
+                                                        <select class="select-css" id="medicamentos"
+                                                                name="medicamentos">
+                                                            {% for medicamentos in Medicamentos %}
+                                                            <option value="{{medicamentos.id}}">
+                                                                {{medicamentos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1">
+					                  
+                                                        <input type="text" id="dosis" name="dosis" placeholder="Dosis" value="">
+                                                    </div>
+						 <div class="col-sm-1">
+								 </div>
+
+                                                    <div class="col-sm-2">
+ 							                  
+                                                        <select class="select-css" id="uMedidaDosis"
+                                                                name="uMedidaDosis" placeholder="UMedida">
+                                                            {% for uMedidaDosis in UMedidaDosis %}
+                                                            <option value="{{uMedidaDosis.id}}">
+                                                                {{uMedidaDosis.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                   
+                                                   
+
+						 <div class="col-sm-1">
+							                        
+                                                        <select class="select-css" id="vias"
+                                                                name="vias" placeholder="Vias Adm">
+                                                            {% for viasAdministracion in ViasAdministracion %}
+                                                            <option value="{{viasAdministracion.id}}">
+                                                                {{viasAdministracion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+						                            <div class="col-sm-1">
+							                        Cantidad:
+                                                        <input type="text" id="cantidadMedicamento" name="cantidadMedicamento" value="" placeholder="Cantidad">
+                                                    </div>
+							 <div class="col-sm-1">
+								 </div>
+                                                    <div class="col-sm-1 text-end">
+                                                        <span class="text-secondary">Adicionar</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="BtnAdicionarFormulacion"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </center>
+                                        </div>
+                                        <div class="card-body" style="height:5px;">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="tablaFormulacion"
+                                                           class="display nowrap table table table-bordered  tablaFormulacion table-hover table-sm dtr-inline">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:5%;">Id</th>
+                                                            <th style="width:5%;">Medicamento</th>
+                                                            <th style="width:5%;">Dosis</th>
+                                                           <th style="width:1%;">UMedida</th>
+                                           					
+                                                            <th style="width:5%;">ViasAdmon</th>
+                                                            <th style="width:5%;">Cant</th>
+                                                        
+                                                            <th style="width:3%;">Borrar</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align:bottom">
+                                                        <tr style="height:10%">
+                                                            <td></td>
+                                           
+                                                            <td></td>
+                                                            <td></td>
+                                                             <td></td>
+                                                              <td></td>
+								<td></td>
+                                                              <td></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+
+
+		<div align="left" height="10px" width="30px">
+
+		 <div class="row" >
+				 <div class="col-sm-2">
+			          </div>
+
+									 <div class="col-sm-8">
+						 <label  for="serviciosAdministrativosDev">Servicio Devuelve:</label>   
+                    							    
+                                                        <select class="select-css" id="serviciosAdministrativosDev"
+                                                                name="serviciosAdministrativosDev">
+                                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                            <option value="{{serviciosAdministrativos.id}}">
+                                                                {{serviciosAdministrativos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+		<div class="col-sm-6">
+	    <input type="button" class="btn btn-primary" value="Crear Devolucion"  onclick="GuardarDevolucion()"> 
+			</div>
+		</div> <!-- cierra el row -->
+
+		</div>
+
+
+                                                  </div>  
+                                            </div> <!-- cierrra el row  -->
+
+                                        </div> <!-- cierrra el body  -->
+                                    </div> <!-- cierrra el card  -->
+
+                                </div>
+                            </div>
+                            <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+  
+             <!-- HASTA AQUI DATATABLE -->
+
+
+		<!-- finaliza lo que viene de clinico -->      	
+
+
+		 
+
+	<!-- fin vien de clinico
+
+
+		</div>
+
+  <!-- Creacion Modal Devolver Medicamentos  -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="postFormModalDevolverEnfermeria" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="ModalDevolverEnfermeria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                           <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Devolver a Farmacia</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                                    </div>
+                                    <div class="modal-body">
+				
+                                        <div class="row row-cols-5 mt-3">
+                                            <div class="col">
+                                                <label for="dosisDev"  class="col-sm-10 col-form-label col-form-label-sm">Dosis:</label>
+						
+                                               <input type="text" id="dosisDev" name="dosisDev" value="" readonly>
+					      
+                                            </div> 
+					  <div class="col">
+                                                <label for="medidaDev"  class="col-sm-10 col-form-label col-form-label-sm">Medida:</label>
+                                                <input type="text" id="medidaDev" name="medidaDev" value="" readonly>
+                                            </div>
+
+					
+				
+					  <div class="col">
+                                                <label for="suministroDev"  class="col-sm-10 col-form-label col-form-label-sm">Suministro:</label>
+                                                <input type="text" id="suministroDev" name="suministroDev" value="" readonly>
+                                            </div>
+					  <div class="col">
+                                                <label for="viaDev"  class="col-sm-10 col-form-label col-form-label-sm">Via:</label>
+                                                <input type="text" id="viaDev" name="viaDev" value="">
+                                            </div>
+
+					  <div class="col">
+                                                <label for="frecuenciaDev"  class="col-sm-10 col-form-label col-form-label-sm">Frecuencia:</label>
+                                                <input type="text" id="frecuenciaDev" name="frecuenciaDev" value="" readonly>
+                                            </div>
+
+					  <div class="col">
+                                                <label for="diasTratamientoDev"  class="col-sm-6 col-form-label col-form-label-sm">Dias:</label>
+                                                <input type="text" id="diasTratamientoDev" name="diasTratamientoDev" value="" readonly>
+                                            </div>
+
+					  <div class="col">
+                                            </div>
+
+					<div class="col">
+                                          <label for="cantidadDev"  class="col-sm-10 col-form-label col-form-label-sm">Cantidad a devolver:</label>
+                                                <input type="text" id="cantidadDev" name="cantidadDev" value="" >
+                                            </div>
+
+
+
+                                        </div> <!-- Cierra row -->
+
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+				 <span id="mensajesErrorModalDevolverEnfermeria" name="mensajesErrorModalDevolverEnfermeria" style= "color:red; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+                                       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                                         <input type="button" class="btn btn-primary" value="Adicionar"  onclick="GuardarDevolver()"> 
+                                        
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal Devolver Enfermeria-->
+
+	
+
+</article>
+
+
+
+<article id="Medicamentos">
+
+ 
+		<div class="container my-2" style="width:100%">
+
+		<div align="left" height="15px" width="50px">
+			TipoDoc: <span id="nombreTipoDocM"></span>
+			Doc: <span id="documentoM"></span>
+			Paciente: <span id="pacienteM"></span>
+			Ingreso: <span id="consecutivoAdmisionM"></span>
+			Servicio: <span id="servicioM"></span>
+			Hab: <span id="habitacionM"></span>
+
+		</div>
+
+
+            	   <div class="row" style="width:100%">
+
+                                        <table id="tablaMedicamentosEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			<th style="width:5px">S1</th> 	
+					<th style="width:5px">S2</th> 
+        	                 		                              
+				        <th>id</th>
+				        <th style="width:150px">tipoDoc</th>
+                                	<th>Documento</th>
+	                                <th>Paciente</th>
+        	                        <th>Folio</th>
+        	                        <th>Consecutivo</th>
+        	                        <th>Dosis</th>
+        	                        <th>Cantidad</th>
+	                                <th>Medida</th>
+                	                <th>Medicamento</th>
+                	                <th>via</th>
+                	                <th>Frecuencia</th>
+                	                <th>Dias</th>
+
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+
+
+
+           		<div class="row" style="width:100%">
+                                        <table id= "tablaPlaneacionEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			    <th>S1</th> 
+				        <th>id</th>
+				        <th>fechaPlanea</th>
+                                	<th>turnoPlanea</th>
+                                	<th>enfermeraPlanea</th>
+	                                <th>cantidadPlaneada</th>
+	                                <th>fechaAplica</th>
+	                                <th>turnoAplica</th>
+	                                <th>enfermeraAplica</th>
+	                                <th>dosis</th>
+	                                <th>medida</th>
+	                                <th>suministro</th>
+	                                <th>via</th>
+	                                <th>frecuencia</th>
+	                                <th>dias</th>
+
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+ 		                                </div>
+
+
+
+
+  <!-- Creacion Modal Planeacion Medicamentos  -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="postFormModalPlaneacionEnfermeria" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="ModalPlaneacionEnfermeria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                           <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Planeacion Enfermeria</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                                    </div>
+                                    <div class="modal-body">
+				<input type="text" id="enfermeriaRecibeId" name="enfermeriaRecibeId" value="0" >
+                                        <div class="row row-cols-5 mt-3">
+                                            <div class="col">
+                                                <label for="dosisP"  class="col-sm-10 col-form-label col-form-label-sm">Dosis:</label>
+						
+                                               <input type="text" id="dosisP" name="dosisP" value="" readonly>
+					      
+                                            </div> 
+					  <div class="col">
+                                                <label for="medidaP"  class="col-sm-10 col-form-label col-form-label-sm">Medida:</label>
+                                                <input type="text" id="medidaP" name="medidaP" value="" readonly>
+                                            </div>
+
+					<div class="col">
+                                          <label for="cantidadP"  class="col-sm-10 col-form-label col-form-label-sm">Cantidad:</label>
+                                                <input type="text" id="cantidadP" name="cantidadP" value="" readonly>
+                                            </div>
+				
+					  <div class="col">
+                                                <label for="suministroP"  class="col-sm-10 col-form-label col-form-label-sm">Suministro:</label>
+                                                <input type="text" id="suministroP" name="suministroP" value="" readonly>
+                                            </div>
+					  <div class="col">
+                                                <label for="viaP"  class="col-sm-10 col-form-label col-form-label-sm">Via:</label>
+                                                <input type="text" id="viaP" name="viaP" value="">
+                                            </div>
+
+					  <div class="col">
+                                                <label for="frecuenciaP"  class="col-sm-10 col-form-label col-form-label-sm">Frecuencia:</label>
+                                                <input type="text" id="frecuenciaP" name="frecuenciaP" value="" readonly>
+                                            </div>
+
+					  <div class="col">
+                                                <label for="diasTratamientoP"  class="col-sm-10 col-form-label col-form-label-sm">Dias:</label>
+                                                <input type="text" id="diasTratamientoP" name="diasTratamientoP" value="" readonly>
+                                            </div>
+
+
+					  <div class="col">
+                                                <label for="desdePlanea"  class="form-control form-control-sm">Desde:</label>
+                                                <input type="datetime-local" id="desdePlanea" name="desdePlanea" value="">
+                                            </div>
+
+
+					  <div class="col">
+                                            </div>
+
+					  <div class="col">
+                                                <label for="numeroPlaneos"  class="col-sm-10 col-form-label col-form-label-sm">Numero de Planes:</label>
+                                                <input type="text" id="numeroPlaneos" name="numeroPlaneos" value="">
+                                            </div>
+
+
+                                        </div> <!-- Cierra row -->
+
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+				 <span id="mensajesErrorModalPlaneacionEnfermeria" name="mensajesErrorModalPlaneacionEnfermeria" style= "color:red; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+                                       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                                         <input type="button" class="btn btn-primary" value="save"  onclick="GuardarPlaneacion()"> 
+                                        
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal Planeacion Enfermeria-->
+
+
+
+  <!-- Creacion Modal Aplicacion Medicamentos Enfermeria  -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="postFormModalAplicacionEnfermeria" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="ModalAplicacionEnfermeria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                           <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Aplicacion Medicamentos Enfermeria</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                                    </div>
+                                    <div class="modal-body">
+			<input type="text" id="planeacionEnfermeriaId" name="planeacionEnfermeriaId">
+
+                                        <div class="row row-cols-5 mt-3">
+                                            <div class="col">
+                                                <label for="dosisA"  class="col-sm-10 col-form-label col-form-label-sm">Dosis:</label>
+						
+                                               <input type="text" id="dosisA" name="dosisA" value="" readonly>
+					      
+                                            </div> 
+					  <div class="col">
+                                                <label for="medidaA"  class="col-sm-10 col-form-label col-form-label-sm">Medida:</label>
+                                                <input type="text" id="medidaA" name="medidaA" value="" readonly>
+                                            </div>
+
+					<div class="col">
+                                          <label for="cantidadA"  class="col-sm-10 col-form-label col-form-label-sm">Cantidad:</label>
+                                                <input type="text" id="cantidadA" name="cantidadA" value="" readonly>
+                                            </div>
+				
+					  <div class="col">
+                                                <label for="suministroA"  class="col-sm-10 col-form-label col-form-label-sm">Suministro:</label>
+                                                <input type="text" id="suministroA" name="suministroA" value="" readonly>
+                                            </div>
+					  <div class="col">
+                                                <label for="viaA"  class="col-sm-10 col-form-label col-form-label-sm">Via:</label>
+                                                <input type="text" id="viaA" name="viaA" value="">
+                                            </div>
+
+					  <div class="col">
+                                                <label for="frecuenciaA"  class="col-sm-10 col-form-label col-form-label-sm">Frecuencia:</label>
+                                                <input type="text" id="frecuenciaA" name="frecuenciaA" value="" readonly>
+                                            </div>
+
+					  <div class="col">
+                                                <label for="diasTratamientoA"  class="col-sm-10 col-form-label col-form-label-sm">Dias:</label>
+                                                <input type="text" id="diasTratamientoA" name="diasTratamientoA" value="" readonly>
+                                            </div>
+
+
+					  <div class="col">
+                                                <label for="fechaAplica"  class="form-control form-control-sm">Fecha-Hora Aplicacion:</label>
+                                                <input type="datetime-local" id="fechaAplica" name="fechaAplica" value="">
+                                            </div>
+
+
+					  <div class="col">
+                                            </div>
+
+				
+                                        </div> <!-- Cierra row -->
+
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+				 <span id="mensajesErrorModalAplicaEnfermeria" name="mensajesErrorModalAplicaEnfermeria" style= "color:red; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+                                       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                                         <input type="button" class="btn btn-primary" value="save"  onclick="GuardarAplicacion()"> 
+                                        
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal Aplicacion Medicamentos Enfermeria-->
+
+
+
+
+
+   			
+</article>
+
+<article id="ParaClinicos">
+      
+     <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+		<div class="container my-2" style="width:100%">
+
+             
+   			   <div class="row" style="width:100%">
+
+                                        <table id= "tablaParaClinicosEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			    <th>S1</th> 
+				        <th>id</th>
+				        <th>Medico</th>
+                                	<th>Fecha</th>
+                                	<th>Folio</th>
+	                                <th>Tipo</th>
+        	                        <th>Consecutivo</th>
+        	                        <th>Cups</th>
+        	                        <th>Examen</th>
+	                                <th>Cantidad</th>
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+	<!-- Espacio modales medicamento - paraclinicos  Enfermeria -->
+
+
+
+</article>
+
+
+
+
+<article id="Liquidos">
+        	
+		
+
+</article>
+
+<article id="NotasEnfermeria">
+
+	        	
+		 <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+		<div class="container my-2" style="width:100%">
+
+		<div align="left" height="15px" width="50px">
+			TipoDoc: <span id="nombreTipoDocN"></span>
+			Doc: <span id="documentoN"></span>
+			Paciente: <span id="pacienteN"></span>
+			Ingreso: <span id="consecutivoAdmisionN"></span>
+			Servicio: <span id="servicioN"></span>
+			Hab: <span id="habitacionN"></span>
+
+		</div>
+
+   			 <div class="row">
+
+ 					 <div class="col-sm-2">
+						 <label  for="serviciosAdministrativosN">Servicio:</label>   
+                    							    
+                                                        <select class="select-css" id="serviciosAdministrativosN"
+                                                                name="serviciosAdministrativosN">
+                                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                            <option value="{{serviciosAdministrativos.id}}">
+                                                                {{serviciosAdministrativos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+                                                    
+                                               
+						<div class="col-sm-6">
+						<label for="observacionesN">Nota:</label>
+						<textarea id="observacionesN" name="observacionesN" rows="6" cols="80" placeholder="Ingrese Nota Enfermria..." required wrap="hard"></textarea>
+
+						</div>
+						    <div class="col-sm-2">
+       						 <input type="button" class="btn btn-primary" value="Guardar"  onclick="GuardarNotasEnfermeria()"> 
+						</div>
+	</div>
+
+
+             
+   			   <div class="row" style="width:100%">
+
+                                        <table id= "tablaNotasEnfermeria" class="display table table-striped table-sm fs-6 nowrap" style="width:100%">
+                                           <thead>
+                                            <tr>    
+					<bold>    
+	        			    <th>S1</th> 
+				        <th>id</th>
+				        <th>Folio</th>
+					<th>Observaciones</th>
+	                                <th>Profesional</th>
+					</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="margin-left:0">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+	<!-- Espacio modales Dietas  Enfermeria -->
+
+			
+
+
+</article>
+
+
+<article id="Pedidos">
+        
+            <form action="/EnfermeriaPedidos/" method="get" id="FormEnfermeriaPdidos">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+
+
+
+  <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+		<div align="left" height="15px" width="50px">
+			TipoDoc: <span id="nombreTipoDoc"></span>
+			Doc: <span id="documento"></span>
+			Paciente: <span id="paciente"></span>
+			Ingreso: <span id="consecutivoAdmision"></span>
+			Servicio: <span id="servicio"></span>
+			Hab: <span id="habitacion"></span>
+			<input type="text" id="enfermeriaId" name="enfermeriaId" value="" readonly>
+	               <input type="button" style="height:30px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="10px" id="BtnSolicitudPedidosEnfermeria"  name="BtnSolicitudPedidosEnfermeria" value="CreaPedido" onclick= "ModalPedidosEnfermeriaCabezote()">				    
+
+		</div>
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaPedidosEnfermeria" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					          <th>Sel</th>    					                                                                                      
+ 						  <th>id</th>                             
+						 <th>tipoOrigen</th>                                        
+						 <th>tipoMovimiento</th>  
+					 <th>Servicio</th>  							
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+
+
+			<!-- Aquip van los combos de Adicionar -->
+
+
+				
+                                        <table  id= "tablaPedidosEnfermeriaDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold> 
+					     <th>Sel</th>                                               
+ 						  <th>id</th>                             
+		                                    
+						 <th>suministro</th>  
+						 <th>dosis</th>  					
+					 <th>unidadDosis</th>                                                 
+					 <th>via</th>                                                 
+					 <th>cantidad</th>                                                 
+					                                           
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div> <!-- cierrra el row  -->
+               
+
+
+		<!--   estop viene de clinico -->
+           <!-- DESDE AQUIP DATATABLE  -->
+
+                    <table class="table"
+                           style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+                        <form class="form-inline" action="/crearFormulacionDef/" method="POST"
+                              id="FormaFormulacion">
+
+                            <!-- INICIO TABLE DE  EL DATATABLE  -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header" style="height:70px;">
+                                            <center>
+                                                <div class="row">
+                                                    
+                                                    <div class="col-sm-3">
+						<!-- <label  for="medicamentos">Medicamentos:</label>   -->
+                    							    
+                                                        <select class="select-css" id="medicamentos"
+                                                                name="medicamentos">
+                                                            {% for medicamentos in Medicamentos %}
+                                                            <option value="{{medicamentos.id}}">
+                                                                {{medicamentos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1">
+					                  
+                                                        <input type="text" id="dosis" name="dosis" placeholder="Dosis" value="">
+                                                    </div>
+						 <div class="col-sm-1">
+								 </div>
+
+                                                    <div class="col-sm-2">
+ 							                  
+                                                        <select class="select-css" id="uMedidaDosis"
+                                                                name="uMedidaDosis" placeholder="UMedida">
+                                                            {% for uMedidaDosis in UMedidaDosis %}
+                                                            <option value="{{uMedidaDosis.id}}">
+                                                                {{uMedidaDosis.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                   
+                                                   
+
+						 <div class="col-sm-1">
+							                        
+                                                        <select class="select-css" id="vias"
+                                                                name="vias" placeholder="Vias Adm">
+                                                            {% for viasAdministracion in ViasAdministracion %}
+                                                            <option value="{{viasAdministracion.id}}">
+                                                                {{viasAdministracion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+
+						                            <div class="col-sm-1">
+							                        Cantidad:
+                                                        <input type="text" id="cantidadMedicamento" name="cantidadMedicamento" value="" placeholder="Cantidad">
+                                                    </div>
+							 <div class="col-sm-1">
+								 </div>
+                                                    <div class="col-sm-1 text-end">
+                                                        <span class="text-secondary">Adicionar</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="BtnAdicionarFormulacionEnfermeria"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </center>
+                                        </div>
+                                        <div class="card-body" style="height:5px;">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="tablaFormulacionEnfermeria"
+                                                           class="display nowrap table table table-bordered  tablaFormulacion table-hover table-sm dtr-inline">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:5%;">Id</th>
+                                                            <th style="width:5%;">Medicamento</th>
+                                                            <th style="width:5%;">Dosis</th>
+                                                           <th style="width:1%;">UMedida</th>
+                                           					
+                                                            <th style="width:5%;">ViasAdmon</th>
+                                                            <th style="width:5%;">Cant</th>
+                                                        
+                                                            <th style="width:3%;">Borrar</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align:bottom">
+                                                        <tr style="height:10%">
+                                                            <td></td>
+                                           
+                                                            <td></td>
+                                                            <td></td>
+                                                             <td></td>
+                                                              <td></td>
+								<td></td>
+                                                              <td></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+
+
+		<div align="left" height="10px" width="30px">
+
+		 <div class="row" >
+				 <div class="col-sm-2">
+			          </div>
+
+					   <div class="col-sm-2">
+ 							   Enfermera:               
+                                                        <select class="select-css" id="servicioAdmonEnfermeria"
+                                                                name="servicioAdmonEnfermeria" >
+                                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                            <option value="{{serviciosAdministrativos.id}}">
+                                                                {{serviciosAdministrativos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+					   <div class="col-sm-2">
+
+				               <input type="button" style="height:30px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="10px" id="BtnAdicionarPedidosEnfermeria"  name="BtnAdicionarPedidosEnfermeria" value="Solicitar" onclick= "GuardarPedido()" >				    
+                                                    </div>
+		</div> <!-- cierra el row -->
+
+		</div>
+
+						<!-- ojo desdde qaquip -->
+
+
+
+
+
+						<!-- ojo hasta  qaquip -->
+
+
+
+                                                  </div>  
+                                            </div> <!-- cierrra el row  -->
+
+                                        </div> <!-- cierrra el body  -->
+                                    </div> <!-- cierrra el card  -->
+
+                                </div>
+                            </div>
+                            <!-- FIN TABLE DE  EL DATATABLE  -->
+                        </form>
+                    </table>
+  
+             <!-- HASTA AQUI DATATABLE -->
+
+             
+		</div>
+             </div>
+
+		<!-- finaliza lo que viene de clinico -->      	
+
+
+           <!-- Modales -->
+
+
+                <!-- Creacion Modal Crea Pedido  -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="postFormModalCreaPedidosEnfermeria" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="creaModalPedidosEnfermeria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog  modal-dialog-scrollable  modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                           <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Pedidos Enfermeria</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row row-cols-1 mt-3">
+                                            <div class="col">
+                                                <label for="enfermeriaTipoOrigenx"  class="col-sm-10 col-form-label col-form-label-sm">Tipo Origen:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="enfermeriaTipoOrigenx" name="enfermeriaTipoOrigenx">
+                                                    {% for enfermeriaTipoOrigen in EnfermeriaTipoOrigen %}
+                                                    <option value="{{enfermeriaTipoOrigen.id}}"> {{enfermeriaTipoOrigen.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+					 <div class="row row-cols-1 mt-3">
+                                            <div class="col">
+                                                <label for="enfermeriaTipoMovimientox"  class="col-sm-10 col-form-label col-form-label-sm">Tipo Movimiento:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="enfermeriaTipoMovimientox" name="enfermeriaTipoMovimientox">
+                                                    {% for enfermeriaTipoMovimiento in EnfermeriaTipoMovimiento %}
+                                                    <option value="{{enfermeriaTipoMovimiento.id}}"> {{enfermeriaTipoMovimiento.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="servicioEnfermeria"  class="col-sm-10 col-form-label col-form-label-sm">Servicio:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="servicioEnfermeria" name="servicioEnfermeria">
+                                                    {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                    <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </div> <!-- Cierra row -->
+
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+				 <span id="mensajesErrorModalPedidosEnfermeria" name="mensajesErrorPedidosEnfermeria" style= "color:red; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+                                       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                                         <input type="button" class="btn btn-primary" value="save"  onclick="CreaPedidosEnfermeriaCabezote()"> 
+                                        
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal estado Despachoo  -->
+
+
+     <!-- FIN Espacio Modales  -->
+
+</article>
+
+
+
+
+
+
+
+<article id="OtrosPedidos">
+       	<div class="container my-2">
+           
+         </div>
+	
+
+</article>
+     
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+     <span id="mensajes" name="mensajes" style= "color:blue; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+     <span id="mensajesError" name="mensajesError" style= "color:red; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+<div class="marco">
+    <ul class="tabs">
+    
+        <li><a href="#OtrosPedidos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Otros Pedidos </a></li>
+    </ul>
+</div>
+
+{% endblock %}
+
+
+
+

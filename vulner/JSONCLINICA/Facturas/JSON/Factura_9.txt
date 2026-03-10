@@ -1,0 +1,4 @@
+{"tipoDocumento": "01","numero":"9", "fecha": "2026-03-10 14:37:20.445861-05","moneda": "COP", "emisor": {"nit":	"830507718-8", "dv":"8","nombreRazonSocial": "CLINICA MEDICAL S.A.S","tipoPersona":"1","direccion":{"codigomunicipio":"11001","direccion":"Calle 36 Sur 77 -33","departamento":"CUNDINAMARCA"}}, "receptor": {"nit": "1000200400", "dv" : "0", "nombreRazonSocial": "MARIA PAULA BERNAL CAMACHO","tipoPersona": "2","tipoDocumentoIdentificacion": "13","direccion" : {"codigomunicipio":"11001","direccion": "CALLE 87 NRO 103C -50","departamento":"CUNDINAMARCA"}}, "items": [{"codigoProducto":"1982869-1","nombreProducto": "3M DURAPREP SURGICAL SOLUTION", "cantidad": 1.00,"unidadMedida": "94", "valorUnitario":"20000","valorTotal":"20000","impuestos": [{"tipo": "01", 
+          "porcentaje": 19.0,
+          "valor": 19000.00
+        }]}], "totales": {"valorBruto": "35837830","valorNeto": 35837830,"valorTotalImpuestos": 0.00,"valorTotal":35837830}}

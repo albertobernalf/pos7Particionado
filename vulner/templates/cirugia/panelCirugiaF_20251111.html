@@ -1,0 +1,2172 @@
+{% extends "cirugia/menuCirugiaF.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelCirugia.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsRips.js' %} defer >         </script>
+
+<!-- Datatable extension SELECT 
+<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+-->
+
+
+<div class="marco">
+    <ul class="tabs">
+	<li><a href="#SolicitarCirugia"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Solicitar Cirugia </a></li>
+        <li><a href="#ProgramacionCirugia"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Programacion de Cirugia </a></li>
+        <li><a href="#InformeQx"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Informe Quirurgico </a></li>
+        <li><a href="#RecordAnestesico"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Record Anestesico </a></li>
+	<li><a href="#HojaDeGasto"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Hoja De Gasto </a></li>
+        <li><a href="#OcupacionSalas"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Ocupacion salas </a></li>
+    </ul>
+</div>
+
+
+<style>
+
+</style>
+<script>
+
+function RefrescarPantalla() {
+ 	 	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+        var username = document.getElementById("username").value;
+        var nombreSede = document.getElementById("nombreSede").value;
+    	var sede = document.getElementById("sede").value;
+        var username_id = document.getElementById("username_id").value;
+         var data =  {}   ;
+        data['username'] = username;
+        data['sedeSeleccionada'] = sedeSeleccionada;
+        data['nombreSede'] = nombreSede;
+        data['sede'] = sede;
+        data['username_id'] = username_id;
+ 	    data = JSON.stringify(data);
+
+	alert("sede = " + sede);
+
+        arrancaCirugia(2,data);
+	    dataTableProgramacionCirugiaInitialized = true;
+
+        arrancaCirugia(1,data);
+	    dataTableSalasCirugiaInitialized = true;
+
+        arrancaCirugia(3,data);
+	    dataTableSolicitudCirugiaInitialized = true;
+}
+</script>
+<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
+
+
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+	<article id="SolicitarCirugia">
+
+  <form action="/solicitudCiru/" method="get" id="solicitudCiru">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+
+        	
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+             
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnAdicionarCirugia"  name="BtnAdicionarCirugia" value="Adicionar" onclick= "SolicitudCirugia()" >				    
+		</div>
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaSolicitudCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold> 
+ 						  <th>id</th>                             
+					     <th>Sel</th>                                               
+					     <th>Proced</th>                                               
+						 <th>Participa</th>  
+					 <th>Material</th>                                                 
+					<th>sede</th> 
+					<th>cirugia</th> 
+					<th>tipoDoc</th>  
+					<th>documento</th> 
+					<th>paciente </th> 
+					<th>nacimiento</th> 
+					<th>genero</th>  
+					<th>edad</th> 
+					<th>ingreso</th> 
+					<th>solicita</th>  
+					<th>cama</th>	
+					<th>empresa</th>
+					<th>telefono</th>
+					<th>solicitaSangre</th>		
+					<th>describeSangre</th>
+					<th>cantidadSangre</th>
+					<th>solicitaCamaUci</th>
+					<th>solicitaMicroscopio</th>
+					<th>solicitaRx</th>
+					<th>solicitaAutoSutura</th>
+					<th>solicitaOsteosintesis</th>
+					<th>solicitaBiopsia</th>
+					<th>solicitaMalla</th>
+					<th>solicitaOtros</th>
+					<th>estadoProg </th>
+					<th>anestesia</th>
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+ <!-- Modales Cirugia -->
+
+
+            <div class="modal fade" id="crearModelSolicitudCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingSolicitudCirugia"> </h4> 
+			
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormSolicitudCirugia" name="postFormSolicitudCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+                                <input type="text" name="cirugiaId2" id="cirugiaId2">
+                                <input type="text" name="ingresoId2" id="ingresoId2">
+			     <input type="hidden" class="form-control" id="sedesClinica_id" name="sedesClinica_id"  readonly></input>
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+		
+				<div class="col-12">
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaIngresosCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					     <th>Sel</th>                                               
+					<th>id</th> 
+					<th>tipoDoc</th>  
+					<th>documento</th> 
+					<th>paciente </th> 
+					<th>consecutivo </th> 
+					<th>genero</th>  
+					<th>edad</th> 
+					<th>nacimiento</th> 
+					<th>cama</th>	
+					<th>telefono</th>
+					<th>empresa</th>
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				 </div>
+
+			<!-- Fin Data table -->
+
+			  <div class="col-4">
+                                        <label for="serviciosAdministrativosI" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosI"  tabindex= "0"
+                                                    name="serviciosAdministrativosI"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+	
+			 <div class="col-4">
+                                        <label for="convenioProc" class="col-sm-1 control-label">Convenio:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="convenioProc"  tabindex= "0"  name="convenioProc"  required>
+                                                {% for conveniosCirugia in ConveniosCirugia %}
+                                                <option value="{{conveniosCirugia.id}}"> {{conveniosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+
+				  <div class="col-4">
+                                        <label for="anestesia" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="anestesia"  tabindex= "0"
+                                                    name="anestesia"
+                                                    required>
+                                                {% for tiposAnestesia in TiposAnestesia %}
+                                                <option value="{{tiposAnestesia.id}}"> {{tiposAnestesia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+				  <div class="col-4">
+                                        <label for="tiposCirugia" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="tiposCirugia"  tabindex= "0"
+                                                    name="tiposCirugia"
+                                                    required>
+                                                {% for tiposCirugia in TiposCirugia %}
+                                                <option value="{{tiposCirugia.id}}"> {{tiposCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+  				<div class="col-4">
+                                        <label for="dxPreQx" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="dxPreQx"  tabindex= "0"
+                                                    name="dxPreQx"
+                                                    required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+				<div class="col-3">
+                                        <label for="dxPrinc" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="dxPrinc"  tabindex= "0"
+                                                    name="dxPrinc"
+                                                    required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+				<div class="col-3">
+                                        <label for="dxRel1" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="dxRel1"  tabindex= "0"
+                                                    name="dxRel1"
+                                                    required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+	
+				<div class="col-3">
+                                        <label for="dxRel2" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="dxRel2"  tabindex= "0"
+                                                    name="dxRel2"
+                                                    required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+				<div class="col-3">
+                                        <label for="especialidadX" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="especialidadX"  tabindex= "0"
+                                                    name="especialidadX"
+                                                    required>
+                                                {% for especialidadesCirugia in EspecialidadesCirugia %}
+                                                <option value="{{especialidadesCirugia.id}}"> {{especialidadesCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                                   
+				
+				<div class="col-1">
+					                          	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaHospitalizacion" name="solicitaHospitalizacion" size="7" placeholder="SolHosp"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitaAyudante">solicitaAyudante:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaAyudante" name="solicitaAyudante" placeholder="solicitaAyudante"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitaTiempoQx">solicitaTiempoQx:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaTiempoQx" name="solicitaTiempoQx" placeholder="solicitaTiempoQx"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitatipoQx">solicitatipoQx:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitatipoQx" name="solicitatipoQx" placeholder="solicitatipoQx"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitaAnestesia">solicitaAnestesia:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaAnestesia" name="solicitaAnestesia" placeholder="solicitaAnestesia"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitaOtros">solicitaOtros:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaOtros" name="solicitaOtros" placeholder="solicitaOtros"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="tiempoMaxQx">tiempoMaxQx:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="tiempoMaxQx" name="tiempoMaxQx" placeholder="tiempoMaxQx"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitaAutoSutura">solicitaAutoSutura:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaAutoSutura" name="solicitaAutoSutura" placeholder="solicitaAutoSutura"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitaSoporte">solicitaSoporte:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaSoporte" name="solicitaSoporte" placeholder="solicitaAutoSutura"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="describeOtros">describeOtros:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="describeOtros" name="describeOtros" placeholder="describeOtros"  >
+
+                                </div>
+
+
+				<div class="col-1">
+					<label  for="solicitaSangre">solicitaSangre:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaSangre" name="solicitaSangre" placeholder="solicitaSangre"  >
+
+                                </div>
+						
+
+				<div class="col-1">
+					<label  for="describeSangre">describeSangre:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="describeSangre" name="describeSangre" placeholder="describeSangre"  >
+
+                                </div>
+
+				<div class="col-1">
+					<label  for="cantidadSangre">cantidadSangre:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="cantidadSangre" name="cantidadSangre" placeholder="cantidadSangre"  >
+
+                                </div>
+
+				<div class="col-1">
+					<label  for="solicitaCamaUci">solicitaCamaUci:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaCamaUci" name="solicitaCamaUci" placeholder="solicitaCamaUci"  >
+
+                                </div>
+
+								<div class="col-1">
+					<label  for="solicitaMicroscopio">solicitaMicroscopio:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaMicroscopio" name="solicitaMicroscopio" placeholder="solicitaMicroscopio"  >
+
+                                </div>
+			<div class="col-1">
+					<label  for="solicitaCamaUci">solicitaCamaUci:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaCamaUci" name="solicitaCamaUci" placeholder="solicitaCamaUci"  >
+
+                                </div>
+			<div class="col-1">
+					<label  for="solicitaRx">solicitaRx:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaRx" name="solicitaRx" placeholder="solicitaRx"  >
+
+                                </div>
+			<div class="col-1">
+					<label  for="solicitaCamaUci">solicitaCamaUci:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaCamaUci" name="solicitaCamaUci" placeholder="solicitaCamaUci"  >
+
+                                </div>
+			<div class="col-1">
+					<label  for="solicitaOsteosintesis">solicitaOsteosintesis:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaOsteosintesis" name="solicitaOsteosintesis" placeholder="solicitaOsteosintesis"  >
+
+                                </div>
+			<div class="col-1">
+					<label  for="solicitaBiopsia">solicitaBiopsia:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaBiopsia" name="solicitaBiopsia" placeholder="solicitaBiopsia"  >
+
+	                         </div>
+				<div class="col-1">
+					<label  for="solicitaMalla">solicitaMalla:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaMalla" name="solicitaMalla" placeholder="solicitaMalla"  >
+
+                                </div>
+				<div class="col-1">
+					<label  for="solicitaOtros">solicitaOtros:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="solicitaOtros" name="solicitaOtros" placeholder="solicitaOtros"  >
+
+                                </div>
+			
+
+					
+
+				<div class="col-12">
+				
+					 <input type="hidden"  class="form-control form-control-sm" id="username3_id" name="username3_id" >
+                                </div>
+
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+
+					<textarea id="mensajesErrorModalSolicitud" name="mensajesErrorModalSolicitud" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+		
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                   
+                                       	<button type="button" class="btn btn-primary" id="saveBtnCrearSolicitudCirugia" onclick="CrearSolicitudCirugia()">Grabar!</button> 
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+
+
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+
+	<!-- Modal Procedimiento Cirugia -->
+
+   <div class="modal fade" id="crearModelProcedimientosCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingProcedimientosCirugia"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormProcedimientosCirugia" name="postFormSolicitudCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+			     <input type="hidden" class="form-control" id="sedesClinicaModalProcedimientos_id" name="sedesClinicaModalProcedimientos_id"  readonly></input>
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalProcedimientos" name="cirugiaIdModalProcedimientos"  readonly></input>
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+			 <div class="col-2">
+
+			</div>
+
+			  <div class="col-4">
+                                        <label for="cups" class="col-sm-1 control-label">Cups:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="cups"  tabindex= "0"  name="cups"  required>
+                                                {% for cupsCirugia in CupsCirugia %}
+                                                <option value="{{cupsCirugia.id}}"> {{cupsCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+			
+			<div class="col-2">
+                                        <label for="finalidad" class="col-sm-1 control-label">Finalidad:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="finalidad"  tabindex= "0"  name="finalidad"  required>
+                                                {% for finalidadCirugia in FinalidadCirugia %}
+                                                <option value="{{finalidadCirugia.id}}"> {{finalidadCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			  <div class="col-2">
+			 <input type="hidden" class="form-control" id="usernameProcedimientosCirugia_id" name="usernameProcedimientosCirugia_id"  ></input>  
+                         </div>
+
+
+			 <div class="col-2">
+				<button type="button" class="btn btn-primary" id="saveBtnCrearProcedimientosCirugia" onclick="CrearProcedimientosCirugia()">Adicionar!</button> 
+			</div>
+		</div>
+			
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaProcedimientosCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					    	<th>Sel</th>  
+						<th>id</th>                                             
+						<th>cups</th>
+						<th>nombre</th>
+						<th>finalidad</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				
+
+			<!-- Fin Data table -->
+
+			
+                            
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+					
+					<textarea id="mensajesErrorModalProcedimientosCirugia" name="mensajesErrorModalProcedimientosCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+				<textarea id="mensajesModalProcedimientosCirugia" name="mensajesModalProcedimientosCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                 
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- Modal Procedimiento Cirugia -->
+
+
+	<!-- Modal Participantes Cirugia -->
+
+   <div class="modal fade" id="crearModelParticipantesCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingParticipantesCirugia"> </h4> 
+ 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormParticipantesCirugia" name="postFormParticipantesCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+			     <input type="hidden" class="form-control" id="sedesClinicaModalParticipantes_id" name="sedesClinicaModalParticipantes_id"  readonly></input>
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalParticipantes" name="cirugiaIdModalParticipantes"  readonly></input>
+
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+				  <div class="col-3">
+                                        <label for="procedParticipantes" class="col-sm-1 control-label">Procedimientos:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="procedParticipantes"  tabindex= "0"  name="procedParticipantes" required>
+                                                {% for procedParticipantes in ProcedParticipantes %}
+                                                <option value="{{procedParticipantes.id}}"> {{procedParticipantes.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					  </div>
+                                        </div>
+
+
+				  <div class="col-3">
+                                        <label for="medico" class="col-sm-1 control-label">Medico:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="medico"  tabindex= "0"  name="medico" required>
+                                                {% for especialidadesMedicos in EspecialidadesMedicosCirugia %}
+                                                <option value="{{especialidadesMedicos.id}}"> {{especialidadesMedicos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					  </div>
+                                        </div>
+
+
+			<div class="col-3">
+                                        <label for="finalidadParticipantesCirugia" class="col-sm-1 control-label">Finalidad:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="finalidadParticipantesCirugia"  tabindex= "0"  name="finalidadParticipantesCirugia"  required>
+                                                {% for finalidadCirugia in FinalidadCirugia %}
+                                                <option value="{{finalidadCirugia.id}}"> {{finalidadCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			<div class="col-3">
+                                        <label for="tipoHonorarios" class="col-sm-1 control-label">TipoHonorarios:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="tipoHonorarios"  tabindex= "0"  name="tipoHonorarios"  required>
+                                                {% for tiposHonorarios in TiposHonorarios %}
+                                                <option value="{{tiposHonorarios.id}}"> {{tiposHonorarios.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+
+
+
+			  <div class="col-1">
+			 <input type="hidden" class="form-control" id="usernameParticipantesCirugia_id" name="usernameParticipantesCirugia_id"  ></input>
+                         </div>
+
+
+                                    
+			 <div class="col-2">
+				<button type="button" class="btn btn-primary" id="saveBtnCrearParticipantesCirugia"  onclick="CrearParticipantesCirugia()">Adicionar!</button>
+			</div>
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+				<div class="col-12">
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaParticipantesCirugia" class=" display  table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					     <th>Sel</th>                                               
+					<th>id</th>
+					<th>cirugia</th>
+					<th>Honorario</th>
+					<th>Medico</th>
+					<th>Especialidad</th>  
+					<th>cupsNombre</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				 </div>
+
+			<!-- Fin Data table -->
+	
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+
+					<textarea id="mensajesErrorModalParticipantesCirugia" name="mensajesErrorModalParticipantesCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+					<textarea id="mensajesModalParticipantesCirugia" name="mensajesModalParticipantesCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+					
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                   
+                                       <!-- 	<button type="button" class="btn btn-primary" id="saveBtnCrearParticipantesCirugia" onclick="CrearParticipantesCirugia()">Grabar!</button>   -->
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- Modal Participantes Cirugia -->
+
+
+
+<!-- Modal Material Cirugia -->
+
+   <div class="modal fade" id="crearModelMaterialCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingMaterialCirugia"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormMaterialCirugia" name="postFormMaterialCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+		 <input type="hidden" class="form-control" id="sedesClinicaModalMaterial_id" name="sedesClinicaModalMaterial_id"  readonly></input>
+
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalMaterial" name="cirugiaIdModalMaterial"  readonly></input>
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+			 <div class="col-2">
+                                        <label for="procedMateriales" class="col-sm-1 control-label">Procedimientos:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="procedMateriales"  tabindex= "0"  name="procedMateriales" required>
+                                                {% for procedMateriales in ProcedMateriales %}
+                                                <option value="{{procedMateriales.id}}"> {{procedMateriales.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					  </div>
+                                        </div>
+
+			  <div class="col-2">
+                                        <label for="suministro" class="col-sm-1 control-label">Suministro:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="suministro"  tabindex= "0"  name="suministro"  required>
+                                                {% for suministrosCirugia in SuministrosCirugia %}
+                                                <option value="{{suministrosCirugia.id}}"> {{suministrosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			  <div class="col-2">
+                                        <label for="procedimientosCir" class="col-sm-1 control-label">Material:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="procedimientosCir"  tabindex= "0"  name="procedimientosCir"  required>
+                                                {% for procedimientosCirugia in ProcedimientosCirugia %}
+                                                <option value="{{procedimientosCirugia.id}}"> {{procedimientosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			
+			  <div class="col-2">
+			 Cantidad:
+			 <input type="text" class="form-control" id="cantidad" name="cantidad"  required  ></input>  
+                         </div>
+
+
+
+			  <div class="col-2">
+			  Valor Unitario:
+			 <input type="text" class="form-control" id="unitarioLiquidacion" name="unitarioLiquidacion"  ></input>  
+                         </div>
+
+			  <div class="col-2">
+			 Valor Liquidacion:
+			 <input type="text" class="form-control" id="valorLiquidacionSolicitud" name="valorLiquidacionSolicitud" readonly ></input>
+                         </div>
+
+
+			 <input type="hidden" class="form-control" id="usernameMaterialCirugia_id" name="usernameMaterialCirugia_id"  ></input>  
+
+
+
+			 <div class="col-2">
+				<button type="button" class="btn btn-primary" id="saveBtnCrearMaterialCirugia" onclick="CrearMaterialCirugia()">Adicionar!</button> 
+			</div>
+		</div>
+			
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaMaterialCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					    	<th>Sel</th>  
+						<th>id</th>  
+						<th>Procedimiento</th>  
+                                           	<th>suministro_id</th>
+						<th>Suministro</th>
+						<th>tipo</th>  
+						<th>cantidad</th>  
+						<th>valorLiquidacion</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				
+
+			<!-- Fin Data table -->
+
+			
+                            
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+
+					<textarea id="mensajesErrorModalMaterialCirugia" name="mensajesErrorModalMaterialCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>					
+				<textarea id="mensajesModalMaterialCirugia" name="mensajesModalMaterialCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>					
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                   
+
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- Modal Material Cirugia -->
+
+
+
+     <!-- FIN Espacio Modales  -->
+
+	
+
+	</article>
+
+
+        <article id="ProgramacionCirugia">
+      
+	
+            <form action="/programacionCirugiaps/" method="get" id="FormEnviosRips">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+             
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnProgramacionCirugia"  name="BtnProgramacionCirugia" value="Adicionar" onclick= "ProgramacionCirugia()" >				    
+		</div>
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaProgramacionCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					     <th>Opcion</th>                                               
+					     <th>Opcion</th>                                               
+					     <th>id</th>
+					     <th>tipoDoc_id</th>
+					     <th>tipoNota</th>
+					     <th>abrev</th>
+					     <th>documento</th>
+					     <th>paciente</th>
+					     <th>sala</th>
+					    
+					     <th>nombreSala</th>
+					     <th>Procedimientos</th>
+					     <th>inicia</th>
+					     <th>hora</th>
+					     <th>Termina</th>
+					     <th>hora</th>
+  						<th>SelProg</th>
+  						<th>estadoProg</th>
+  						<th>SelCiru</th>
+						<th>estadoCirugia</th>
+
+					  
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+    <!-- Modales Cirugia -->
+
+
+<!-- Modal Estado Programacion Cirugia -->
+
+   <div class="modal fade" id="crearModelEstadoProgramacionCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingEstadoProgramacionCirugia"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+		                       
+  			  <form id="postFormEstadoProgramacionCirugia" name="postFormEstadoProgramacionCirugia">
+
+			Programacion No : 
+			<input type="text"  id="programacionIdParaEstado" name="programacionIdParaEstado"  readonly></input>
+
+				<div class="col-2">
+                                        <label for="estadosProgramacionCirugia" class="col-sm-1 control-label">Estados Programacion Cirugia:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="estadosProgramacionCirugia"  tabindex= "0"  name="estadosProgramacionCirugia"  required>
+                                                {% for estadosProgramacion in EstadosProgramacion %}
+                                                <option value="{{estadosProgramacion.id}}"> {{estadosProgramacion.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>                              
+				 </div>
+
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+				  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>    
+			<button type="button" class="btn btn-primary" id="saveBtnCrearProgramacionCirugia" onclick="GuardarEstadoProgramacionCirugia()">Grabar!</button> 
+
+                         </div>
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- FIN Modal Estado Programacion Cirugia -->
+
+
+<!-- Modal Estado Cirugia -->
+
+   <div class="modal fade" id="crearModelEstadoCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingEstadoCirugia"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+
+                        
+			
+  			  <form id="postFormEstadoCirugia" name="postFormEstadoCirugia">
+
+			Programacion No : 
+			<input type="text"  id="programacionIdParaEstado2" name="programacionIdParaEstado2"  readonly></input>
+
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdParaEstado2" name="cirugiaIdParaEstado2"  readonly></input>
+
+					<div class="col-2">
+                                        <label for="estadosCirugia" class="col-sm-1 control-label">Estados Cirugia:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="estadosCirugia"  tabindex= "0"  name="estadosCirugia"  required>
+                                                {% for estadosCirugia in EstadosCirugia %}
+                                                <option value="{{estadosCirugia.id}}"> {{estadosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+				  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>                                  
+				<button type="button" class="btn btn-primary" id="saveBtnCrearEstadoCirugia" onclick="GuardarEstadoCirugia()">Grabar!</button> 
+                                    </div>
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- FIN Modal Estado  Cirugia -->
+
+
+
+	<!-- Modal para Programacion de  Cirugia -->
+
+            <div class="modal fade" id="crearModelProgramacionCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingProgramacionCirugia"> </h4> 
+			
+		 <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>                    
+    </div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormProgramacionCirugia" name="postFormProgramacionCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+
+
+				<!-- Aqui DATA TABLE PARA DISPONIBILIDAD DE SALA A CIRUGIA -->
+ <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+             
+		   <div class="row">
+				
+                                        <table  id= "tablaDisponibilidadSala" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					                                             
+					     <th>Opcion</th>                                               
+					     <th>id</th>
+					     <th>sala</th>
+					     <th>nombre</th>
+					     <th>fec.inicia</th>
+					     <th>fec.Fin</th>
+					     <th>horaInicio</th>
+					     <th>horaFin</th>
+					    <th>Estado</th>
+				
+					  
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+				<!-- Fin Data table -->
+
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+
+				  <div class="col-12">
+					
+                                    
+                                    <input type="hidden" class="form-control" id="sedesClinicaProgramacionCirugia_id" name="sedesClinicaProgramacionCirugia_id"  readonly></input>
+                                    <input type="hidden" class="form-control" id="programacionId" name="programacionId"  readonly></input>
+                                </div>
+
+			  <div class="col-4">
+                                        <label for="serviciosAdministrativos" class="col-sm-1 control-label">SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos"  tabindex= "0"
+                                                    name="serviciosAdministrativos"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+				<div class="col-4">
+                                    Sala:
+				<select class="select-css"  id="sala" name="sala">
+                                                            {% for salasCirugia in SalasCirugia %}
+                                                            <option value="{{salasCirugia.id}}">
+                                                                {{salasCirugia.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+                          
+				<div class="col-4">
+				<label  for="fechaProgramacionInicia">Fecha Inicio:</label>                               	                               
+					 <input type="date"  class="form-control form-control-sm" id="fechaProgramacionInicia" name="fechaProgramacionInicia" placeholder="fecha Inicia"  >
+                                </div>
+
+
+				<div class="col-4">
+				<label  for="horaProgramacionInicia">Hora Inicio:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="horaProgramacionInicia" name="horaProgramacionInicia" placeholder="hora Inicia"  >
+                                </div>
+
+
+				<div class="col-4">
+				<label  for="fechaProgramacionFin">Fecha Fin:</label>                               	                               
+					 <input type="date"  class="form-control form-control-sm" id="fechaProgramacionFin" name="fechaProgramacionFin" placeholder="fecha Fin"  >
+                                </div>
+
+
+				<div class="col-4">
+				<label  for="horaProgramacionFin">Hora Fin:</label>                               	                               
+					 <input type="text"  class="form-control form-control-sm" id="horaProgramacionFin" name="horaProgramacionFin" placeholder="hora Fin"  >
+                                </div>
+
+
+				<div class="col-4">
+                                    Estado Programacion:
+				<select class="select-css"  id="estadosProgramacionY" name="estadosProgramacionY">
+                                                            {% for estadosProgramacion in EstadosProgramacion %}
+                                                            <option value="{{estadosProgramacion.id}}">
+                                                                {{estadosProgramacion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+
+
+
+
+
+	
+				<div class="col-12">
+				
+					 <input type="hidden"  class="form-control form-control-sm" id="usernameProgramacionCirugia_id" name="usernameProgramacionCirugia_id"  readonly>
+                                </div>
+
+
+                           </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			
+			<div class="modal-footer">
+
+					
+					<textarea id="mensajesErrorModalProgramacion" name="mensajesErrorModalProgramacion" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>					
+
+					<textarea id="mensajesExitoModalProgramacion" name="mensajesExitoModalProgramacion" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>					
+	
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                  	<button type="button" class="btn btn-primary" id="saveBtnCrearProgramacionCirugia" onclick="CrearProgramacionCirugia()">Grabar!</button> 
+                                    </div>
+
+			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+     <!-- FIN Espacio Modales  -->
+
+   </article>
+
+
+<article id="InformeQx">
+
+		<div align="right" height="15px" width="50px">
+			Tipo: <span id="tipoDocPaciente"></span>
+			Doc: <span id="docPaciente"></span>
+			Paciente: <span id="nombrePaciente"></span>
+			Sala: <span id="salaCirugia"></span>
+			Dede: <span id="programacionDesdeCirugia"></span>
+			Hora: <span id="programacionDesdeHoraCirugia"></span>
+			Hasta: <span id="programacionHastaCirugia"></span>
+			Hora: <span id="programacionHastaHoraCirugia"></span>
+
+	               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="5px" id="BtnAdicionarParticipanteInformeCirugia"  name="BtnAdicionarParticipanteInformeCirugia" value="Adic.Participantes" onclick= "AdicionarParticipanteInformeCirugia()" >				    
+	               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="5px" id="BtnAdicionarProcedimientosInformeCirugia"  name="BtnAdicionarProcedimientosInformeCirugia" value="Adic.Procedimientos" onclick= "AdicionarProcedimientosInformeCirugia()" >				    
+	               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="5px" id="BtnAdicionarQx"  name="BtnAdicionarQx" value="Descripcion Quirurgica" onclick= "AdicionarQx()" >				    
+		       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="5px" id="BtnAdicionarMaterialInformeCirugia"  name="BtnAdicionarMaterialInformeCirugia" value="Adic.Material Qx" onclick= "AdicionarMaterialInformeCirugia()" >				    
+		       <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="5px" id="BtnGenerarLiquidacionCirugia"  name="BtnAdicionarProcedimientosInformeCirugia" value="Genera Liquidacion" onclick= "GenerarLiquidacionCirugia()" >				    
+		</div>
+
+		<div class="container my-2">
+
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaParticipantesInformeCirugia" class="display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					     <th>Sel</th>                                               
+					<th>id</th>
+					<th>cirugia</th>
+					<th>Honorario</th>
+					<th>Medico</th>
+					<th>Especialidad</th>  
+					<th>CupsNombre</th>  
+					<th>Borrar</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				 </div>
+
+			<!-- Fin Data table -->
+		<!-- 
+		<div align="right" height="15px" width="50px">
+	               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnAdicionarProcedimientosInformeCirugia"  name="BtnAdicionarProcedimientosInformeCirugia" value="Adicionar Procedimientos" onclick= "AdicionarProcedimientosInformeCirugia()" >				    
+		   <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnGenerarLiquidacionCirugia"  name="BtnAdicionarProcedimientosInformeCirugia" value="Generar Liquidacion" onclick= "GenerarLiquidacionCirugia()" >				    
+		</div>
+		-->
+		<div class="container my-2">
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaProcedimientosInformeCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					    	<th>Sel</th>  
+						<th>id</th>   
+						<th>CirugiaId</th>                                           
+						<th>cups</th>
+						<th>nombre</th>
+						<th>finalidad</th>  
+						<th>Cruento</th> 
+						<th>Incruento</th> 
+						<th>Region</th> 
+						<th>Acceso</th> 
+						<th>Borrar</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                    </div>
+				
+
+			<!-- Fin Data table -->
+		<!-- 
+		<div align="right" height="15px" width="50px">
+	               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnAdicionarMaterialInformeCirugia"  name="BtnAdicionarMaterialInformeCirugia" value="Adicionar Material Qx" onclick= "AdicionarMaterialInformeCirugia()" >				    
+		</div>
+		-->
+	<!-- Aqui Data Table  -->
+		<div class="container my-2">
+				 <div class="row">
+				
+                                        <table  id= "tablaMaterialInformeCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					    	<th>Sel</th>  
+						<th>id</th> 
+						<th>CirugiaId</th> 
+                                            	<th>Procedimiento</th>
+						<th>suministro_id</th>
+						<th>Suministro</th>
+						<th>tipo</th>  
+						<th>cantidad</th>  
+						<th>valorLiquidacion</th>  
+						<th>Borrar</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                    </div>
+				
+			<!-- Fin Data table -->
+
+	<!-- Modal Procedimiento Informe Cirugia -->
+
+   <div class="modal fade" id="crearModelProcedimientosInformeCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingProcedimientosInformeCirugia"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormProcedimientosInformeCirugia" name="postFormSolicitudInformeCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+			     <input type="hidden" class="form-control" id="sedesClinicaModalInformeProcedimientos_id" name="sedesClinicaModalInformeProcedimientos_id"  readonly></input>
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalInformeProcedimientos" name="cirugiaIdModalInformeProcedimientos"  readonly></input>
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+			 <div class="col-2">
+				
+				TipoDoc:<span id="tipoDocZ" name="tipoDocZ"></span>
+				Documento:<span id="documentoZ" name="documentoZ"></span>
+				Paciente:<span id="pacienteZ" name="pacienteZ"></span>
+				Sala:<span id="salaZ" name="salaZ"></span>
+				Estado Cirugia:<span id="estadoCirugiaZ" name="estadoCirugiaZ"></span>
+
+			</div>
+
+			  <div class="col-4">
+                                        <label for="cupsInforme" class="col-sm-1 control-label">Cups:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="cupsInforme"  tabindex= "0"  name="cupsInforme"  required>
+                                                {% for cupsCirugia in CupsCirugia %}
+                                                <option value="{{cupsCirugia.id}}"> {{cupsCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+			
+			<div class="col-2">
+                                        <label for="finalidadInforme" class="col-sm-1 control-label">Finalidad:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="finalidadInforme"  tabindex= "0"  name="finalidadInforme"  required>
+                                                {% for finalidadCirugia in FinalidadCirugia %}
+                                                <option value="{{finalidadCirugia.id}}"> {{finalidadCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			  <div class="col-2">
+			 Cruento: <input type="text" class="form-control" id="cruento" name="cruento"  ></input>  
+                         </div>
+			  <div class="col-2">
+			 Incruento: <input type="text" class="form-control" id="incruento" name="incruento"  ></input>  
+                         </div>
+
+
+			<div class="col-2">
+                                        <label for="regionesOperatorias" class="col-sm-1 control-label">Region Operatoria:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="regionesOperatorias"  tabindex= "0"  name="regionesOperatorias"  required>
+                                                {% for regionesOperatorias in RegionesOperatorias %}
+                                                <option value="{{regionesOperatorias.id}}"> {{regionesOperatorias.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+
+			<div class="col-2">
+                                        <label for="viasDeAcceso" class="col-sm-1 control-label">Via de Acceso:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="viasDeAcceso"  tabindex= "0"  name="viasDeAcceso"  required>
+                                                {% for viasDeAcceso in ViasDeAcceso %}
+                                                <option value="{{viasDeAcceso.id}}"> {{viasDeAcceso.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+
+
+			  <div class="col-2">
+			 <input type="hidden" class="form-control" id="usernameProcedimientosInformeCirugia_id" name="usernameProcedimientosInformeCirugia_id"  ></input>  
+                         </div>
+
+
+			 <div class="col-2">
+				<button type="button" class="btn btn-primary" id="saveBtnCrearProcedimientosInformeCirugia" onclick="CrearProcedimientosInformeCirugia()">Adicionar!</button> 
+			</div>
+		</div>
+			
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaProcedimientosInformeXXCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					    	<th>Sel</th>  
+						<th>id</th>                                             
+						<th>cups</th>
+						<th>nombre</th>
+						<th>finalidad</th>  
+						<th>Cruento</th> 
+						<th>Incruento</th> 
+						<th>Region</th> 
+						<th>Acceso</th> 
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				
+
+			<!-- Fin Data table -->		
+                            
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+					<textarea id="mensajesErrorModalProcedimientosInformeCirugia" name="mensajesErrorModalProcedimientosInformeCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>										
+					<textarea id="mensajesModalProcedimientosInformeCirugia" name="mensajesModalProcedimientosInformeCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>										
+
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>                                  
+
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- FIN Modal Procedimiento Informe Cirugia -->
+
+
+
+	<!-- Modal Participantes Informe Cirugia -->
+
+   <div class="modal fade" id="crearModelParticipantesInformeCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingParticipantesInformeCirugia"> </h4> 
+ 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormParticipantesInformeCirugia" name="postFormParticipantesInformeCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+			     <input type="hidden" class="form-control" id="sedesClinicaModalParticipantesInforme_id" name="sedesClinicaModalParticipantesInforme_id"  readonly></input>
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalParticipantesInforme" name="cirugiaIdModalParticipantesInforme"  readonly></input>
+
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+				 <div class="col-2">
+                                        <label for="procedParticipantesInforme" class="col-sm-1 control-label">Procedimientos Participantes:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="procedParticipantesInforme"  tabindex= "0"  name="procedParticipantesInforme" required>
+                                                {% for procedParticipantesInforme in ProcedParticipantesInforme %}
+                                                <option value="{{procedParticipantesInforme.id}}"> {{procedParticipantesInforme.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					  </div>
+                                        </div>
+
+
+
+				  <div class="col-2">
+                                        <label for="medicoInforme" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medico:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="medicoInforme"  tabindex= "0"  name="medicoInforme" required>
+                                                {% for especialidadesMedicos in EspecialidadesMedicosCirugia %}
+                                                <option value="{{especialidadesMedicos.id}}"> {{especialidadesMedicos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					  </div>
+                                        </div>
+
+
+			<div class="col-2">
+                                        <label for="finalidadParticipantesInformeCirugia" class="col-sm-1 control-label">Finalidad:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="finalidadParticipantesInformeCirugia"  tabindex= "0"  name="finalidadParticipantesInformeCirugia"  required>
+                                                {% for finalidadCirugia in FinalidadCirugia %}
+                                                <option value="{{finalidadCirugia.id}}"> {{finalidadCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			<div class="col-2">
+                                        <label for="tipoHonorariosInforme" class="col-sm-1 control-label">TipoHonorarios:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="tipoHonorariosInforme"  tabindex= "0"  name="tipoHonorariosInforme"  required>
+                                                {% for tiposHonorarios in TiposHonorarios %}
+                                                <option value="{{tiposHonorarios.id}}"> {{tiposHonorarios.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			<div class="col-2">
+                                        <label for="cupsParticipantesInforme" class="col-sm-1 control-label">Cups Participa:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="cupsParticipantesInforme"  tabindex= "0"  name="cupsParticipantesInforme"  required>
+                                                {% for cupsParticipantesInforme in CupsParticipantesInforme %}
+                                                <option value="{{cupsParticipantesInforme.id}}"> {{cupsParticipantesInforme.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+
+
+
+			  <div class="col-1">
+			 <input type="hidden" class="form-control" id="usernameParticipantesInformeCirugia_id" name="usernameParticipantesInformeCirugia_id" readonly ></input>
+                         </div>
+
+
+                                    
+			 <div class="col-2">
+				<button type="button" class="btn btn-primary" id="saveBtnCrearParticipantesCirugia"  onclick="CrearParticipantesInformeCirugia()">Adicionar!</button>
+			</div>
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+				<div class="col-12">
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaParticipantesInformeXXCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					     <th>Sel</th>                                               
+					<th>id</th>
+					<th>cirugia</th>
+					<th>Honorario</th>
+					<th>Medico</th>
+					<th>Especialidad</th>  
+					<th>CupsNombre</th>  
+			                 <th>Sel</th>         
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				 </div>
+
+			<!-- Fin Data table -->
+	
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+
+				<textarea id="mensajesErrorModalParticipantesInformeCirugia" name="mensajesErrorModalParticipantesInformeCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>											
+				<textarea id="mensajesModalParticipantesInformeCirugia" name="mensajesModalParticipantesInformeCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>											
+
+
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                   
+
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- FIN Modal Participantes Informe Cirugia -->
+
+
+
+
+
+
+
+<!-- Modal Material Informe Cirugia -->
+
+   <div class="modal fade" id="crearModelMaterialInformeCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingMaterialInformeCirugia"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormMaterialInformeCirugia" name="postFormMaterialInformeCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+		 <input type="hidden" class="form-control" id="sedesClinicaModalMaterialInforme_id" name="sedesClinicaModalMaterialInforme_id"  readonly></input>
+
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalMaterialInforme" name="cirugiaIdModalMaterialInforme"  readonly></input>
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+			 <div class="col-2">
+
+			</div>
+
+				 <div class="col-2">
+                                        <label for="procedMaterialesInforme" class="col-sm-1 control-label">Procedimientos:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20"  id="procedMaterialesInforme"  tabindex= "0"  name="procedMaterialesInforme" required>
+                                                {% for procedMaterialesInforme in ProcedMaterialesInforme %}
+                                                <option value="{{procedMaterialesInforme.id}}"> {{procedMaterialesInforme.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					  </div>
+                                        </div>
+
+
+			  <div class="col-4">
+                                        <label for="suministroInforme" class="col-sm-1 control-label">Suministro:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="suministroInforme"  tabindex= "0"  name="suministroInforme"  required>
+                                                {% for suministrosCirugia in SuministrosCirugia %}
+                                                <option value="{{suministrosCirugia.id}}"> {{suministrosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+
+			  <div class="col-2">
+			  Valor Unitario:
+			 <input type="text" class="form-control" id="unitarioLiquidacionInforme" name="unitarioLiquidacionInforme"  ></input>  
+                         </div>
+
+			
+			  <div class="col-2">
+			  Cantidad:
+			 <input type="text" class="form-control" id="cantidadInforme" name="cantidadInforme"  ></input>  
+                         </div>
+
+			  <div class="col-2">
+			 Valor Liquidacion:
+			 <input type="text" class="form-control" id="valorLiquidacion" name="valorLiquidacion"  readonly ></input>
+                         </div>
+
+
+			  <div class="col-2">
+			 <input type="text" class="form-control" id="usernameMaterialInformeCirugia_id" name="usernameMaterialInformeCirugia_id" readonly></input>  
+                         </div>
+
+
+			 <div class="col-2">
+				<button type="button" class="btn btn-primary" id="saveBtnCrearMaterialInformeCirugia" onclick="CrearMaterialInformeCirugia()">Adicionar!</button> 
+			</div>
+		</div>
+			
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaMaterialInformeXXCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					    	<th>Sel</th>  
+						<th>id</th> 
+						<th>CirugiaId</th> 
+                                                <th>Procedimiento</th>
+						<th>suministro_id</th>
+						<th>Suministro</th>
+						<th>tipo</th>  
+						<th>cantidad</th>  
+						<th>valorLiquidacion</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				
+
+			<!-- Fin Data table -->
+	
+                           
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+	
+					<textarea id="mensajesErrorModalMaterialInformeCirugia" name="mensajesErrorModalMaterialInformeCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>																
+					<textarea id="mensajesModalMaterialInformeCirugia" name="mensajesModalMaterialInformeCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>																
+
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                   
+
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- FIN Modal Material INFORME Cirugia -->
+
+
+
+
+	<!-- Modal Adicionar Qx-->
+
+   <div class="modal fade" id="crearModelAdicionarQx" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingAdicionarQx"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormAdicionarQx" name="postFormAdicionarQx">
+
+                                <input type="hidden" name="post_id" id="post_id">
+			     <input type="hidden" class="form-control" id="sedesClinicaModalAdicionarQx_id" name="sedesClinicaModalAdicionarQx_id"  readonly></input>
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalAdicionarQx" name="cirugiaIdModalAdicionarQx"  readonly></input>
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+			 <div class="col-2">
+				Tiempos Qx:
+
+				</div>
+			<div class="col2" style="border-width:2px;border-style:solid;border-color:black;">
+		IngresoQuirofano  : <input type="text" name="ingresoQuirofano" id="ingresoQuirofano" size="19" maxlength="19" > 
+		InicioAnestesia     : <input type="text" name="fechaIniAnestesia2" id="fechaIniAnestesia2" size="19" maxlength="19"> 
+ 		InicioCirugia       : <input type="text" name="fechaQxIni" id="fechaQxIni" size="19" maxlength="19" > 
+		FinCirugia  	     : <input type="text" name="fechaQxFin" id="fechaQxFin" size="19" maxlength="19" > 		 
+		FinAnestesia 	     : <input type="text" name="fechaFinAnestesia" id="fechaFinAnestesia" size="19" maxlength="19" > 
+  		SalidaQuirofano     : <input type="text" name="salidaQuirofano" id="salidaQuirofano" size="19" maxlength="19" > 
+		<!-- 
+		TiempoQx Total      : <input type="text" name="tiempoTotal" id="tiempoTotal" size="3" maxlength="3" > 
+		TiempoAnestesico Total : <input type="text" name="tiempoAnestesicoTotal" id="tiempoAnestesicoTotal" size="3"> 
+		Tiempototal en Sala   : <input type="text" name="tiempoTotalEnSala" id="tiempoTotalEnSala" size="3">  
+     		-->
+		IngresoRecuperacion  : <input type="text" name="ingresoRecuperacion" id="ingresoRecuperacion" size="19" maxlength="19" > 
+		SalidaRecuperacion   : <input type="text" name="salidaRecuperacion" id="salidaRecuperacion" size="19" maxlength="19" > 
+		<!--
+		Tiempo total de recuperacion:  <input type="text" name="tiempoTotalRecuperacion" id="tiempoTotalRecuperacion" size="3" maxlength="3" > 
+     		-->
+			</div>
+
+			<div class="col2" style="border-width:2px;border-style:solid;border-color:black;">
+
+		dx pre-operatorio:  	 <select class="select-css h-40 w-20" id="dxPreOperatorio"  tabindex= "0"  name="dxPreOperatorio"  required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					
+
+      		dx post-operatorio: <select class="select-css h-40 w-20" id="dxPostOperatorio"  tabindex= "0"  name="dxPostOperatorio"  required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+
+
+		impresion dx:   <select class="select-css h-40 w-20" id="impresionDx"  tabindex= "0"  name="impresionDx"  required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+		Complicaciones cie: <select class="select-css h-40 w-20" id="complicacionesDx"  tabindex= "0"  name="complicacionesDx"  required>
+                                                {% for diagnosticosCirugia in DiagnosticosCirugia %}
+                                                <option value="{{diagnosticosCirugia.id}}"> {{diagnosticosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+		Forma realizacion: <input type="text" name="formaRealizacion" id="formaRealizacion" size="15" maxlength="15" > 
+		tejidos enviados a patologia: <input type="text" name="tejidoPatologia" id="tejidoPatologia" size="1" maxlength="1" > 
+		tipo de fractura: <input type="text" name="tipoFractura" id="tipoFractura" size="40" maxlength="40" > 
+		Uso de intensificador: <input type="text" name="intensificador" id="intensificador" size="1" maxlength="1" > 
+		</div>
+
+		<div class="col2" style="border-width:2px;border-style:solid;border-color:black;">
+
+	
+		<textarea id="descripcionQx" name="descripcionQx" rows="5" cols="110" placeHolder="Descripcion Qx"></textarea>
+
+
+		<textarea id="hallazgos"  name="hallazgos" rows="4" cols="110" placeHolder="Hallazgos"></textarea>
+
+		<textarea id="analisis" name="analisis" rows="3" cols="110" placeHolder="NOTA OPERATORIA:Analisis"></textarea>
+
+		<textarea id="planx" name="planx" rows="3" cols="110" placeHolder="NOTA OPERATORIA:Plan"></textarea>
+
+			</div>
+
+			</div>
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+
+	<textarea id="mensajesErrorModalAdicionarQx" name="mensajesErrorModalAdicionarQx" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>																	
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                  <button type="button" class="btn btn-primary" id="saveBtnAdicionQx" onclick="CrearAdicionQx()">Grabar!</button> 
+
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- FIN Modal Adicionar Qx-->
+
+
+   			
+</article>
+
+<article id="RecordAnestesico">
+        	
+		
+
+</article>
+
+<article id="HojaDeGasto">
+
+<div class="container my-2">
+        	
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnAdicionarHojaDeGastoCirugia"  name="BtnAdicionarHojaDeGAstoCirugia" value="Adicionar" onclick= "AdicionarHojaDeGastoCirugia()" >				    
+		</div>
+
+
+		<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaHojaDeGastoCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					
+						<th>id</th>                                             
+						<th>CirugiaId</th>                                             
+						<th>suministro_id</th>
+						<th>Suministro</th>
+						<th>tipo</th>  
+						<th>cantidad</th>  
+						<th>Sel</th>  
+						<th>Sel</th>  
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+ </div>				
+			<!-- Fin Data table -->
+
+	
+<!-- Modal Hoja de Gasto Cirugia -->
+
+   <div class="modal fade" id="crearModelHojaDeGastoCirugia" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                             <h4 class="modal-title" id="modelHeadingHojaDeGastoCirugia"> </h4> 
+			 
+                         <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			</div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormHojaDeGastoCirugia" name="postFormHojaDeGastoCirugia">
+
+                                <input type="hidden" name="post_id" id="post_id">
+		 <input type="hidden" class="form-control" id="sedesClinicaModalHojaDeGastoCirugia_id" name="sedesClinicaModalHojaDeGastoCirugia_id"  readonly></input>
+
+			Cirugia No : 
+			<input type="text"  id="cirugiaIdModalHojaDeGastoCirugia" name="cirugiaIdModalHojaDeGastoCirugia"  readonly></input>
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+			 <div class="col-2">
+
+			</div>
+
+			  <div class="col-4">
+                                        <label for="suministroHojaDegasto" class="col-sm-1 control-label">Suministro:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="suministroHojaDeGasto"  tabindex= "0"  name="suministroHojaDeGasto"  required>
+                                                {% for suministrosCirugia in SuministrosCirugia %}
+                                                <option value="{{suministrosCirugia.id}}"> {{suministrosCirugia.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                         </div>
+			
+			  <div class="col-2">
+			 <input type="text" class="form-control" id="cantidadHojaDeGasto" name="cantidadHojaDeGasto"  ></input>  
+                         </div>
+
+
+			  <div class="col-2">
+			 <input type="hidden" class="form-control" id="usernameHojaDeGastoCirugia_id" name="usernameHojaDeGastoCirugia_id"  ></input>  
+                         </div>
+
+
+			 <div class="col-2">
+				<button type="button" class="btn btn-primary" id="saveBtnHojaDeGastoCirugia" onclick="CrearHojaDeGastoCirugia()">Adicionar!</button> 
+			</div>
+		</div>
+			
+			<!-- Aqui Data Table  -->
+				 <div class="row">
+				
+                                        <table  id= "tablaHojaDeGastoXXCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					    	
+						<th>id</th>   
+						<th>cirugiaId</th>   
+                                               <th>suministro_id</th>
+						<th>Suministro</th>
+						<th>tipo</th>  
+						<th>cantidad</th>  
+						<th>Sel</th>  
+						<th>Sel</th>  	
+					
+			              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+				
+
+			<!-- Fin Data table -->
+
+                            
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+	
+
+	<textarea id="mensajesErrorModalHojaDeGastoCirugia" name="mensajesErrorModalHojaDeGastoCirugia" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>																						
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                                   
+
+                                    </div>
+
+						
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- FIN Modal Hoja De Gasto Cirugia -->
+		
+
+</article>
+
+
+<article id="Facturacion">
+        	
+		
+
+</article>
+
+
+
+<article id="OcupacionSalas">
+        	
+		<div class="container my-2">
+             
+   			   <div class="row">
+				 <!--  <input type="button" style="height:15px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnEnviosRips"  name="BtnEnviosRips" value="Adicionar" onclick= "EnvioRips()" >				      -->
+
+                                        <table  id= "tablaSalasCirugia" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                
+					     <th>Opcion</th>                                               
+					     <th>Opcion</th>                                               
+					     <th>Id</th>   
+					     <th>Numero</th>
+					     <th>Nombre</th>
+					     <th>Ubicacion</th>
+					     <th>Servicio</th>
+					     <th>Estado</th>
+				              
+					</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+
+		
+
+</article>
+
+
+     
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+ 	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+
+</div>
+{% endblock %}
+
+
+
+{% block footer %}
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,1169 @@
+{% extends "rips/menuRipsF.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelRips.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsRips.js' %} defer >         </script>
+
+<!-- Datatable extension SELECT 
+<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+-->
+
+
+<div class="marco">
+    <ul class="tabs">
+
+        <li><a href="#Rips"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Pendientes </a></li>
+        <li><a href="#DetalleEnviosRips"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Detalle Rips </a></li>
+        <li><a href="#GenerarJsonRips"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Genera Json </a></li>
+        <li><a href="#RipsEnviados"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>A radicar</a></li>
+        <li><a href="#AuditoriaRips"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span>Auditoria </a></li>
+
+
+    </ul>
+</div>
+
+
+<style>
+div.dataTables_wrapper  div.dataTables_filter input {
+   height: 2px;
+   padding:10px;
+   border-radius:8px;
+}
+
+div.dataTables_filter input {
+    width: 50px;
+  }
+
+
+#tablaEnviosRips {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 50px;
+ padding: 1px;
+  height: 1px;
+    }
+
+table.dataTable tbody tr {
+  min-height: 60px;
+}
+
+
+.my-row-class {
+    height: 30px;
+}
+
+</style>
+<script>
+
+function RefrescarPantalla() {
+ 		var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+        var username = document.getElementById("username").value;
+        var nombreSede = document.getElementById("nombreSede").value;
+    	var sede = document.getElementById("sede").value;
+        var username_id = document.getElementById("username_id").value;
+         var data =  {}   ;
+        data['username'] = username;
+        data['sedeSeleccionada'] = sedeSeleccionada;
+        data['nombreSede'] = nombreSede;
+        data['sede'] = sede;
+        data['username_id'] = username_id;
+ 	    data = JSON.stringify(data);
+
+	alert("sede = " + sede);
+
+        arrancaEnviosRips(1,data);
+	    dataTableEnviosRipsInitialized = true;
+}
+</script>
+
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+        <article id="Rips">
+      
+	
+            <form action="/enviosRips/" method="get" id="FormEnviosRips">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+		<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">	
+            </form>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+             
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnEnviosRips"  name="BtnEnviosRips" value="Adicionar" onclick= "EnvioRips()" >				    
+		</div>
+
+   			   <div class="row">
+				 <!--  <input type="button" style="height:15px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnEnviosRips"  name="BtnEnviosRips" value="Adicionar" onclick= "EnvioRips()" >				      -->
+
+                                        <table  id= "tablaEnviosRips" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr id= "filasEnvios">    
+						<bold>                
+                                                <th>Selr</th>                   
+                                                <th>Ver</th>                   
+                                                <th>Envio#</th> 
+   						<th></th>  
+						 <th>TipoNota</th>   
+					       <th></th> 
+                                                <th>Empresa</th>                                    
+                                                <th>FechaEnvio</th>
+                                                <th>FechaRespuesta</th>
+                                                <th>Facturas</th>
+                                                <th>Pasaron</th>
+                                                <th>Rechazadas</th>
+                                                <th>AlMinisterio</th>
+						<th>FechaRegistro</th>
+						<th>UsuarioRegistro</th>
+						<th>Registra</th>
+					        <th>NombreClinica</th> 
+				               <th>id</th>                                             					                                   
+                                          
+              
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+
+	            <!-- Espacio Modales  EnviosRips-->
+
+	    <div class="modal fade" id="crearModelEnviosRips" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-bs-backdrop="static">
+
+		<div class="modal-dialog modal-mg modal-dialog-scrollable  modal-dialog-center " role="document">
+	
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+    <div  class="modal-title" id="modelHeadingEnviosRips" style="text-align:center;"><font gont-family="Times New roman" size=5"></font> </div>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearEnviosRips" onclick="CrearEnviosRips()">Grabar!</button> 
+     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+          			
+  			  <form id="postFormEnviosRips" name="postFormEnviosRips">
+
+                                <input type="hidden" name="post_id" id="post_id">
+
+                    
+		<!--  <div class="row row-cols-lg-auto g-3 align-items-center mb-3">  -->
+		<div class="row row-cols-4 g-3 align-items-center mb-3">  
+
+
+				  <div class="col-1">			
+                                    
+                                    <input type="text" class="form-control" id="sedesClinica_id" name="sedesClinica_id"  value="1" readonly></input>
+                                </div>
+
+			  <div class="col-4">
+                                        <label for="serviciosAdministrativos" class="col-sm-1 control-label">ServiciosAdmon:</label>
+                                        <div class="col-sm-4">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos"  tabindex= "0"
+                                                    name="serviciosAdministrativos"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+				<div class="col-4">
+                                    Empresa:
+				<select class="select-css"  id="empresa_id"
+                                                                name="empresa_id">
+                                                            {% for empresas in Empresas %}
+                                                            <option value="{{empresas.id}}">
+                                                                {{empresas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+				<div class="col-3">
+                                    Tipo Envio:
+				<select class="select-css"  id="ripsTiposNotas"  name="ripsTiposNotas">
+                                                           {% for ripsTiposNotas in RipsTiposNotas %}
+                                                            <option value="{{ripsTiposNotas.id}}">
+                                                                {{ripsTiposNotas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+                               </div>
+
+
+	<div class="row row-cols-5 g-3 align-items-center mb-3">  
+
+                          
+				<div class="col-4">
+				  FechaEnvio:
+                                   	 <label class="visually-hidden" for="fechaEnvio">FechaEnvio:</label>
+                               
+					 <input type="datetime-local"  class="form-control form-control-sm" id="fechaEnvio" name="fechaEnvio" placeholder="fechaEnvio"  >
+                                </div>
+
+				<div class="col-4">
+				 FechaRespuesta:
+                                    
+					 <input type="datetime-local"  class="form-control form-control-sm" id="fechaRespuesta" name="fechaRespuesta" placeholder="Respuesta"  readonly>
+                                </div>
+
+				<div class="col-1">
+                                    
+				 <label  for="cantidadFacturas">Facturas:</label>
+                                    <input type="text"  id="cantidadFacturas" name="cantidadFacturas" value="0" placeholder="Facturas:" readonly></input>
+                                </div>
+				<div class="col-1">
+				
+                                    Pasaron:
+                                    <input type="text" id="cantidadPasaron" name="cantidadPasaron" value="0" readonly></input>
+                                </div>
+				<div class="col-1">
+				Rechazadas:
+                                     <input type="text"  id="cantidadRechazadas" name="cantidadRechazadas" value="0" placeholder="Rechazadas:"  readonly></input>
+	                                </div>
+
+
+                              </div>
+
+			<div class="row row-cols-4 g-3 align-items-center mb-3">   
+
+
+                                <div class="col-2">
+                                    EstadoEnvio:
+                                    <input type="text" id="estadoMinisterio" name="estadoMinisterio" value="PENDIENTE" readonly></input>
+                                </div>
+           
+                                <div class="col-1">
+                                   
+                                    <input type="hidden" id="fechaRegistro" name="fechaRegistro" value="" > </input>
+                                </div>
+
+
+
+                                <div class="col-1">
+				
+                                    EstadoReg:
+                                    <input type="text" class="form-control form-control-sm" id="estadoReg" name="estadoReg" value="A" placeholder="estadoReg"  estadoReg> </input>
+                                </div>
+
+
+
+                                <div class="col-2">
+                                    Usuario:
+                                    <input type="text" id="usuarioRegistro_id" name="usuarioRegistro_id" value="{{Username_id}}" readonly > </input>
+                                </div>
+
+			<!--
+                                <div class="col-12">
+                                    <center> 
+					<button type="button" class="btn btn-primary" id="saveBtnCrearEnviosRips"   value="create" onclick="CrearEnviosRips()">Guardar </button> 
+					</center> 
+                                </div>
+
+			-->
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelEnviosRips" name="mensajesErrorCrearModelEnviosRips" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearEnviosRips" onclick="CrearEnviosRips()">Grabar!</button> 
+
+
+                               </div>
+
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	<!-- MODAL PARA MOSTRAT EL JSON DEL ENVIO  ->
+
+	<!-- Otra Modal -->
+
+
+            <div class="modal fade" id="crearModelRipsEnvioJson" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+		 <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingRipsEnvioJson"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormRipsEnvioJson" name="postFormRipsEnvioJson" class="form-horizontal"
+                                  novalidate>
+							 EnvioId :     <input type="text" name="envioRipsIdP" id="envioRipsIdP" readonly>
+
+
+				<div class="row row-cols-1" style="height=30px;">
+
+				<div class="col">
+                                    JSON:
+					<textarea id="valorJsonP" name="valorJsonP"   cols="120" rows="23"></textarea>
+                                 
+                                </div>
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="button" class="btn btn-primary" id="cerrarJson" name="cerrarJson"  value="Cerrar" onclick="CerrarModalEnvioJson()">Cerrar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+
+			   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelRipsEnvioJson" name="mensajesErrorCrearModelRipsEnvioJson" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+
+
+
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+	<!-- Fin otra Modal -->
+
+	<!-- Otra Modal -->
+	<!-- Fin otra Modal -->
+
+
+     <!-- FIN Espacio Modales  -->
+
+        </article>
+
+
+<article id="DetalleEnviosRips">
+
+        	
+		<div class="container my-2">          
+Envio No: <input type="text" name="envioRipsId" id="envioRipsId" readonly>  
+			     Empresa:  <input type="text" name="empresaId" id="empresaId" readonly>  
+			     Tipo:     <input type="text" name="tipoRips2" id="tipoRips2" readonly>  
+   			   <div class="row">
+		     
+                                       <table  id= "tablaDetalleRipsAdicionar" class="display nowrap table table table-bordered tablaDetalleRipsAdicionar table-hover table-sm " style="width:100%; margin-left: 0;">  
+
+  <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>Factura</th>
+                                                <th>Glosa</th>
+                                                <th>Fec Factura/Recepcion </th>
+                                                <th>Paciente</th>
+                                                <th>Valor</th>
+                                                <th>Estado</th>
+                                                <th>Action</th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            <tr style="height:10%">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>	
+			   </div>	
+				<!-- hasta aquip -->
+
+
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaDetalleRips" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>Factura No</th>
+				              <th>Nombre</th>	
+                                                <th>GlosaId</th>
+                                                <th>NC</th>
+                                                <th>Cuv</th>
+                                                <th>EstadoPasoAlMinisterio</th>
+                                                <th>RutaJsonRespuesta</th>
+                                                <th>RutaJsonFactura</th>
+                                                <th>RutaPdf</th>
+                                                <th>RutaZip</th>
+						<th>UsuarioRegistro</th>
+                                                <th>Action</th>
+
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                  
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+	            <!-- Espacio Modales  RipsDetalle-->
+
+            <div class="modal fade" id="crearModelRipsDetalle" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+		<div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingRipsDetalle"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormRipsDetalle" name="postFormRipsDetalle" class="form-horizontal"
+                                  novalidate>
+                               
+                                  <div class="row row-cols-lg-auto g-3 align-items-center mb-3">     
+                     
+					<div class="col-12">
+
+			 Id : <input type="text" name="detalleRipsId" id="detalleRipsId" readonly>
+
+                                </div>
+
+				<div class="col-12">
+				   <label  for="numeroFacturaT">Factura:</label>                               
+                                   <input type="text" class="form-control form-control-sm" id="numeroFacturaT" name="numeroFacturaT" value="0" placeholder="numeroFacturaT:"  readonly></input>
+                             
+                                </div>
+
+				<div class="col-12">
+				   <label  for="numeroFacturaT">Envio:</label>                               
+                                   <input type="text" class="form-control form-control-sm" id="ripsEnvios" name="ripsEnvios" value="0" placeholder="ripsEnvios:"  readonly></input>
+  
+                                   
+                               </div>
+
+				<div class="col-12">
+
+				   <label  for="cuv">Cuv:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="cuv" name="cuv" value="0" placeholder="cuv:"  readonly></input>
+                                   
+                                </div>
+
+                                <div class="col-12">
+
+				   <label  for="cuv">Estado:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="estadoPasoMinisterio" name="estadoPasoMinisterio" value="0" placeholder="estadoPasoMinisterio:"  readonly></input>
+                                
+
+                                </div>
+                          
+				<div class="col-12">
+				   <label  for="cuv">RutaJsonFactura:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="rutaJsonFactura" name="rutaJsonFactura" value="0" placeholder="rutaJsonFactura:"  ></input>
+       
+                                </div>
+
+				<div class="col">
+				   <label  for="cuv">RutaJsonRespuesta:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="rutaJsonRespuesta" name="rutaJsonRespuesta" value="0" placeholder="rutaJsonRespuesta:"  ></input>
+                                </div>
+
+           
+                                <div class="col-12">
+                               	<label  for="cuv">fechaRegistro:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="fechaRegistro" name="fechaRegistro" value="0" placeholder="fechaRegistro:"  readonly></input>
+  
+                                </div>
+
+
+
+                                <div class="col-12">
+			     	<label  for="cuv">EstadoRegistro:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="estadoReg" name="estadoReg" value="0" placeholder="estadoReg:"  readonly></input>
+  
+                               </div>
+
+
+                                <div class="col-12">
+
+			     	<label  for="cuv">UsuarioRegistro_id:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="UsuarioRegistro_id" name="UsuarioRegistro_id" value="{{Username_id}}" placeholder="UsuarioRegistro_id:"  readonly></input>
+  
+                                </div>
+
+				<div class="col">
+
+		     	<label  for="cuv">RutaPdf:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="rutaPdf" name="rutaPdf" value="0" placeholder="rutaPdf:"  ></input>
+                                  </div>
+
+				<div class="col">
+
+				<label  for="cuv">RutaZip:</label>                               
+                                  <input type="text" class="form-control form-control-sm" id="rutaZip" name="rutaZip" value="0" placeholder="rutaZip:"  ></input>
+                               
+                                </div>
+
+
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="button" class="btn btn-primary" id="saveBtnCrearDetalleRips"   value="create" onclick="GuardarDetalleRips()">Guardar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+			   <div class="modal-footer">
+
+				<textarea id="mensajesErrorcrearModelRipsDetalle" name="mensajesErrorCrearModelRipsDetalle" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                             
+
+
+                               </div>
+
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+
+	<!-- Otra Modal -->
+
+
+            <div class="modal fade" id="crearModelRipsJson" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingRipsJson"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormRipsJson" name="postFormRipsJsone" class="form-horizontal"
+                                  novalidate>
+							 EnvioId :     <input type="text" name="envioRipsIdJ" id="envioRipsIdJ" readonly>
+        				                 Factura/Glosa: <input type="text" id="facturaIdJ" name="facturaIdJ"  readonly></input>           
+
+
+				<div class="row row-cols-1" style="height=30px;">
+
+				<div class="col">
+                                    JSON:
+					<textarea id="valorJson" name="valorJson"   cols="120" rows="23"></textarea>
+                                 
+                                </div>
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="button" class="btn btn-primary" id="cerrarJson" name="cerrarJson"  value="Cerrar" onclick="CerrarModalJson()">Cerrar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+		   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelRipsJson" name="mensajesErrorCrearModelRipsJson" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+	<!-- Fin otra Modal -->
+     <!-- FIN Espacio Modales  -->
+
+
+</article>
+
+<article id="GenerarJsonRips">
+
+	   <div id="flex-container-generar-json-rips">
+				<div>
+<center>
+
+		<br>
+			<br>
+			<br> <center>
+				<!-- <label for id="envioRipsId1" >Envio No: </label> -->
+			     Envio No: <input type="text" name="envioRipsId1" id="envioRipsId1" readonly>  
+				<!-- <label for id="empresaId1" >Empresa: </label> -->
+			     Empresa: <input type="text" name="empresaId1" id="empresaId1"  readonly>  
+				<!-- <label for id="tipoRips1" >Tipo: </label> -->
+			     Tipo: <input type="text" name="tipoRips1" id="tipoRips1" size="10" readonly>  
+			<br>
+			<br>
+			<br>
+		            <button type="button" class="btn btn-primary" id="generarJsonRips"   value="Generar" onclick="GenerarJsonRips()">Generar JSON rips </button>
+
+			</center>
+		 </div>
+		 </div>
+
+</article>
+
+
+
+<article id="RipsTransaccion">
+
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+ 	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaRipsTransaccion" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>NumeroDocObligatorio</th>
+                                                <th>NumNota</th>
+                                                <th>FechaRegistro</th>
+                                                <th>TipoNota</th>
+                                                <th>UsuarioRegistro</th>
+                                                <th>Envio Rips # </th>
+						<th>Sedes # </th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+ 					
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+</article>
+
+<article id="RipsUsuarios">
+	<div class="container my-2">          
+   			   <div class="row">
+                                         <table  id= "tablaRipsUsuarios" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>tipoDocumento </th>
+                                                <th>tipoUsuario </th>
+                                                <th>FechaNacimiento </th>
+                                                <th>CodSexo </th>
+                                                <th>CodZonaTerritorial </th>
+                                                <th>Incapacidad </th>
+						<th>Consecutivo </th>
+                                                <th>FechaRegistro </th>
+                                                <th>CodMunicipio</th>
+                                                <th>CodPaisOrigen </th>
+                                                <th>CodPaisResidencia </th>
+                                                <th>UsuarioRegistro </th>
+                                                <th>NumDocumentoIdentifica </th>
+                                                <th>RipsDetalleId </th>
+                                                <th>RipsTransaccionId </th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                 
+
+                                        </table>
+                                    </div>
+                                </div>
+
+</article>
+
+<article id="RipsConsulta">
+
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		
+		
+		 </div>
+</article>
+
+<article id="RipsHospitalizacion">
+
+	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaRipsHospitalizacion" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>Prestador </th>
+                                                <th>fechaAtn </th>
+                                                <th>Aut </th>
+                                                <th>Egreso </th>
+                                                <th>consec </th>
+						<th>Fec.Reg </th>
+                                                <th>CausaMotivo </th>
+                                                <th>Complica</th>
+                                                <th>DxMuerte </th>
+                                                <th>DxPrincipalI </th>
+                                                <th>DxPrincipalE </th>
+                                                <th>DxRel1</th>
+                                                <th>DxRel2</th>
+                                                <th>DxRel3 </th>
+                                                <th>DestEgreso </th>
+                                                <th>UsuReg </th>
+                                                <th>ViaIngreso </th>
+                                                <th>RipsDetalle_id </th>
+                                                <th>ripsTiposNotas_id </th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                 
+
+                                        </table>
+                                    </div>
+                                </div>
+
+		
+
+</article>
+
+<article id="RipsUrgenciasObs">
+
+	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaRipsUrgenciasObs" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+						<th> id</th> 
+						<th>cod</th> 
+						<th>fecInicAte</th>
+						<th>fecEgreso</th> 
+						<th>consec</th> 
+						<th>fecRegistro</th> 
+						<th>causaMotAten</th>
+						<th>codDxMuerte</th>
+						<th>codDxPpal</th>
+						<th>codDxPpalE</th> 
+						<th>codDxRel1</th> 
+						<th>codDxRel2</th>
+						<th>codDxRel3</th> 
+						<th>Egreso</th>
+						<th>usuarioReg</th> 
+						<th>ripsDetalle_id</th>
+						<th>ripsTipos_id</th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                       
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+</article>
+
+<article id="RipsProcedimientos">
+
+	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaRipsProcedimientos" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>Prestador </th>
+                                                <th>fechaAtn </th>
+                                                <th>MIPRES</th>
+                                                <th>Aut </th>
+                                                <th>Identif </th>
+                                                <th>vr </th>
+						<th>Moderadora </th>
+                                                <th>FEVPago </th>
+                                                <th>consec</th>
+                                                <th>Complicacion </th>
+                                                <th>Principal </th>
+                                                <th>Relacionado </th>
+                                                <th>Proced</th>
+                                                <th>Servicio </th>
+                                                <th>concepto </th>
+                                                <th>FinalTecSalud </th>
+                                                <th>grupoServ </th>
+                                                <th>modGrupoServ </th>
+                                                <th>tipoIdent </th>
+                                                <th>usuario </th>
+                                                <th>viaIngreso </th>
+                                                <th>ripsDetalle </th>
+                                                <th>tipoModerado </th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                       
+
+                                        </table>
+                                    </div>
+                                </div>
+  
+
+</article>
+
+<article id="RipsMedicamentos">
+
+
+	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaRipsMedicamentos" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+				  <th>id</th>
+				<th>Prest</th>
+				 <th>Aut</th>
+				 <th>MIPRES</th> 
+				<th>fecDisp</th>
+				 <th>nomTec</th> 
+				<th>concentMed</th>
+				 <th>cant</th> 
+					<th>dias</th>
+				 <th>Ident</th>
+				 <th>vrUnit</th>		
+				 <th>vrServ</th> 	
+				<th>Modera</th>
+				 <th>FEV</th> 
+				<th>consec</th>
+			
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+
+                                        </table>
+                                    </div>
+                                </div>
+  
+
+</article>
+<article id="RipsRecienNacidos">
+
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		
+		
+		 </div>
+</article>
+
+<article id="RipsOtrosServicios">
+
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		
+		
+		 </div>
+</article>
+
+<article id="EnviarRips">
+
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+			  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		   	     Envio No: <input type="text" name="envioRipsId3" id="envioRipsId3">  
+			     Empresa: <input type="text" name="empresaId3" id="empresaId3" >  
+			     Tipo: <input type="text" name="tipoRips3" id="tipoRips3">  
+		
+		<div class="row">
+		</div>
+		
+		<div class="row">
+		<div class="col">
+                                    <button type="button" class="btn btn-primary" id="enviarJsonRips"   value="Generar" onclick="EnviarJsonRips()">Enviar JSON rips </button>
+                 </div>	
+		 </div>
+
+		 </div>
+		
+		 </div>
+</article>
+
+<article id="RipsEnviados">
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+             
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnEnviosRips"  name="BtnEnviosRips" value="Adicionar" onclick= "EnvioRips()" >				    
+		</div>
+
+   			   <div class="row">
+
+                                        <table  id= "tablaRipsEnviados" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr id= "filasEnvios">    
+						<bold>    
+						<th>Sel</th>             
+                                                <th>radicar</th>  
+                                                <th>Respuesta</th>  
+                                                <th></th>
+                                                <th></th>  
+						  <th>TipoNota</th>                                     
+                                                 <th>Emp</th> 
+                                                <th>Empresa</th>                                    
+                                                <th>FechaEnvio</th>
+                                                <th>Radicacion</th>
+                                                <th>Respuesta</th>
+                                                <th>Facturas</th>
+                                                <th>Pasaron</th>
+                                                <th>Rechazadas</th>
+                                                <th>AlMinisterio</th>
+						<th>Registro</th>
+						<th>Usuario</th>
+						<th>Registra</th>
+					        <th>Clinica</th> 
+				              
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+<!-- Espacio para Modales  -->
+	<!-- Modal Radicar Rips  -->
+
+            <div class="modal fade" id="crearModelRadicarRips" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+		 <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingRadicarRips"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="postFormRadicarRips" name="postFormRadicarRips" class="form-horizontal"
+                                  novalidate>
+				EnvioId :     <input type="text" name="envioRipsIdR" id="envioRipsIdR" readonly>
+				Tipo:         <input type="text" name="tipoRips4" id="tipoRips4" readonly>
+
+
+				<div class="row row-cols-1" style="height=30px;">
+
+				<div class="col-4">
+				 FechaRadicacion:
+                                    
+					 <input type="datetime-local"  class="form-control form-control-sm" id="fechaRadicacion" name="fechaRadicacion" placeholder="fechaRadicacion"  readonly>
+                                </div>
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="button" class="btn btn-primary" id="guardarRadicacion" name="guardarRadicacion"  value="Guardar" onclick="GuardarRadicacionRips()">Guardar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+
+			   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelRadicarRips" name="mensajesErrorcrearModelRadicarRips" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+	<!-- FIN Modal Radicar Rips  -->
+
+
+	<!-- Modal Respuesta Rips  -->
+
+            <div class="modal fade" id="crearModelRespuestaRips" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+		 <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingRespuestaRips"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="postFormRespuestaRips" name="postFormRespuestaRips" class="form-horizontal"
+                                  novalidate>
+				EnvioId :     <input type="text" name="envioRipsIdZ" id="envioRipsIdZ" readonly>
+				Tipo:         <input type="text" name="tipoRips5" id="tipoRips5" readonly>
+
+
+				<div class="row row-cols-1" style="height=30px;">
+
+				<div class="col-4">
+				 FechaRespuesta:                                  
+					 <input type="datetime-local"  class="form-control form-control-sm" id="fechaRespuestaR" name="fechaRespuestaR" placeholder="fechaRespuesta"  readonly>
+                                </div>
+				<div class="col-4">
+				<label for="respuesta">Nota:</label>
+				<textarea id="respuesta" name="respuesta" rows="6" cols="120" placeholder="Respuesta..." required wrap="hard"></textarea>
+				</div>
+
+
+				<div class="col-4">
+				 RutaRespuestaJson:
+					 <input type="text"  class="form-control form-control-sm" id="rutaRespuestaJson" name="rutaRespuestaJson" placeholder="rutaRespuestaJson"  >
+                                </div>
+
+
+				<div class="col-4">
+				 Cantidad facturas Pasaron o Aprobadas:
+					 <input type="text"  class="form-control form-control-sm" id="cantidadPasaronR" name="cantidadPasaronR" placeholder="cantidadPasaron"  >
+                                </div>
+
+				<div class="col-4">
+				 Cantidad facturas Rechazadas:
+					 <input type="text"  class="form-control form-control-sm" id="cantidadRechazadasR" name="cantidadRechazadasR" placeholder="cantidadRechazadas"  >
+                                </div>
+
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="button" class="btn btn-primary" id="guardarRespuesta" name="guardarRespuesta"  value="Guardar" onclick="GuardarRespuestaRips()">Guardar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+
+			   <div class="modal-footer">
+
+			<textarea id="mensajesErrorcrearModelRespuestaRips" name="mensajesErrorcrearModelRespuestaRips" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+                               </div>
+
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+	<!-- FIN Modal Respuesta Rips  -->
+
+
+
+
+<!-- Fin MODAles             -->
+
+</article>
+
+
+
+     
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+ 	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+<div class="marco">
+    <ul class="tabs">
+
+        <li><a href="#RipsTransaccion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Transaccion </a></li>
+        <li><a href="#RipsUsuarios"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Usuarios </a></li>
+        <li><a href="#RipsConsulta"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Rips Consulta</a></li>
+        <li><a href="#RipsHospitalizacion"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Hospitalizacion </a></li>
+        <li><a href="#RipsUrgenciasObs"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Urgencias y Observacion </a></li> 
+        <li><a href="#RipsProcedimientos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Procedimientos </a></li> 
+        <li><a href="#RipsMedicamentos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Medicamentos </a></li> 
+        <li><a href="#RipsRecienNacidos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Recien nacidos </a></li> 
+        <li><a href="#RipsOtrosServicios"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Otros Servicios </a></li> 
+    </ul>
+</div>
+
+{% endblock %}
+
+
+
+

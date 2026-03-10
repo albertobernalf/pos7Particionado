@@ -1,0 +1,40 @@
+{% extends "menu.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+<form method="post">
+        <br>
+     <br>
+     <br>
+
+
+
+    <center>
+
+          <p>Seleccione Musica en fonfo:</p>
+             <br>
+     <br>
+
+
+        <input type="radio" id="music1" name="musica" value="M1">
+    {{info1}}
+
+
+        <label for="music1">Cancion_1</label><br>
+        <input type="radio" id="music2" name="musica" value="M2">
+     {{info2}}
+        <label for="music2">Cancion_2</label><br>
+
+        <input type="radio" id="music3" name="musica" value="M3">
+     {{info3}}
+        <label for="music3">Cancion_3</label><br>
+
+
+
+        <input type="submit" value="Enviar">
+        </center>
+</form>
+{% endblock %}

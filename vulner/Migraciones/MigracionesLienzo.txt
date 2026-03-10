@@ -1,0 +1,45 @@
+from psqlextra.backend.migrations.operations import PostgresAddRangePartition
+
+
+ PostgresAddRangePartition(
+           model_name="ingresos",
+           name="Año2025_semana0",
+           from_values='2025-12-01',
+           to_values='2025-12-12',
+        ),
+ PostgresAddRangePartition(
+           model_name="ingresos",
+           name="Año2025_semana4",
+           from_values='2025-12-12',
+           to_values='2026-01-01',
+        ),
+ PostgresAddRangePartition(
+           model_name="ingresos",
+           name="Año_2026",
+           from_values='2026-01-01',
+           to_values='2027-01-01',
+        ),
+ PostgresAddRangePartition(
+           model_name="ingresos",
+           name="Año_2027",
+           from_values='2027-01-01',
+           to_values='2028-01-01',
+        ),
+ PostgresAddRangePartition(
+           model_name="ingresos",
+           name="Año_2028",
+           from_values='2028-01-01',
+           to_values='2029-01-01',
+        ),
+ PostgresAddRangePartition(
+           model_name="ingresos",
+           name="Año_2029",
+           from_values='2029-01-01',
+           to_values='2030-01-01',
+        ),
+ PostgresAddRangePartition(
+           model_name="ingresos",
+           name="Año_2030",
+           from_values='2030-01-01',
+           to_values='2031-01-01',
+        ),

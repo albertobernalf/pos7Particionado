@@ -1,0 +1,496 @@
+{% extends "autorizaciones/menuAutorizacionesF.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelAutorizaciones.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsAutorizaciones.js' %} defer >         </script>
+
+
+<!-- Datatable extension SELECT 
+<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+-->
+
+
+<div class="marco">
+    <ul class="tabs">
+
+        <li><a href="#Autorizaciones"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Autorizaciones </a></li>
+        <li><a href="#AutorizacionesDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Autorizaciones Detalle</a></li>
+        <li><a href="#AutorizacionesCirugia"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Autorizaciones Cirugia </a></li>
+
+
+    </ul>
+</div>
+
+<style>
+.my-row-class {
+    height: 30px;
+}
+
+</style>
+<script>
+
+function RefrescarPantalla() {
+ 	 
+    	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+        var username = document.getElementById("username").value;
+        var nombreSede = document.getElementById("nombreSede").value;
+    	var sede = document.getElementById("sede").value;
+        var username_id = document.getElementById("username_id").value;
+         var data =  {}   ;
+        data['username'] = username;
+        data['sedeSeleccionada'] = sedeSeleccionada;
+        data['nombreSede'] = nombreSede;
+        data['sede'] = sede;
+        data['username_id'] = username_id;
+ 	    data = JSON.stringify(data);
+
+        arrancaAutorizaciones(1,data);
+	    dataTableAutorizacionesInitialized = true;
+}
+
+function RefrescarPantallaDetalle() {
+
+        autorizacionId  = document.getElementById("autorizacionId").value ;
+
+ 	 
+    	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+        var username = document.getElementById("username").value;
+        var nombreSede = document.getElementById("nombreSede").value;
+    	var sede = document.getElementById("sede").value;
+        var username_id = document.getElementById("username_id").value;
+         var data =  {}   ;
+        data['username'] = username;
+        data['sedeSeleccionada'] = sedeSeleccionada;
+        data['nombreSede'] = nombreSede;
+        data['sede'] = sede;
+        data['username_id'] = username_id;
+	data['username_id'] = username_id;
+	data['autorizacionId'] = autorizacionId;
+
+ 	    data = JSON.stringify(data);
+
+        arrancaAutorizaciones(2,data);
+	    dataTableAutorizacionesDetalleInitialized = true;
+}
+
+
+</script>
+
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+        <article id="Autorizaciones">
+      
+            <form action="/enviosRips/" method="get" id="FormEnviosRips">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+ 			<input type="hidden" id="autorizacionId" name="autorizacionId" value="" readonly> </input>
+	
+            </form>
+{% csrf_token %}
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
+
+ 		<div class="container my-2">
+   			   <div class="row">
+
+                                        <table  id= "tablaAutorizaciones" class=" display nowrap table table-striped" style="width: 100%";>
+                                           <thead>
+                                            <tr >    
+						<bold>      
+				     		 <th>Accion</th> 
+						<th>
+				            <img src="{% static 'img/icons8-impresora-50.png' %}" alt="Imprimir" width="20" height="20">
+						</th>                              
+                                                <th>id</th>
+                                                <th>SedeId</th>
+  
+                                                <th>Paciente</th>
+                                                <th>Folio</th>                                       
+                                                 <th>FecSolicitad</th>                                 
+                               
+                                                <th>#Aut</th>
+                                                <th>FecAut</th>
+                                                <th>Medico</th>
+                                                <th>Observac</th>
+                                                <th>EstAut</th>
+                                                <th>Solicitud</th>
+						<th>Vigencia</th>
+						<th>EmpId</th>
+						<th>Empresa</th>
+						<th>Ordena</th>
+					        <th>Registra</th> 
+	                                  
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+   </table>
+
+	</div>
+	</div>
+
+	            <!-- Espacio Modales  Autorizaciones-->
+
+            <div class="modal fade" id="crearModelAutorizaciones" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingEnviosRips"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormAutorizaciones" name="postFormAutorizaciones" class="form-horizontal"
+                                  novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" id="post_id">
+                     
+				<div class="row row-cols-12" style="height=1px;">
+
+				<div class="col">
+                                    Sede Clinica:
+                                    <input type="text" id="sedesClinica_id" name="sedesClinica_id" value="1" readonly></input>
+                                </div>
+
+				  <div class="col">
+                                        <label for="serviciosAdministrativos" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos"  tabindex= "0"
+                                                    name="serviciosAdministrativos"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+				<div class="col">
+                                    Empresa:
+				<select class="select-css"  id="empresa_id"
+                                                                name="empresa_id">
+                                                            {% for empresas in Empresas %}
+                                                            <option value="{{empresas.id}}">
+                                                                {{empresas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+                          
+				<div class="col">
+                                   Fecha Envio:
+                               
+					 <input type="datetime-local" id="fechaEnvio" name="fechaEnvio" readonly >
+                                </div>
+
+				<div class="col">
+                                    Fecha Respuesta:
+					 <input type="datetime-local" id="fechaRespuesta" name="fechaRespuesta" readonly>
+                                </div>
+
+				<div class="col">
+                                    CantidadFacturas:
+                                    <input type="text" id="cantidadFacturas" name="cantidadFacturas" value="0" readonly></input>
+                                </div>
+				<div class="col">
+                                    CantidadPasaron:
+                                    <input type="text" id="cantidadPasaron" name="cantidadPasaron" value="0" readonly></input>
+                                </div>
+				<div class="col">
+                                    CantidadRechazadas:
+                                    <input type="text" id="cantidadRechazadas" name="cantidadRechazadas" value="0" readonly></input>
+	                                </div>
+
+
+                                <div class="col">
+                                    EstadoPasoMinisterio:
+                                    <input type="text" id="estadoPasoMinisterio" name="estadoPasoMinisterio" value="PENDIENTE" readonly></input>
+                                </div>
+           
+                                <div class="col">
+                                   
+                                    <input type="hidden" id="fechaRegistro" name="fechaRegistro" value="" > </input>
+                                </div>
+
+
+
+                                <div class="col">
+                                    EstadoRegistro:
+                                    <input type="text" id="estadoReg" name="estadoReg" value="A"  readonly> </input>
+                                </div>
+
+
+
+                                <div class="col">
+                                    UsuarioRegistro_id:
+                                    <input type="text" id="usuarioRegistro_id" name="usuarioRegistro_id" value="{{Username_id}}" readonly > </input>
+                                </div>
+
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+
+		<textarea id="mensajesErrorAutorizaciones" name="mensajesErrorAutorizaciones" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+	
+                                    <button type="button" class="btn btn-primary" id="saveBtnCrearAutorizaciones"   value="create" onclick="CrearAutorizaciones()">Guardar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+                  
+
+     <!-- FIN Espacio Modales  -->
+
+
+        </article>
+
+
+<article id="AutorizacionesDetalle">
+                                     
+<input type="button" id="btnRefrescarDetalle" name="btnRefrescarDetalle" value="Refrescar" onclick="RefrescarPantallaDetalle()">
+                              
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+   			   <div class="row">
+                                        <table  id= "tablaAutorizacionesDetalle" class="display nowrap table table-striped" style="width: 100%">
+                                           <thead>
+                                            <tr>    
+						<bold>   
+						<th>TipoTipoExamen</th>                               
+                                                <th>id</th>
+                                                <th>TipoExamen</th>
+                                                <th>ExamenId</th>
+                                                <th>Examen </th>
+                                                <th>Cantidad Solicitada</th>
+                                                <th>Cantidad Autorizada</th>
+                                                <th>Valor Solicitado</th>
+                                                <th>Valor Autorizado</th>
+                                                <th>Autorizado</th>
+                                                <th>Usuario</th>
+                                                <th>Action</th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+	            <!-- Espacio Modales  AutorizacionesDetalle-->
+
+            <div class="modal fade" id="crearModelAutorizacionesDetalle" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingAutorizacionesDetalle"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormAutorizacionesDetalle" name="postFormAutorizacionesDetalle" class="form-horizontal"
+                                  novalidate>
+                                                          
+				<input type="hidden" id="Psede" name="Psede" value="{{Sede}}">                   
+				<div class="row row-cols-14" style="height=1px;">
+				<div class="col">
+   			   <input type="text" id="autorizacionDetalleId" name="autorizacionDetalleId" value=""  readonly> </input>
+                                </div>
+
+				<div class="col">
+		          
+				<select class="select-css"  id="AserviciosAdministrativos"
+                                                                name="AserviciosAdministrativos">
+                                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                            <option value="{{serviciosAdministrativos.id}}">
+                                                                {{serviciosAdministrativos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+				<div class="col">
+				<select class="select-css"  id="Aconvenios"
+                                                                name="Aconvenios" disable>
+                                                            {% for convenios in Convenios %}
+                                                            <option value="{{convenios.id}}">
+                                                                {{convenios.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+
+
+				<div class="col">
+				TipoAutorizacion:
+                                    <input type="text" id="tipoTipoExamen" name="tipoTipoExamen" readonly ></input>
+                                </div>
+	
+				<div class="col">
+		          
+				<select class="select-css"  id="estadoAutorizacion"
+                                                                name="estadoAutorizacion">
+                                                            {% for estadosAutorizacion in EstadosAutorizacion %}
+                                                            <option value="{{estadosAutorizacion.id}}">
+                                                                {{estadosAutorizacion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+				<div class="col">
+                                    Autorizacion:
+                                    <input type="text" id="numeroAutorizacion" name="numeroAutorizacion"  ></input>
+                                </div>
+
+
+				<div class="col">
+                                    TipoExamen:
+                                    <input type="text" id="tipNombre" name="tipNombre"  value="" ></input>
+                                </div>
+
+				<div class="col">
+                                    ExamenId:
+                                    <input type="text" id="exaNombre" name="exaNombre"  readonly></input>
+                                </div>
+
+
+				<div class="col">
+                                    Examen:
+                                    <input type="text" id="examenes_id" name="examenes_id"  readonly></input>
+                                </div>
+
+				<div class="col">
+                                    CantidadSolicitada:
+                                    <input type="text" id="cantidadSolicitada" name="cantidadSoclicitada" value=""  readonly></input>
+                                </div>
+				<div class="col">
+                                    CantidadAutorizada:
+                                    <input type="text" id="cantidadAutorizada" name="cantidadAutorizada" value=""  ></input>
+                                </div>
+
+				<div class="col">
+                                    ValorSolicitado:
+                                    <input type="text" id="valorSolicitado" name="valorSolicitado" value="0" readonly ></input>
+                                </div>
+				<div class="col">
+                                    valorAutorizado:
+                                    <input type="text" id="valorAutorizado" name="valorAutorizado" value="0"  ></input>
+                                </div>
+
+           
+                                <div class="col">
+                                   
+                                    <input type="hidden" id="fechaRegistro" name="fechaRegistro" value=""  > </input>
+                                </div>
+
+				   <div class="col">
+                                   usuarioRegistro
+                                    <input type="text" id="usuarioRegistro2_id" name="usuarioRegistro2_id" value="{{Username_id}}" readonly> </input>
+                                </div>
+
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+
+		<textarea id="mensajesErrorAutorizacionesDetalle" name="mensajesErrorAutorizacionesDetalle" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
+                                    <button type="button" class="btn btn-primary" id="saveBtnActualizarAut"   value="create" onclick="ActualizarAut()">Guardar </button>
+                                </div>
+                                </div> 
+			<!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+
+	<!-- Otra Modal -->
+     <!-- FIN Espacio Modales  -->
+
+</article>
+
+
+<article id="AutorizacionesCirugia">
+        	    <center><h3>Autorizaciones Cirugia</h3></center>
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		   	     Envio No: <input type="text" name="envioRipsId1" id="envioRipsId1">  
+			     Empresa: <input type="text" name="empresaId1" id="empresaId1" >  
+			     Tipo: <input type="text" name="tipoRips1" id="tipoRips1">  
+		
+</article>
+
+
+    
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+<span> ... </span>
+  	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+
+{% endblock %}

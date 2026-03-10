@@ -1,0 +1,120 @@
+.wrap{
+	width: 1400px;
+	max-width: 90%;
+	margin: 30px auto;
+}
+
+ul.tabs{
+	width: 100%;
+	background: #363636;
+	list-style: none;
+	display: flex;
+}
+
+ul.tabs li{
+	width: 18%;
+}
+
+ul.tabs li a{
+	color: #fff;
+	text-decoration: none;
+	font-size: 16px;
+	text-align: center;
+
+	display: block;
+	padding: 20px 0px;
+}
+
+.active{
+	background: #0984CC;
+}
+
+ul.tabs li a .tab-text{
+	margin-left: 8px;
+}
+
+.secciones{
+	width: 100%;
+	background: #fff;
+	height: 500px;
+}
+
+.paciente{
+	width: 100%;
+	background: #fff;
+	height: 50px;
+}
+
+.secciones article{
+	padding: 30px;
+}
+
+.secciones article p{
+	text-align: justify;
+}
+
+
+@media screen and (max-width: 700px){
+	ul.tabs li{
+		width: none;
+		flex-basis: 0;
+		flex-grow: 1;
+	}
+}
+
+
+
+@media screen and (max-width: 450px){
+	ul.tabs li a{
+		padding: 15px 0px;
+	}
+
+	ul.tabs li a .tab-text{
+		display: none;
+	}
+
+	.secciones article{
+		padding: 20px;
+	}
+}
+
+.scrollable
+{
+
+    height: 200px;
+    overflow:scroll;
+}
+input[type="date"] {
+  --color: gray;
+
+  border: 2px solid var(--color);
+  font-size: 1rem;
+  background: #f8f9f9;
+  color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+
+  &::-webkit-datetime-edit {
+    margin-right: 0.5rem;
+  }
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    background: #000;
+    border-radius: 8px;
+    padding: 4px 10px;
+  }
+
+  &::-webkit-datetime-edit-text {
+    color: cyan;
+  }
+
+  &::-webkit-datetime-edit-day-field:focus,
+  &::-webkit-datetime-edit-month-field:focus,
+  &::-webkit-datetime-edit-year-field:focus {
+    background: indigo;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter:invert(1);
+  }
+}

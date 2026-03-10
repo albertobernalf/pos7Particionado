@@ -1,0 +1,1098 @@
+{% extends "cartera/menuGlosasFU.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelGlosas.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsGlosas.js' %} defer >         </script>
+
+<!-- Datatable extension SELECT 
+<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+-->
+
+
+<div class="marco">
+    <ul class="tabs">
+
+        <li><a href="#Glosas"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Glosas</a></li>
+        <li><a href="#DetalleGlosas"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Detalle Glosa Clinica</a></li>
+        <li><a href="#NotasCredito"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Notas Credito</a></li>
+        <li><a href="#DetalleNotasCredito"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Detalle notas credito</a></li>
+        <li><a href="#TotalesGlosas"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Totales Glos - rips</a></li>
+
+    </ul>
+</div>
+
+<style>
+
+div.dataTables_filter input {
+    width: 50px;
+  }
+#tablaGlosas {
+     /*    font-family: 'Verdana', sans-serif;  */  /* Times*/
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+        font-size: 50px;
+	 padding: 1px;
+	 /* Alto de las celdas */
+	  height: 1px;
+    }
+
+table.dataTable tbody tr {
+  min-height: 60px;
+}
+
+
+.my-row-class {
+    height: 30px;
+}
+
+</style>
+
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+        <article id="Glosas">
+      
+	
+            <form action="/glosasx/" method="get" id="FormGlosasx">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnGlosas"  name="BtnGlosas" value="Adicionar" onclick= "Glosas()" >				    
+		</div>
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaGlosas" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+					      <th>Seleccionar</th> 
+
+                                            	<th>id</th>
+				                <th>FecRecep</th>
+
+				                <th>Soportado</th>
+				                <th>Aceptado</th>
+						 <th>Tot.Glo</th>
+				                <th>Nc</th>
+				                <th>observa</th>
+				                <th>FecReg</th>
+				                <th>Estado</th>
+				                <th>usuarioReg</th>
+						<th>FecResp</th>
+						<th>TipoGlosa</th>
+						<th>NombreTipo</th>
+						<th>UsuarioRecep</th>
+				                <th>UsuarioResp</th>
+   
+				                <th>EstaRad</th>    
+				                <th>EstaRecep</th>    
+				                <th>NombreRecep</th>    
+				                <th>sede</th>    
+				                <th>Envio</th>
+	                                  
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                      
+                                        </table>
+                                    </div>
+                                </div>
+
+
+	            <!-- Espacio Modales  Glosas-->
+
+            <div class="modal fade" id="crearModelGlosas" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable  modal-dialog-center" role="document" modal-lg>
+                    <div class="modal-content">
+                        <div class="modal-header">
+	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Crear Glosa</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearGlosas" onclick="CrearGlosas()">Grabar!</button> 
+                        </div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormGlosas" name="postFormGlosas">
+
+                                <input type="hidden" name="post_id" id="post_id">
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+
+				  <div class="col-4">
+					                                   
+                                    <input type="hidden" class="form-control" id="sedesClinica_id" name="sedesClinica_id"  value="{{Sede}}" readonly></input>
+                                </div>
+
+				  <div class="col-8">
+                                        <label for="serviciosAdministrativos_id" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos_id"  tabindex= "0"
+                                                    name="serviciosAdministrativos_id"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+			
+			  
+				<div class="col-12">
+					fechaRecepcion:
+                                   	 <label class="visually-hidden" for="fechaRecepcion">fechaRecepcion:</label>
+                               
+					 <input type="datetime-local"  class="form-control" id="fechaRecepcion" name="fechaRecepcion" placeholder="fechaRecepcion"  >
+                                </div>
+
+				<div class="col-12">
+                                   	 <label class="visually-hidden" for="observaciones">observaciones:</label>
+                               
+					 <input type="text"  class="form-control" id="observaciones" name="observaciones" placeholder="observaciones"  >
+                                </div>
+
+
+
+				<div class="col-12">
+			Fecha Respuesta:
+				 <label class="visually-hidden" for="fechaRespuesta">Fecha Respuesta:</label>
+                                    
+					 <input type="datetime-local"  class="form-control" id="fechaRespuesta" name="fechaRespuesta" placeholder="fechaRespuesta"  readonly>
+                                </div>
+
+
+				<div class="col-12">
+                                    Tipo Glosa:
+				<select class="select-css"  id="tipoGlosa_id"  name="tipoGlosa_id">
+                                                           {% for tiposGlosas in TiposGlosas %}
+                                                            <option value="{{tiposGlosas.id}}">
+                                                                {{tiposGlosas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+                   
+				<div class="col-12">
+                                    
+				 <label  for="totalGlosa">totalGlosa:</label>
+                                    <input type="text" class="form-control" id="totalGlosa" name="totalGlosa" value="0" placeholder="totalGlosa:" ></input>
+                                </div>
+
+
+				<div class="col-12">
+                                    Estado Recepcion:
+				<select class="select-css"  id="estadoRecepcion_id"  name="estadoRecepcion_id">
+                                                           {% for estadosRecepcion in EstadosRecepcion %}
+                                                            <option value="{{estadosRecepcion.id}}">
+                                                                {{estadosRecepcion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+
+                                <div class="col-12">
+                                   
+                                    <input type="hidden" id="fechaRegistro" name="fechaRegistro" value="" > </input>
+                                </div>
+
+                                <div class="col-12">
+				 <label  for="estadoReg">EstadoRegistro:</label>
+                                    
+                                    <input type="text" class="form-control" id="estadoReg" name="estadoReg" value="A" placeholder="CantidadRechazadas:"  estadoReg> </input>
+                                </div>
+
+                                <div class="col-12">
+                                    Usuario:
+                                    <input type="text" id="usuarioRegistro_id" name="usuarioRegistro_id" value="{{Username_id}}" readonly > </input>
+                                </div>
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+		
+		
+		<textarea id="mensajesErrorModalGlosas" name="mensajesErrorModalGlosas" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+				<button type="button" class="btn btn-primary" id="saveBtnCrearGlosas" onclick="CrearGlosas()">Grabar!</button> 
+                        
+			    </div> <!-- CIERRA FOOTER -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+     <!-- FIN Espacio Modales  -->
+
+        </article>
+
+	
+
+<article id="DetalleGlosas">
+
+		
+<!-- DESDE AQUI ENCABEZADO GLOSA-->
+	<div style="position: relative; left: 150px; width:1200px; height:50px;>
+	  <form id="postFormGlosas" name="postFormGlosas">
+		<input type="hidden" name="post_id" id="post_id">
+		
+                      <div class="row">
+			<div class="col-sm-1">							
+					Factura:                                 	                              
+					<span class="miTexto" name="factura_idGlo" id="factura_idGlo"></span>
+				                             
+			</div>
+
+
+			<div class="col-sm-1">
+			 <label for="post_idGlo">Glosa No</label>
+				<span class="miTexto" name="post_idGlo" id="post_idGlo"></span>
+			</div>
+
+
+			<div class="col-sm-1">
+			 <label for="post_idGloDet">Detalle Glosa No</label>
+				<span class="miTexto" name="post_idGloDet" id="post_idGloDet"></span>
+			</div>
+
+
+			<div class="col-sm-1">		                                   
+                                   <span class="miTexto" name="sedesClinica_idGlo" id="sedesClinica_idGlo" hidden></span>
+			</div>
+
+					
+
+                     				   <div class="col-sm-1">
+
+                                    EstadoRadica:
+				<select class="select-css"  id="estadoRadicacion_idGlo"  name="estadoRadicacion_idGlo">
+                                                           {% for estadosRadicacion in EstadosRadicacion %}
+                                                            <option value="{{estadosRadicacion.id}}">
+                                                                {{estadosRadicacion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+		
+
+		
+
+				<div class="col-sm-1">
+                                    Tipo Glosa:
+				<select class="select-css"  id="tipoGlosa_idGlo"  name="tipoGlosa_idGlo" >
+                                                           {% for tiposGlosas in TiposGlosas %}
+                                                            <option value="{{tiposGlosas.id}}">
+                                                                {{tiposGlosas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+
+			<div class="col-sm-1">
+                                    EstadoRecepcion:
+				<select class="select-css"  id="estadoRecepcion_idGlo"  name="estadoRecepcion_idGlo">
+                                                           {% for estadosRecepcion in EstadosRecepcion %}
+                                                            <option value="{{estadosRecepcion.id}}">
+								  {{estadosRecepcion.nombre}}	
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+		
+
+		<div class="col-sm-1">
+			<button type="button" class="btn btn-primary btn-sm" id="saveBtnGuardarGlosa" onclick="GuardaGlosasEstados()">Guardar !</button> 
+		 </div>
+		<div class="col-sm-1">
+               <input type="button" style="height:10px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnGlosas"  name="BtnGlosas" value="AdicionarFactura" onclick= "GlosasAdicionar()" >				    
+		</div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+	</div>
+<!-- FIN ENCABEZADO -->
+
+<!-- PRIMER DATATABLE  -->
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaGlosasDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+				<th>Accion </th>                            
+				<th>id</th>
+				<th>Factura</th>
+				<th>valorGlosa</th>
+				<th>valorAceptado</th>
+				<th>valorNotasCredito</th>	
+				<th>valorSoportado</th>
+				<th>Delete</th>    		
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                      
+                                        </table>
+                                    </div>
+                  <!--              </div> -->
+
+<!-- FIN PRIMER DATATABLE  -->
+
+		<!-- AQUI DATATABLE GENERALPARA DETALLE GLOSAS -->
+
+
+	 <!--   <div class="container my-2" style="margin-top:400px;">   -->        
+   			   <div class="row">
+                                        <table  id= "tablaGlosasDetalleRips" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>      
+				<th>Accion </th>                            
+				<th>Tipo </th>                            
+				<th>id</th>
+				<th>#</th>                            
+				<th>ItemFac</th>
+				<th>Cod </th>                            
+				<th>Nombre </th>                            
+				<th>vrServicios </th>                            
+				<th>valorGlosa</th>
+				<th>valorSoportado</th>
+				<th>valorAceptado</th>
+				<th>valorNotasCredito</th>	
+				<th>Delete</th>    		
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+		<!-- FIN DATATABLE GENERALPARA DETALLE GLOSAS -->
+
+	            <!-- Espacio Modales Detalle Glosas  RIPS-->
+
+            <div class="modal fade" id="crearModelGlosasDetalleRips" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-dialog-scrollable" modal-dialog-center  role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                         <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Detalle Glosa</font> </div>
+                                        
+			<button type="button" class="btn btn-primary" id="saveBtnCrearGlosasDetalleRips" onclick="GuardarGlosasDetalleRips()">Grabar!</button> 
+			<button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormGlosasDetalleRips" name="postFormGlosasDetalleRips">
+                               
+
+                      <div class="row">
+
+			 <div class="col-2">
+				<input type="hidden" class="form-control form-control-sm" name="post_idGloDetRips" id="post_idGloDetRips">
+			   </div>
+
+			 <div class="col-2">
+				Id:
+			 <span class="miTexto" name="glosaGloDetRips" id="glosaGloDetRips"></span>
+
+			   </div>
+
+				  <div class="col-1">
+					                                   
+                                    <input type="hidden" class="form-control" id="sedesClinica_id" name="sedesClinica_id"  value="{{Sede}}" readonly></input>
+                                </div>
+						  
+			 <div class="col-6">
+				tipo Rips:
+			 <span class="miTexto" name="tipoGloDetRips" id="tipoGloDetRips"></span>
+
+			   </div>
+
+
+				<div class="col-6">
+					
+                                   	 <label  for="itemFacturaGloDetRips">itemFactura:</label>
+                       			 <span class="miTexto" name="itemFacturaGloDetRips" id="itemFacturaGloDetRips"></span>
+
+                                </div>
+
+				<div class="col-3">
+				
+                                   	 <label  for="codigoGloDetRips">Codigo:</label>
+                               			 <span class="miTexto" name="codigoGloDetRips" id="codigoGloDetRips"></span>
+
+                                </div>
+
+
+				<div class="col-10">
+					
+                                   	 <label  for="nombreGloDetRips">Nombre:</label>
+				 <span class="miTexto" name="nombreGloDetRips" id="nombreGloDetRips"></span>
+
+                                </div>
+
+
+
+                                <div class="col-1">
+                                   
+                                    <input type="hidden" id="fechaRegistroGloDetRips" name="fechaRegistroGloDetRips" value="" > </input>
+                                </div>
+
+                                <div class="col-4">
+				 <label  for="estadoRegRipsGloDetRips">EstadoRegistro:</label>
+                                     <span class="miTexto" name="estadoRegRipsGloDetRips" id="estadoRegRipsGloDetRips"></span>
+                                </div>
+
+              
+				<div class="col-4">
+                                    		
+				 <label  for="vrServicioGloDetRips">vrServicio:</label>
+				  <span class="miTexto" name="vrServicioGloDetRips" id="vrServicioGloDetRips"></span>
+                                   <!-- <input type="text" class="form-control form-control-sm" id="vrServicioGloDetRips" name="vrServicioGloDetRips" value="0"  readonly></input> -->
+                                </div>
+
+
+
+				<div class="col-4">
+                          				
+
+				<div class="col-4">
+                                    		
+				 <label  for="valorGlosadoGloDetRips">valorGlosado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="valorGlosadoGloDetRips" name="valorGlosadoGloDetRips" value="0"  ></input>
+                                </div>
+
+
+				<div class="col-4">
+                                    		
+				 <label  for="vAceptadoGloDetRips">vAceptado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="vAceptadoGloDetRips" name="vAceptadoGloDetRips" value="0" ></input>
+                                </div>
+
+				<div class="col-4">
+                                    		
+				 <label  for="valorSoportadoGloDetRips">valorSoportado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="valorSoportadoGloDetRips" name="valorSoportadoGloDetRips" value="0"  ></input>
+                                </div>
+
+			<div class="col-4">
+                                    Motivo Glosa:
+				<select class="select-css"  id="motivoGlosa_idGloDetRips"  name="motivoGlosa_idGloDetRips">
+                                                           {% for motivosGlosas in MotivosGlosas %}
+                                                            <option value="{{motivosGlosas.id}}">
+                                                                {{motivosGlosas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+
+
+			<div class="col-4">
+                                    		
+				 <label  for="notasCreditoGlosaGloDetRips">notasCreditoGlosa:</label>
+                                    <input type="text" class="form-control form-control-sm" id="notasCreditoGlosaGloDetRips" name="notasCreditoGlosaGloDetRips" value="0"  ></input>
+                                </div>
+
+				<div class="col-4">
+                                    		
+				 <label  for="observacionesGloDetRips">Observaciones:</label>
+                                    <input type="text" class="form-control form-control-sm" id="observacionesGloDetRips" name="observacionesGloDetRips" value=""  ></input>
+                                </div>
+
+
+			
+			<div class="col-4">
+                                    		
+				 <label  for="mensajesGloDetRips">Mensajes:</label>
+				<textarea id="mensajesGloDetRips" name="mensajesGloDetRips" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+     			 <div class="modal-footer">
+
+
+					<textarea id="mensajesErrorGlosasDetalleModalRips" name="mensajesErrorGlosasDetalleModalRips" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+	<button type="button" class="btn btn-primary" id="saveBtnCrearGlosasDetalle" onclick="GuardarGlosasDetalleRips()">Grabar!</button> 
+
+                                    </div> <!-- CIERRA FOOTER -->
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+	            <!-- Espacio Modal  Glosa Adicionar -->
+
+            <div class="modal fade" id="crearModelGlosasAdicionar" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable  modal-dialog-center" role="document" modal-lg>
+                    <div class="modal-content">
+                        <div class="modal-header">
+	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Adicionar Glosa a Factura</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearGlosasAdicionar" onclick="CrearGlosasAdicionar()">Grabar!</button> 
+                        </div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormGlosasAdicionar" name="postFormGlosasAdicionar">
+
+                                <input type="hidden" name="post_id" id="post_id">
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+
+				  <div class="col-4">
+					                                   
+                                    <input type="hidden" class="form-control" id="sedesClinicaAdicionar_id" name="sedesClinicaAdicionar_id"  value="{{Sede}}" readonly></input>
+                                </div>
+
+
+				<div class="col-12">
+                                   	 <label class="visually-hidden" for="observacionesAdicionar">observaciones:</label>
+                               
+					 <input type="text"  class="form-control" id="observacionesAdicionar" name="observacionesAdicionar" placeholder="observaciones"  >
+                                </div>
+
+
+				<div class="col-12">
+                                   	 Factura:
+                               
+					 <input type="text" class="form-control" id="facturaAdicionar_id" name="facturaAdicionar_id" placeholder="factura_id"  >
+                                </div>
+
+
+			
+				<div class="col-12">
+                                    
+				 <label  for="totalGlosaAdicionar">valorGlosa:</label>
+                                    <input type="text" class="form-control" id="totalGlosaAdicionar" name="totalGlosaAdicionar" value="0" placeholder="totalrGlosa:" ></input>
+                                </div>
+
+			
+                                <div class="col-12">
+                                   
+                                    <input type="hidden" id="fechaRegistroAdicionar" name="fechaRegistroAdicionar" value="" > </input>
+                                </div>
+
+                                <div class="col-12">
+				 <label  for="estadoRegAdicionar">EstadoRegistro:</label>
+                                    
+                                    <input type="text" class="form-control" id="estadoRegAdicionar" name="estadoRegAdicionar" value="A" placeholder="CantidadRechazadas:"  readonly> </input>
+                                </div>
+
+                                <div class="col-12">
+                                    Usuario:
+                                    <input type="text" id="usuarioRegistroAdicionar_id" name="usuarioRegistroAdicionar_id" value="{{Username_id}}" readonly > </input>
+                                </div>
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+		
+		
+		<textarea id="mensajesErrorModalGlosasAdicionar" name="mensajesErrorModalGlosasAdicionar" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+				<button type="button" class="btn btn-primary" id="saveBtnCrearGlosasAdicionar" onclick="CrearGlosasAdicionar()">Grabar!</button> 
+                        
+			    </div> <!-- CIERRA FOOTER -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+	            <!-- FIN Espacio Modal  Glosa Adicionar -->
+
+
+     <!-- FIN Espacio Modales  -->
+
+
+</article>
+
+<article id = "NotasCredito">
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnNotasCredito"  name="BtnNotasCreditos" value="Adicionar" onclick= "NotasCredito()" >				    
+		</div>
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaNotasCredito" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+					      <th>Seleccionar</th> 
+						<th>id</th>
+						<th>Servicio</th>
+				                <th>FechaNota</th>
+				                <th>ValorNota</th>
+				                <th>FecReg</th>
+				                <th>usuarioReg</th> 
+					        <th>descripcion</th> 
+						<th>Seleccionar</th>                                
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                      
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+	            <!-- Espacio Modales  Glosas-->
+
+            <div class="modal fade" id="crearModelNotasCredito" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable  modal-dialog-center" role="document" modal-lg>
+                    <div class="modal-content">
+                        <div class="modal-header">
+	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Crear Notas Credito</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearNotasCredito" onclick="CrearNotasCredito()">Grabar!</button> 
+                        </div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormNotasCredito" name="postFormNotasCredito">
+
+                                <input type="hidden" name="post_id" id="post_id">
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+
+				  <div class="col-4">
+					                                   
+                                    <input type="hidden" class="form-control" id="sedesClinican_id" name="sedesClinican_id"  value="{{Sede}}" readonly></input>
+                                </div>
+
+				  <div class="col-8">
+                                        <label for="serviciosAdministrativosNC_id" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosNC_id"  tabindex= "0"
+                                                    name="serviciosAdministrativosNC_id"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+  
+				<div class="col-12">
+					fecha Nota:
+                                   	 <label class="visually-hidden" for="fechaNota">fechaNota:</label>
+                               
+					 <input type="datetime-local"  class="form-control" id="fechaNota" name="fechaNota" placeholder="fecha Nota"  >
+                                </div>
+
+                  
+				<div class="col-12">
+                                    
+				 <label  for="valorNotaNC">valor Nota:</label>
+                                    <input type="text" class="form-control" id="valorNotaNC" name="valorNotaNC" value="0" placeholder="valor Nota:" ></input>
+                                </div>
+
+                                <div class="col-12">
+                                    Descripcion:
+                                    <input type="text" id="descripcionNc" name="descripcionNc"  > </input>
+                                    <input type="hidden" id="usuarioRegistroNC_id" name="usuarioRegistroNC_id" value="{{Username_id}}" > </input>
+                                </div>
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+		
+		
+		<textarea id="mensajesErrorModalNotasCredito" name="mensajesErrorModalNotasCredito" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+				<button type="button" class="btn btn-primary" id="saveBtnCrearNotasCredito" onclick="CrearNotasCredito()">Grabar!</button> 
+                        
+			    </div> <!-- CIERRA FOOTER -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+     <!-- FIN Espacio Modales  -->
+
+</article>
+
+
+<article id="DetalleNotasCredito">
+
+		<div align="left" height="20px" width="200px">
+			 <label  for="notaCreditoId">Nota Credito:</label>
+
+                         <input type="text"  id="notaCreditoId" name="notaCreditoId" value="0"  readonly></input>
+                         <input type="text"  id="notaCreditoDetalleId" name="notaCreditoDetalleId" value="0"  readonly></input>
+
+                                    
+				<label  for="tipoNotaCredito">Tipo Nota Credito:</label>
+				<select   id="tipoNotaCredito"  name="tipoNotaCredito">
+                                                           {% for tiposNotasCredito in TiposNotasCredito %}
+                                                            <option value="{{tiposNotasCredito.id}}">
+                                                                {{tiposNotasCredito.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                 
+				 <label  for="facturaDetalle">Factura:</label>
+                                    <input type="text"  id="facturaDetalle" name="facturaDetalle" value="0" placeholder="factura" ></input>
+
+				 <label  for="valorNotaDetalle">Valor:</label>
+                                    <input type="text"  id="valorNotaDetalle" name="valorNotaDetalle" value="0" placeholder="valor Nota" ></input>
+
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="50px" id="BtnNotasCreditoDetalle"  name="BtnNotasCreditoDetalle" value="Adicionar" onclick= "CrearNotasCreditoDetalle()" >				    
+
+		</div>
+
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaNotasCreditoDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+					      <th>Seleccionar</th> 
+						<th>id</th>
+						<th>NotaCredito</th>
+						<th>factura</th>
+				                <th>ValorNota</th>
+				                <th>TipoNota</th>
+				                <th>FecReg</th>
+				                <th>Usuario</th>
+				                <th>tot.Fact</th> 
+				                <th>tot.Glosas</th> 
+				                <th>tot.NC</th> 
+				                <th>saldoFact</th> 
+                              
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                      
+                                        </table>
+
+
+                                        <table  id= "tablaNotasCreditoDetalleRips" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+					      <th>Seleccionar</th> 
+						<th>tipo</th>
+						<th>id</th>
+						<th>consec</th>
+						<th>itemFactura</th>
+						<th>codigo</th>
+						<th>nombre</th>
+						<th>vrServicio</th>
+				                <th>ValorNota</th>		              
+                            			<th>Borrar</th> 
+
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                      
+                                        </table>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+	            <!-- Espacio Modales Detalle Glosas -->
+
+            <div class="modal fade" id="crearModelNotasCreditoDetalleRips" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-dialog-scrollable" modal-dialog-center  role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                         <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Detalle Glosa</font> </div>
+                                        
+			<button type="button" class="btn btn-primary" id="saveBtnCrearNotasCreditoDetalleRips" onclick="GuardarNotasCreditoDetalleRips()">Grabar!</button> 
+			<button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormNotasCreditoDetalleRips" name="postFormNotasCreditoDetalleRips">
+                               
+
+                      <div class="row">
+
+			 <div class="col-2">
+			<input type="text" class="form-control form-control-sm" name="post_idRipsId" id="post_idRipsId">
+				<input type="text" class="form-control form-control-sm" name="post_idNotasCreditoDetalle" id="post_idNotasCreditoDetalle">
+			   </div>
+
+				<div class="col-6">
+					
+                                   	 <label  for="tipoNotasCreditoDetalleRips">Tipo de Rips:</label>
+                       			 <span class="miTexto" name="tipoNotasCreditoDetalleRips" id="tipoNotasCreditoDetalleRips"></span>
+                                </div>
+
+
+
+				<div class="col-6">
+					
+                                   	 <label  for="itemFacturaNotasCreditoDetalleRips">itemFactura:</label>
+                       			 <span class="miTexto" name="itemFacturaNotasCreditoDetalleRips" id="itemFacturaNotasCreditoDetalleRips"></span>
+                                </div>
+
+
+				<div class="col-6">
+					
+                                   	 <label  for="codigoNotasCreditoDetalleRips">itemFactura:</label>
+                       			 <span class="miTexto" name="codigoNotasCreditoDetalleRips" id="codigoNotasCreditoDetalleRips"></span>
+                                </div>
+
+				<div class="col-6">
+					
+                                   	 <label  for="nombreNotasCreditoDetalleRips">Nombre:</label>
+                       			 <span class="miTexto" name="nombreNotasCreditoDetalleRips" id="nombreNotasCreditoDetalleRips"></span>
+                                </div>
+
+
+
+             
+				<div class="col-4">
+                                    		
+				 <label  for="vrServicioNotasCreditoDetalleRips">vrServicio:</label>
+				  <span class="miTexto" name="vrServicioNotasCreditoDetalleRips" id="vrServicioNotasCreditoDetalleRips"></span>
+                                </div>
+
+                        		
+				<div class="col-4">
+                                    		
+				 <label  for="valorNotaNotasCreditoDetalleRips">valor Nota credito:</label>
+                                    <input type="text" class="form-control form-control-sm" id="valorNotaNotasCreditoDetalleRips" name="valorNotaNotasCreditoDetalleRips" value="0"  ></input>
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+     			 <div class="modal-footer">
+
+
+					<textarea id="mensajesErrorNotasCreditoDetalleRips" name="mensajesErrorNotasCreditoDetalleRips" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+	<button type="button" class="btn btn-primary" id="saveBtnCrearNotasCreditoGlosasDetalleRips" onclick="GuardarNotasCreditoDetalleRips()">Grabar!</button> 
+
+                                    </div> <!-- CIERRA FOOTER -->
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+
+</article>
+
+
+
+<article id="TotalesGlosas">
+
+		<!-- AQUI DATATABLE GENERALPARA DETALLE GLOSAS -->
+
+
+	 <!--   <div class="container my-2" style="margin-top:400px;">   -->        
+   			   <div class="row">
+                                        <table  id= "tablaGlosasTotalesDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>      
+				<th>Accion </th>                            
+				<th>tipo</th>
+				<th>id</th>
+				<th>consec</th>
+				<th>itemFactura</th>
+				<th>codigo</th>
+				<th>nombre</th>
+				<th>glosaNombre</th>
+				<th>vrServicio</th>
+		
+				<th>valorGlosa</th>
+				<th>valorAceptado</th>
+				<th>valorNotasCredito</th>	
+				<th>valorSoportado2</th>		
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+		<!-- FIN DATATABLE GENERALPARA DETALLE GLOSAS -->
+
+
+
+</article>
+
+
+
+
+
+
+
+
+     
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+<span> ... </span>
+ 	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+<div class="marco">
+    <ul class="tabs">
+
+     
+    </ul>
+</div>
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,279 @@
+*{
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body{
+	background: #D4D4D4;
+	font-family: 'Open sans';
+}
+
+table {     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 8px;    margin: 10px;     width: 480px; text-align: left;    border-collapse: collapse; }
+
+th {     font-size: 8px;       padding: 8px;     background: #b9c9fe;
+    border-top: 4px solid #aabcfe;    border-bottom: 1px solid #fff; color: #039;   text-align: left; font-weight: bold;
+    }
+
+td {   font-size: 12px;    padding: 8px;     background: #e8edff;    
+    color: #669;      text-align: left; height: 2px;
+  }
+
+ tr {
+  height: 1px;
+  }
+
+
+
+.wrap{
+	width: 1400px;
+	max-width: 90%;
+	margin: 30px auto;
+}
+
+ul.tabs{
+	width: 100%;
+	background: #363636;
+	list-style: none;
+	display: flex;
+}
+
+ul.tabs li{
+	width: 18%;
+}
+
+ul.tabs li a{
+	color: #fff;
+	text-decoration: none;
+	font-size: 16px;
+	text-align: center;
+
+	display: block;
+	padding: 20px 0px;
+}
+
+.active{
+	background: #0984CC;
+}
+
+ul.tabs li a .tab-text{
+	margin-left: 8px;
+}
+
+.secciones{
+	width: 100%;
+	background: #fff;
+	height: 350px;
+}
+
+.paciente{
+	width: 100%;
+	background: #fff;
+	height: 50px;
+}
+
+.secciones article{
+	padding: 30px;
+}
+
+.secciones article p{
+	text-align: justify;
+}
+
+
+@media screen and (max-width: 700px){
+	ul.tabs li{
+		width: none;
+		flex-basis: 0;
+		flex-grow: 1;
+	}
+}
+
+
+
+@media screen and (max-width: 450px){
+	ul.tabs li a{
+		padding: 15px 0px;
+	}
+
+	ul.tabs li a .tab-text{
+		display: none;
+	}
+
+	.secciones article{
+		padding: 20px;
+	}
+}
+
+.scrollable
+{
+
+    height: 150px;
+    overflow:scroll;
+}
+input[type="date"] {
+  --color: gray;
+
+  border: 2px solid var(--color);
+  font-size: 1rem;
+  background: #f8f9f9;
+  color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+
+  &::-webkit-datetime-edit {
+    margin-right: 0.5rem;
+  }
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    background: #000;
+    border-radius: 8px;
+    padding: 4px 10px;
+  }
+
+  &::-webkit-datetime-edit-text {
+    color: cyan;
+  }
+
+  &::-webkit-datetime-edit-day-field:focus,
+  &::-webkit-datetime-edit-month-field:focus,
+  &::-webkit-datetime-edit-year-field:focus {
+    background: indigo;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter:invert(1);
+  }
+}
+
+input[type="datetime-local"] {
+  --color: gray;
+
+  border: 2px solid var(--color);
+  font-size: 1rem;
+  background: #f8f9f9;
+  color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+
+  &::-webkit-datetime-edit {
+    margin-right: 0.5rem;
+  }
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    background: #000;
+    border-radius: 8px;
+    padding: 4px 10px;
+  }
+
+  &::-webkit-datetime-edit-text {
+    color: cyan;
+  }
+
+  &::-webkit-datetime-edit-day-field:focus,
+  &::-webkit-datetime-edit-month-field:focus,
+  &::-webkit-datetime-edit-year-field:focus {
+    background: indigo;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter:invert(1);
+  }
+}
+
+
+.mensajes
+{
+
+   display: inline-block;
+   color:green;
+   font-size:8px;
+   line-height:8px;
+   font-family: Calibri;
+   width: 800px;
+   height: 20px;
+   position: relative;
+
+}
+
+
+.mensajesError 
+{
+
+   display: inline-block;
+   color:red;
+   font-size:8px;
+   line-height:8px;
+   font-family: Calibri;
+   width: 800px;
+   height: 20px;
+   position: relative;
+
+}
+
+
+
+.dataTables_filter input {
+    height: 25px !important; /* Ajusta según sea necesario */
+    padding: 2px !important;
+    font-size: 12px !important;
+    width: 100px;
+    text-align: left;
+
+}
+
+/* Ajusta el margen contenedor si es necesario */
+.dataTables_filter {
+    padding-top: 5px;
+}
+
+.dataTables_wrapper .dataTables_footer {
+    display: none;
+}
+
+.texto-span {
+     
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        height: 100vh;
+	font-style: italic;
+	color:blue;
+	font-size: 10px !important;
+
+}
+
+
+
+#flex-container1{
+  display: flex;
+  justify-content: center;
+
+}
+
+#flex-container1 div{
+  width: 1300px;
+  height: 15px;
+	  color: #FFF;
+  text-align: center;
+  line-height: 15px;
+  /* margin: 10px; */
+  font-size: 8px;
+  font-family: 'Roboto', sans-serif;
+  /* background-color: #9B59B6;*/
+}
+
+#btnRefrescar {
+  border: 1px solid #ccc;
+  padding: 0px;
+  height: 10px;
+}
+
+#btnCargaHc1 {
+  border: 1px solid #ccc;
+  padding: 0px;
+  height: 10px;
+}

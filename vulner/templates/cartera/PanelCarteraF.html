@@ -1,0 +1,650 @@
+{% extends "cartera/menuCarteraF.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelCartera.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsCartera.js' %} defer >         </script>
+
+
+
+<div class="marco">
+    <ul class="tabs">
+   <li><a href="#Empresas"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Empresas</a></li>
+        <li><a href="#PagosEmpresas"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>Pagos Empresas</a></li>   
+        <li><a href="#Cartera"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>Cartera</a></li>   
+        <li><a href="#CarteraDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>Pagos Factura</a></li>   
+	 <li><a href="#Caja"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Caja</a></li>
+    </ul>
+</div>
+
+<style>
+
+.my-row-class {
+    height: 30px;
+}
+
+</style>
+<script>
+
+function RefrescarPantalla() {
+ 	 location.reload();
+}
+</script>
+
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+
+
+        <article id="Empresas">
+      
+	
+            <form action="/empresas/" method="get" id="FormEmpresas">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+			
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+ 	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaEmpresas" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+						<th>Accion </th>
+                                                <th>id</th>
+                                                <th>TipoEmpresa</th>
+                                                <th>TipoDoc</th>
+                                                <th>Documento</th>
+                                                <th>Empresa</th>
+                                                <th>CodigoEapb</th>
+                                                <th>Departamento</th>
+                                                <th>Municipio</th>
+                                                <th>Telefono</th>
+                                                <th>Representante</th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>				
+                                       </table>
+                                    </div>
+                                </div>
+
+        </article>
+
+
+
+
+<article id="Caja">
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+ 	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaCaja" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+						<th>Accion </th>
+						<th>Edita </th>
+                                                <th>id</th>
+                                                <th>Fecha</th>
+                                                <th>Entrega</th>
+                                                <th>Efec</th>
+                                                <th>TDeb</th>
+                                                <th>TCred</th>
+                                                <th>Cheq</th>
+                                                <th>Total</th>
+                                                <th>Recibe</th>
+                                                <th>Superviza</th>
+                                                <th>Estado</th>
+                                                <th>EfecEspera</th>
+                                                <th>TDebEspera</th>
+                                                <th>TCredEspera</th>
+                                                <th>CheqEspera</th>
+                                                <th>TotalEspera</th>
+						<th>Servicio</th>
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+ 					
+                                        </table>
+                                    </div>
+                                </div>
+
+
+	            <!-- Espacio Modales  Glosas-->
+
+            <div class="modal fade" id="crearModelCaja" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Caja</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCaja" onclick="GuardarCaja()">Grabar!</button> 
+                        </div>
+		
+                        <div class="modal-body">
+			
+  			  <form id="postFormCaja" name="postFormCaja">
+
+                                <input type="hidden" name="post_id" id="post_id">
+                                <input type="hidden" name="cajaId" id="cajaId">
+
+             			  <input type="hidden" id="username_id" name="username_idC" value="{{Username_id}}">
+               			<input type="hidden" id="sedeC" name="sedeC" value="{{Sede}}">
+
+                      <div id="flex-container-caja">
+				<div>
+
+					                                   
+                                    <input type="hidden"  id="sedesClinica_id" name="sedesClinica_id"  value="{{Sede}}" readonly></input>
+                                
+                                       <label for="serviciosAdministrativos_id" >ServiciosAdmon:</label>
+
+                                            <select  id="serviciosAdministrativos_id"  tabindex= "0"
+                                                    name="serviciosAdministrativos_id"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+					fecha:
+                                                
+					 <input type="date"  id="fecha" name="fecha" placeholder="fecha"  readonly></input>
+
+                                        <label for="usuarioEntrega_id" >Entrega:</label>
+
+                                            <select  id="usuarioEntrega_id"  tabindex= "0"
+                                                    name="usuarioEntrega_id"
+                                                    required>
+                                                {% for usuarioEngrega in UsuarioEntrega  %}
+                                                <option value="{{usuarioEngrega.id}}"> {{usuarioEngrega.nombre}}</option>
+                                                {% endfor %}
+                                           </select>
+
+                                        <label for="usuarioRecibe_id" >Recibe:</label>
+
+                                            <select  id="usuarioRecibe_id"  tabindex= "0"
+                                                    name="usuarioRecibe_id"
+                                                    required>
+                                                {% for usuarioRecibe in UsuarioRecibe   %}
+                                                <option value="{{usuarioRecibe.id}}"> {{usuarioRecibe.nombre}}</option>
+                                                {% endfor %}
+                                           </select>
+
+                                        <label for="usuarioSuperviza_id" >Superviza:</label>
+
+                                            <select  id="usuarioSuperviza_id"  tabindex= "0"
+                                                    name="usuarioSuperviza_id"
+                                                    required>
+                                                {% for usuarioSuperviza in UsuarioSuperviza   %}
+                                                <option value="{{usuarioSuperviza.id}}"> {{usuarioSuperviza.nombre}}</option>
+                                                {% endfor %}
+                                           </select>
+					Total Efectivo: 
+				<label for="totalEfectivo" >totalEfectivo:</label>
+                              
+					 <input type="text"   id="totalEfectivo" name="totalEfectivo" placeholder="totalEfectivo"></input>
+					Total EsperadoEfectivo:                               
+					 <input type="text"   id="totalEfectivoEsperado" name="totalEfectivoEsperado" placeholder="totalEfectivoEsperado" readonly></input>
+					Total Tarjetas Debito:                               
+					 <input type="text"   id="totalTarjetasDebito" name="totalTarjetasDebito" placeholder="totalTarjetasDebito"></input>
+
+					Total Tarjetas Debito Esperado:                               
+					 <input type="text"   id="totalTarjetasDebitoEsperado" name="totalTarjetasDebitoEsperado" placeholder="totalTarjetasDebitoEsperado" readonly></input>
+					Total Tarjetas Credito:                               
+					 <input type="text"   id="totalTarjetasCredito" name="totalTarjetasCredito" placeholder="totalTarjetasCredito"></input>
+
+					Total Tarjetas Credito Esperado:                               
+					 <input type="text"   id="totalTarjetasCreditoEsperado" name="totalTarjetasCreditoEsperado" placeholder="totalTarjetasCreditoEsperado" readonly></input>
+					Total Cheques:                               
+					 <input type="text"   id="totalCheques" name="totalCheques" placeholder="totalCheques"></input>
+					Total Cheques Esperado:                               
+					 <input type="text"   id="totalChequesEsperado" name="totalChequesEsperado" placeholder="totalChequesEsperado" readonly></input>
+					Total :                               
+					 <input type="text"   id="total" name="total" placeholder="total" ></input>
+					Total Esperado:                               
+					 <input type="text"   id="totalEsperado" name="totalEsperado" placeholder="totalEsperado" readonly></input>
+					Estado Caja:                               
+					 <input type="text"   id="estadoCaja" name="estadoCaja" placeholder="estadoCaja"></input>
+                                </div>
+
+                                </div> 
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+
+		<textarea id="mensajesErrorModalCaja" name="mensajesErrorModalCaja" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>			
+	  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+				<button type="button" class="btn btn-primary" id="saveBtnGuardarCaja" onclick="GuardarCaja()">Grabar!</button> 
+                        
+			    </div> <!-- CIERRA FOOTER -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+     <!-- FIN Espacio Modales  -->
+
+</article>
+
+        <article id="Cartera">
+      
+	
+            <form action="/carteraVencida/" method="get" id="FormCarteraVencida">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+			
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+ 	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaCartera" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+						<th>Accion </th>
+
+                                                <th>factura</th>
+                                                <th>nombre</th>
+                                                <th>fecha</th>
+                                                <th>empresa</th>
+                                                <th>valor</th>
+                                                <th>pagos</th>
+                                                <th>saldo</th>
+                                                <th></th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>				
+                                       </table>
+                                    </div>
+                                </div>
+
+        </article>
+
+
+
+
+        <article id="PagosEmpresas">
+      
+	
+            <form method="get" id="FormCarteraVencida">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+			
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+ 	<div class="container my-2">          
+		<input type="button" style="height:30px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnPagosEmpresas"  name="BtnPagosEmpresas" value="Adicionar" onclick= "AdicionarPagosEmpresas()" >
+
+   			   <div class="row">
+                                        <table  id= "tablaPagosEmpresas" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+						<th>Editar </th>
+                                                <th>id</th>
+                                                <th>Empresa</th>
+                                                <th>Fecha</th>
+                                                <th>FormaPago</th>
+                                                <th>TipoPago</th>
+                                                <th>Valor</th>
+                                                <th>Descripcion</th>
+                                                <th>FechaRegistro</th>
+                                                <th>Radicado</th>
+                                                <th>Servicio</th>
+						<th>CargarPagos</th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>				
+                                       </table>
+                                    </div>
+                                </div>
+
+	            <!-- Espacio Modales Pagos Empresas-->
+
+            <div class="modal fade" id="crearModelPagosEmpresas" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Pagos Empresas</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnPagosEmpresas" onclick="GuardarPagosEmpresas()">Grabar!</button> 
+                        </div>
+		
+                        <div class="modal-body">
+			
+  			  <form id="postFormPagosEmpresas" name="postFormPagosEmpresas">
+
+                                <input type="hidden" name="post_id" id="post_id">
+                                <input type="hidden" name="usernamePago" id="usernamePago" value="{{Username_id}}">
+                                <input type="hidden" name="sedePago" id="sedePago" value="{{Sede}}">
+
+                      <div id="flex-container-pagosEmpresas">
+				<div>
+
+			<input type="text"   id="idPago" name="idPago" placeholder="pagoId" readonly></input>
+
+
+
+	 			<select  id="empresaPago" name="empresaPago"
+                                                    hidden>
+                                                {% for empresas in Empresas %}
+                                                <option value="{{empresas.id}}"> {{empresas.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+					 <input type="date"  id="fechaPago" name="fechaPago" placeholder="fechaPago"></input>
+
+
+					 <select  id="formaPago"          name="formaPago"
+                                                    required>
+                                                {% for formasPagos in FormasPagos %}
+                                                <option value="{{formasPagos.id}}"> {{formasPagos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+					 <select  id="tipoPago"   name="tipoPago"
+                                                    required>
+                                                {% for tiposPagos in TiposPagos %}
+                                                <option value="{{tiposPagos.id}}"> {{tiposPagos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+		<input type="text"   id="valorPago" name="valorPago" placeholder="valorPago" ></input>
+		<input type="text"   id="descripcionPago" name="descripcionPago" placeholder="descripcion" ></input>
+		<input type="text"   id="radicado" name="radicado" placeholder="radicado" ></input>
+
+		
+					 <select  id="servicio"    name="servicio"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+
+	
+
+
+                                </div>
+
+                                </div> 
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+
+		<textarea id="mensajesErrorModalPagosEmpresas" name="mensajesErrorModalPagosEmpresas" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>			
+	  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                      
+			    </div> <!-- CIERRA FOOTER -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+     <!-- FIN Espacio Modales  -->
+
+	            <!-- Espacio Modales Pagos Empresas Detalle-->
+
+            <div class="modal fade" id="ModelPagosEmpresasDetalle" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Pagos Empresas Detalle</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnPagosEmpresasDetalle" onclick="GuardarPagosEmpresasDetalle()">Grabar!</button> 
+                        </div>
+		
+                        <div class="modal-body">
+
+  			  <form id="postFormPagosEmpresasDetalle" name="postFormPagosEmpresasDetalle">
+
+				<input type="text" id="usernamePago_id" name="usernamePago_id" value={{Username_id}}  readonly></input>
+				<input type="text" id="sedePago" name="sedePago" value={{Sede}}  readonly></input>
+
+	                      <div id="flex-container-pagosEmpresasMuestarPago">
+				<div>
+				
+				PagoId:
+				<input type="text" id="empresaPagoMuestra" name="empresaPagoMuestra" placeholder="empresaPagoMuestra"  readonly></input>
+				Valor Pago
+				<input type="text" id="valorPagoMuestra" name="valorPagoMuestra" placeholder="valorPagoMuestra"  readonly></input>
+				Descripcion
+				<input type="text" id="descripcionPagoMuestra" name="descripcionPagoMuestra" placeholder="descripcionPagoMuestra"   readonly></input>
+				Radicado Pago
+				<input type="text" id="radicadoPagoMuestra" name="radicadoPagoMuestra" placeholder="radicadoPago"  readonly></input>
+					
+
+				</div>
+				</div>
+
+
+
+                      <div id="flex-container-pagosEmpresasDetalle">
+				<div>
+
+
+		<input type="text"   id="valorPagoDetalle" name="valorPagoDetalle" placeholder="valorPago" ></input>
+		<input type="text"   id="facturaPago" name="facturaPago" placeholder="Factura a abonar" ></input>
+		<input type="text"   id="radicadoFactura" name="radicadoFactura" placeholder="radicadoFactura" ></input>
+
+		
+					 <select  id="servicioDetalle"    name="servicioDetalle"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                </div>
+                                </div> 
+
+                            </form>
+
+			<!--A Aqui viene el Datatable de las facturas relacionadas con el pago -->
+
+
+		<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaPagosEmpresasDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+						<th>Editar </th>
+                                                <th>id</th>
+                                                <th>Factura</th>
+                                                <th>Valor</th>
+                                                <th>RadicadoFactura</th>
+						<th>Borrar</th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>				
+                                       </table>
+                                    </div>
+                                </div>
+
+
+			<!-- FIN DATATABLE -->
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+
+		<textarea id="mensajesErrorModalPagosEmpresasDetalle" name="mensajesErrorModalPagosEmpresasDetalle" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>			
+	  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+                      
+			    </div> <!-- CIERRA FOOTER -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+     <!-- FIN Espacio Modales  EmpresasDetalle-->
+
+
+
+
+        </article>
+
+<article id="CarteraDetalle">
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+ 	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaCarteraDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+						<th>Edita </th>
+                                                <th>id</th>
+                                                <th>Empresa</th>
+                                                <th>Pago</th>
+                                                <th>Fecha</th>
+						<th>Factura</th>
+						<th>Valor</th>
+						<th>Pagos</th>
+						<th>Saldo</th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+ 					
+                                        </table>
+                                    </div>
+                                </div>
+
+
+	            <!-- Espacio Modales  Glosas-->
+
+     <!-- FIN Espacio Modales  -->
+
+</article>
+
+
+
+    
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+<span> ... </span>
+ 	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+<div class="marco">
+    <ul class="tabs">
+
+    </ul>
+</div>
+
+{% endblock %}
+
+
+
+
+

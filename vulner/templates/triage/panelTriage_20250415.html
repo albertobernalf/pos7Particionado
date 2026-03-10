@@ -1,0 +1,1282 @@
+{% extends "triage/menuTriage.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelTriage.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<script src={% static 'js/panelTabsTriage.js' %} defer>         </script>
+<script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
+
+<style>
+th ,tr{
+  border-style:solid;
+  border-color: #96D4D4;
+}
+
+
+</style>
+
+<div class="marco">
+<!-- <div class="wrap">  -->
+    <ul class="tabs">
+        <li><a href="#Triage"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Ingresos Triage </a></li>
+        <li><a href="#crearTriage"><span class="fa-solid fa-user-doctor-message"></span><span class="tab-text"> </span>
+            Creacion Triage</a></li>
+
+    </ul>
+</div>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<input type="hidden" id="username" name="username" value="{{Username}}">
+<input type="hidden" id="username_id" name="username_id"   value="{{Username_id}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+<input type="hidden" id="sede" name="sede" value="{{Sede}}">
+<input type="hidden" id="documento" name="documento" value="{{Documento}}">
+<input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+<input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+<input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+<input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+<input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+
+<div class="marco">
+<div class="secciones">
+    <article id="Triage">
+
+        <center><h4> Triage </h4></center>
+
+        <!-- Filtros de busqueda -->
+        <div class="row justify-content-center">
+            <div class=" col-lg-12" style="backgrouond-color:LightGray;">
+                <div class="card-block">
+                    <div style="height: 100px;">
+                        <form class="form-inline" action="/buscarTriage/" method="POST" id="formBuscarTriage">
+
+                            <input type="hidden" id="username" name="username" value="{{Username}}">
+			    <input type="hidden" id="username_id" name="username_id"   value="{{Username_id}}">
+                            <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada"
+                                   value="{{SedeSeleccionada}}">
+                            <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                            <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                            <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                            <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                            <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                            <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                            <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                            <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                            <input type="hidden" id="permisosDetalle" name="permisosDetalle"
+                                   value="{{PermisosDetalle}}">
+                            <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+
+                            <div class="row justify-content-center">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="busServicio"
+                                               class="col-sm-1 col-form-label col-form-label-sm">Servicio:</label>
+                                        <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                aria-label="" id="busServicio" name="busServicio">
+                                            {% for servicios in Servicios %}
+                                            <option value="{{servicios.id}}"> {{servicios.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="busSubServicio"
+                                               class="col-sm-1 col-form-label col-form-label-sm">SubServicio:</label>
+                                        <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                aria-label=""
+                                                id="busSubServicio" name="busSubServicio">
+                                            {% for subServicios in SubServicios %}
+                                            <option value="{{subServicios.id}}"> {{subServicios.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="busHabitacion"
+                                               class="col-sm-1 col-form-label col-form-label-sm">Hab:</label>
+                                        <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                aria-label=""
+                                                id="busHabitacion" name="busHabitacion">
+                                            {% for habitaciones in Habitaciones %}
+                                            <option value="{{habitaciones.id}}"> {{habitaciones.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="busTipoDoc"
+                                               class="col-sm-1 col-form-label col-form-label-sm">TipoDoc:</label>
+                                        <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                aria-label=""
+                                                id="busTipoDoc" name="busTipoDoc">
+                                            {% for tiposDoc in TiposDoc %}
+                                            <option value="{{tiposDoc.id}}"> {{tiposDoc.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-sm-1 control-label" for="busDocumento">DocNo:</label>
+                                        <input class="col-sm-12" style="height: 32px;" type="text" id="busDocumento"
+                                               name="busDocumento"></input>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="col-sm-1 control-label" for="busPaciente">Paciente:</label>
+                                        <input class="col-sm-10" style="height: 32px;" type="text" id="busPaciente"
+                                               name="busPaciente"></input>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="col-sm-1 control-label" for="busDesde">Desde:</label>
+                                        <input class="col-sm-6" type="datetime-local" id="busDesde"
+                                               name="busDesde"></input>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="col-sm-4 control-label"
+                                               for="busHasta">Hasta:</label>
+                                        <input class="col-sm-6" type="datetime-local" id="busHasta"
+                                               name="busHasta"></input>
+                                        <span id="error" name="error" style="color:blue">{{Error}}</span>
+                                        <input class="col-sm-4" type="submit" value="Buscar">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Fin  Filtros de busqueda -->
+
+
+
+        <!-- La tabla -->
+
+
+        <div class="row">
+
+            <div class="col-10" >
+                <div class="card-block">
+                    <div style="height: 400px; width:1400px; overflow: auto">
+                        <table class="table table-hover" id="tablaDatosTriage"
+                               style="height: 300px , background-color:LightGray; border: 2px solid black; border-radius: 10px; width:99%;">
+                            <thead>
+                            <th>Tipo Doc</th>
+                            <th>Documento</th>
+                            <th>Paciente</th>
+                            <th>Consec</th>
+                            <th>Cama</th>
+                            <th>Solicita</th>
+                            <th>Motivo</th>
+                            <th>Triage</th>
+                            <th>Editar</th>
+                            <th>Crear Admision</th>
+                            </thead>
+                            {% for triage in Triage %}
+                            <tr>
+                                <td>{{triage.tipoDoc}}</td>
+                                <td>{{triage.Documento}}</td>
+                                <td>{{triage.Nombre}}</td>
+                                <td>{{triage.Consec}}</td>
+                                <td>{{triage.camaNombre}}</td>
+                                <td>{{triage.Solicita}}</td>
+                                <td>{{triage.motivo}}</td>
+                                <td>{{triage.triage}}</td>
+                                <td>
+                                    <button class="btn btn-primary" type="submit">Editar</button>
+
+                                    <!-- Ops recuerde lo estoy haciendo por la click en la tabla  Todo esto deberia de arreglarlo mejo
+
+                   <a href="#" class="btn btn-primary eBtn1" role="button" data-toggle="modal" id="banda1"
+                                          onclick="findOneTriage( {{triage.tipoDoc}}  {{triage.Documento}}  {{Sede}})">Editar</a>
+    -->
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-primary" role="button" data-toggle="modal"
+                                       id="banda2"></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <!-- Fin La tabla -->
+
+        <!-- Espacio Modales del article-->
+
+
+
+
+        <!-- Edicion Modal de Triage -->
+
+
+        <!--
+               <div class="container"> -->
+        <div class="card">
+            <div class="myForm">
+                <form id="guardaTriageModal" method="POST" onsubmit="guardaTriageModal()">
+                    <div class="modal fade" id="modalActualizaTriage" tabindex="-1" role="dialog"
+                         style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Actualiza
+                                        Triage</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    {% if crearTriageForm.errors %}
+                                    <p style="color:Red;"> Revizar estos camos</p>
+
+                                    {% endif %}
+
+                                    <div class="row justify-content-center">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <label for="busServicioT"
+                                                       class="col-sm-8 col-form-label col-form-label-sm">Servicio:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                        aria-label="" id="busServicioT" name="busServicioT" disabled>
+                                                    {% for servicios in Servicios %}
+                                                    <option value="{{servicios.id}}"> {{servicios.nombre}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="busSubServicioP"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">SubServicio:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                        aria-label=""
+                                                        id="busSubServicioP" name="busSubServicioP" disabled>
+                                                    {% for subServicios in SubServicios %}
+                                                    <option value="{{subServicios.id}}"> {{subServicios.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="dependenciasP"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Hab:</label>
+                                                <input type="text" class="form-control" id="dependenciasP"
+                                                       name="dependenciasP" readonly>
+
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="tiposDoc" class="col-sm-10 col-form-label col-form-label-sm">TipoDoc:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                        aria-label=""
+                                                        id="tiposDoc" name="tiposDoc" disabled>
+                                                    {% for tiposDocumento in TiposDocumento %}
+                                                    <option value="{{tiposDocumento.id}}"> {{tiposDocumento.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+
+                                                <label class="col-sm-8 control-label"
+                                                       for="busDocumentoSel">DocNo:</label>
+                                                <input type="text" class="form-control" id="busDocumentoSel"
+                                                       name="busDocumentoSel" readonly>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label" for="motivo">Motivo:</label>
+                                                <input type="text" class="form-control" id="motivo" name="motivo"
+                                                       >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-12 control-label"
+                                                       for="examenFisico">ExaFisico:</label>
+                                                <input type="text" class="form-control" id="examenFisico"
+                                                       name="examenFisico" >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="frecCardiaca">FrecCardiaca:</label>
+                                                <input type="text" class="form-control" id="frecCardiaca"
+                                                       name="frecCardiaca" >
+
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label" for="frecRespiratoria">FrecRespiratoria:</label>
+                                                <input type="text" class="form-control" id="frecRespiratoria"
+                                                       name="frecRespiratoria" >
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="taSist">TensArtSistolica:</label>
+                                                <input type="text" class="form-control" id="taSist" name="taSist"
+                                                       >
+
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="taDiast">TensArtDiastolica:</label>
+                                                <input type="text" class="form-control" id="taDiast" name="taDiast"
+                                                       >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="taMedia">TensArtMedia:</label>
+                                                <input type="text" class="form-control" id="taMedia" name="taMedia"
+                                                       >
+                                            </div>
+
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label" for="glasgow">Glasgow:</label>
+                                                <input type="text" class="form-control" id="glasgow" name="glasgow"
+                                                       >
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label" for="peso">Peso:</label>
+                                                <input type="text" class="form-control" id="peso" name="peso" >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="tempreratura">Temperatura:</label>
+                                                <input type="text" class="form-control" id="temperatura"
+                                                       name="temperatura"
+                                                       >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label" for="estatura">Estatura:</label>
+                                                <input type="text" class="form-control" id="estatura" name="estatura"
+                                                       >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="glucometria">Glucometria:</label>
+                                                <input type="text" class="form-control" id="glucometria"
+                                                       name="glucometria"
+                                                       >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="saturacion">Saturacion:</label>
+                                                <input type="text" class="form-control" id="saturacion"
+                                                       name="saturacion"
+                                                       >
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="escalaDolor">EscalaDolor:</label>
+                                                <input type="text" class="form-control" id="escalaDolor"
+                                                       name="escalaDolor"
+                                                       >
+                                            </div>
+
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="tipoIngreso">TipoIngreso:</label>
+                                                <input type="text" class="form-control" id="tipoIngreso"
+                                                       name="tipoIngreso"
+                                                       >
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label"
+                                                       for="observaciones">Observacion:</label>
+                                                <input type="text" class="form-control" id="observaciones"
+                                                       name="observaciones" >
+                                            </div>
+
+                                            <div class="col">
+                                                <label class="col-sm-10 control-label" for="clasificacionTriage">ClasifTriage:</label>
+                                                <select class="form-select  h-10 w-50 form-control form-control-sm"
+                                                        aria-label=""
+                                                        id="clasificacionTriage" name="clasificacionTriage">
+                                                    {% for tiposTriage in TiposTriage %}
+                                                    <option value="{{tiposTriage.id}}"> {{tiposTriage.nombre}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            onclick="CierraModalTriage()">Close
+                                    </button>
+                                    <input type="button" class="btn btn-primary" value="save"
+                                           onclick="guardaTriageModal()">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--
+    </div>  -->
+
+
+        <!-- Fin Edicion Modal de Triage -->
+
+                    <!-- Crear Modal CrearAdmisionTriage  -->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="AdmisionTriage" method="POST" onsubmit="guardarAdmisionTriage()">
+                        <div class="modal fade" id="crearAdmTriage" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog  modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Creacion Admision desde
+                                            Triage</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                                        <input type="hidden" id="servicio" name="servicio" value="{{Servicio}}">
+                                        <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                                        <input type="hidden" id="username" name="username" value="{{Username}}">
+                                        <input type="hidden" id="username_id" name="username_id"
+                                               value="{{Username_id}}">
+                                        <input type="hidden" id="profesional" name="profesional"
+                                               value="{{Profesional}}">
+                                        <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                                        <input type="hidden" id="escogeModulo" name="escogeModulo"
+                                               value="{{EscogeModulo}}">
+
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <label for="busServicio2"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Servicio:</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                            aria-label="" id="busServicio2" name="busServicio2">
+                                                        {% for servicios in Servicios2 %}
+                                                        <option value="{{servicios.id}}"> {{servicios.nombre}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="busSubServicio2"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">SubServicios:</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-select  h-100 w-200 form-control form-control-sm"
+                                                            aria-label=""
+                                                            id="busSubServicio2" name="busSubServicio2">
+                                                        {% for subservicios in SubServicios %}
+                                                        <option value="{{subservicios.id}}"> {{subservicios.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="dependenciasIngreso"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Dependencia:</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-select  h-100 w-200 form-control form-control-sm"
+                                                            aria-label=""
+                                                            id="dependenciasIngreso" name="dependenciasIngreso"
+                                                    >
+                                                        {% for habitaciones in Habitaciones %}
+                                                        <option value="{{habitaciones.id}}"> {{habitaciones.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="tiposDoc2"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">TipoDoc:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="tiposDoc2"
+                                                           name="tiposDoc2" readOnly>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label class="col-sm-8 control-label"
+                                                       for="busDocumentoSel2">DocNo:</label>
+                                                <input type="text" class="form-control" id="busDocumentoSel2"
+                                                       name="busDocumentoSel2" readOnly>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <label for="dxIngreso"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Diagnostico:</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-select  h-100 w-200 form-control form-control-sm"
+                                                            aria-label="" id="dxIngreso" name="dxIngreso">
+                                                        {% for diagnosticos in Diagnosticos %}
+                                                        <option value="{{diagnosticos.id}}"> {{diagnosticos.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="busEspecialidad"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">Especialidad:</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-select  h-40 w-10 form-control form-control-sm"
+                                                            aria-label="" id="busEspecialidad" name="busEspecialidad"
+                                                    >
+                                                        {% for especialidades in Especialidades %}
+                                                        <option value="{{especialidades.id}}">
+                                                            {{especialidades.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="medicoIngreso"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">MedicoIng:</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-select  h-40 w-100 form-control form-control-sm"
+                                                            aria-label="" id="medicoIngreso" name="medicoIngreso"
+                                                    >
+                                                        {% for medicos in Medicos %}
+                                                        <option value="{{medicos.id}}"> {{medicos.nombre}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="viasIngreso"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">ViasDeIng:</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-select  h-40 w-150 form-control form-control-sm"
+                                                            aria-label="" id="viasIngreso" name="viasIngreso">
+                                                        {% for viasIngreso in ViasIngreso %}
+                                                        <option value="{{viasIngreso.id}}"> {{viasIngreso.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="causasExterna"
+                                                       class="col-sm-10 col-form-label col-form-label-sm">CausaExterna:</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-select  h-40 w-150 form-control form-control-sm"
+                                                            aria-label="" id="causasExterna" name="causasExterna"
+                                                    >
+                                                        {% for causasExterna in CausasExterna %}
+                                                        <option value="{{causasExterna.id}}"> {{causasExterna.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row row-cols-8 mt-3">
+
+                                                <div class="col">
+                                                    <label for="regimenes"
+                                                           class="col-sm-10 col-form-label col-form-label-sm">Regimen:</label>
+                                                    <div class="col-sm-4">
+                                                        <select class="form-select  h-40 w-100 form-control form-control-sm"
+                                                                aria-label="" id="regimenes" name="regimenes">
+                                                            {% for regimenes in Regimenes %}
+                                                            <option value="{{regimenes.id}}"> {{regimenes.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="tiposCotizante"
+                                                           class="col-sm-10 col-form-label col-form-label-sm">Tipocotizante:</label>
+                                                    <div class="col-sm-4">
+                                                        <select class="form-select  h-40 w-100 form-control form-control-sm"
+                                                                aria-label="" id="tiposCotizante"
+                                                                name="tiposCotizante">
+                                                            {% for tiposCotizante in TiposCotizante %}
+                                                            <option value="{{tiposCotizante.id}}">
+                                                                {{tiposCotizante.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Aquip el espacio para las tablas           -->
+
+                                                <!-- FIN Aquip el espacio para las tablas           -->
+
+
+                                                <div class="col">
+                                                    <label class="col-sm-8 control-label"
+                                                           for="remitido">Remitido:</label>
+                                                    <input type="text" class="form-control" id="remitido"
+                                                           name="remitido">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="ips"
+                                                           class="col-sm-10 col-form-label col-form-label-sm">Ips:</label>
+                                                    <div class="col-sm-4">
+                                                        <select class="form-select  h-40 w-100 form-control form-control-sm"  aria-label="" id="ips" name="ips">
+                                                            {% for ips in Ips %}
+                                                            <option value="{{ips.id}}"> {{ips.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="col-sm-8 control-label"
+                                                           for="numManilla">Manilla:</label>
+                                                    <input type="text" class="form-control" id="numManilla"
+                                                           name="numManilla">
+                                                </div>
+
+                                                I N F O R M A C I O N RIPS:
+
+                                                <div class="col">
+
+                                                    <label for="ripsDestinoUsuarioEgresoRecienNacido"
+                                                           class="col-sm-7 col-form-label col-form-label-sm">DestinoRecienNacido:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsDestinoUsuarioEgresoRecienNacido"  name="ripsDestinoUsuarioEgresoRecienNacido" required>
+                                                        {% for ripsDestinoUsuarioEgresoRecienNacido in   RipsDestinoUsuarioEgresoRecienNacido %}
+                                                        <option value="{{ripsDestinoUsuarioEgresoRecienNacido.id}}">
+                                                            {{ripsDestinoUsuarioEgresoRecienNacido.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+
+                                                </div>
+
+
+                                                <div class="col">
+                                                    <label for="ripsEdadGestacional"
+                                                           class="col-sm-5 col-form-label col-form-label-sm">RN Edad
+                                                        Gestacional:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsEdadGestacional"
+                                                               name="ripsEdadGestacional" value="">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row row-cols-8 mt-3">
+                                                <div class="col">
+                                                    <label for="ripsNumConsultasCPrenatal"
+                                                           class="col-sm-7 col-form-label col-form-label-sm">NumeroConsultaPrenatal:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsNumConsultasCPrenatal"
+                                                               name="ripsNumConsultasCPrenatal" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsPesoRecienNacido"
+                                                           class="col-sm-6 col-form-label col-form-label-sm">RN peso:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsPesoRecienNacido"
+                                                               name="ripsPesoRecienNacido" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsRecienNacido"   class="col-sm-6 col-form-label col-form-label-sm">Recien
+                                                        Nacido:&nbsp;&nbsp;</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                               id="ripsRecienNacido"
+                                                               name="ripsRecienNacido" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsCausaMotivoAtencion"
+                                                           class="col-sm-6 col-form-label col-form-label-sm">CausaAtencion:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select class="form-select  h-40 w-20" aria-label=""  id="ripsCausaMotivoAtencion" name="ripsCausaMotivoAtencion"                                                     required>
+                                                        {% for ripsCausaMotivoAtencion in RipsCausaMotivoAtencion %}
+                                                        <option value="{{ripsCausaMotivoAtencion.id}}">
+                                                            {{ripsCausaMotivoAtencion.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsCondicionDestinoUsuarioEgreso"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">UsuarioDestinoegreso:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsCondicionDestinoUsuarioEgreso"  name="ripsCondicionDestinoUsuarioEgreso" required>
+                                                        {% for ripsCondicionDestinoUsuarioEgreso in  RipsCondicionDestinoUsuarioEgreso %}
+                                                        <option value="{{ripsCondicionDestinoUsuarioEgreso.id}}">
+                                                            {{ripsCondicionDestinoUsuarioEgreso.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsGrupoServicios"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">GrupoDeServicios:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsGrupoServicios" name="ripsGrupoServicios" required>
+                                                        {% for ripsGrupoServicios in RipsGrupoServicios %}
+                                                        <option value="{{ripsGrupoServicios.id}}">
+                                                            {{ripsGrupoServicios.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsViaIngresoServicioSalud"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">ViaIngreso:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsViaIngresoServicioSalud"  name="ripsViaIngresoServicioSalud"    required>
+                                                        {% for ripsViaIngresoServicioSalud in RipsViaIngresoServicioSalud %}
+                                                        <option value="{{ripsViaIngresoServicioSalud.id}}">
+                                                            {{ripsViaIngresoServicioSalud.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="col">
+                                                    <label for="ripsmodalidadGrupoServicioTecSal"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">ModalidadGrupoServ:
+                                                        &nbsp;&nbsp;&nbsp;</label>
+
+                                                    <select id="ripsmodalidadGrupoServicioTecSal"  name="ripsmodalidadGrupoServicioTecSal" required>
+                                                        {% for ripsmodalidadGrupoServicioTecSal in  RipsmodalidadGrupoServicioTecSal %}
+                                                        <option value="{{ripsmodalidadGrupoServicioTecSal.id}}">
+                                                            {{ripsmodalidadGrupoServicioTecSal.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="row row-cols-8 mt-3">
+                                                <div class="col">
+                                                    <label for="ripsServiciosIng"
+                                                           class="col-sm-4 col-form-label col-form-label-sm">ServicioIngreso:bsp;&nbsp;&nbsp;</label>
+                                                    <select id="ripsServiciosIng" name="ripsServiciosIng"> required>
+                                                        {% for ripsServiciosIng in RipsServiciosIng %}
+                                                        <option value="{{ripsServiciosIng.id}}">
+                                                            {{ripsServiciosIng.nombre}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            onclick="CierraModalAdmisionTriage()">Close
+                                    </button>
+                                    <input type="button" class="btn btn-primary" value="save"
+                                           onclick="guardarAdmisionTriage()">
+                                </div>
+                            </div>
+                                </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FIN MODAL CrearAdmisiontriage                              -->
+
+
+
+
+
+        <!-- Fin Espacio Modales del article-->
+
+    </article>
+
+    <article id="crearTriage">
+        <center><h3>Creacion Triage</h3></center>
+
+            <!-- Creacion Triage   -->
+
+            <table class="table  " style="height: 50px; background-color:LightGray;  width:90%;">
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <table class="table"
+                               style="height: 5px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:60%;">
+                            <form class="form-inline" action="/crearTriage/" method="POST" id="grabacionAdmision">
+
+                                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                                <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
+                                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                                <input type="text" id="username" name="username" value="{{Username}}">
+                                <input type="text" id="username_id" name="username_id" value="{{Username_id}}">
+                                <input type="hidden" id="Profesional" name="Profesional" value="{{Profesional}}">
+                                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                            
+
+
+                                {% if crearTriageForm.errors %}
+                                <p style="color:Red;"> Revizar estos camos</p>
+
+                                {% endif %}
+
+                                <div class="row justify-content-center">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="busServicioX" class="col-sm-1 col-form-label col-form-label-sm">Servicio:</label>
+                                            <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                    aria-label="" id="busServicioX" name="busServicioX">
+                                                {% for servicios in Servicios %}
+                                                <option value="{{servicios.id}}"> {{servicios.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <label for="busSubServicioT"
+                                                   class="col-sm-1 col-form-label col-form-label-sm">SubServicio:</label>
+                                            <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                    aria-label=""
+                                                    id="busSubServicioT" name="busSubServicioT">
+                                                {% for subServicios in SubServicios %}
+                                                <option value="{{subServicios.id}}"> {{subServicios.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="dependenciasT"
+                                                   class="col-sm-1 col-form-label col-form-label-sm">Hab:</label>
+                                            <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                    aria-label=""
+                                                    id="dependenciasT" name="dependenciasT">
+                                                {% for dependencias in dependencias %}
+                                                <option value="{{dependencias.id}}"> {{dependencias.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <label for="tipoDocTriage"
+                                                   class="col-sm-1 col-form-label col-form-label-sm">TipoDoc:</label>
+                                            <select class="form-select  h-10 w-100 form-control form-control-sm"
+                                                    aria-label=""
+                                                    id="tipoDocTriage" name="tipoDocTriage">
+                                                {% for tiposDocumento in TiposDocumento %}
+                                                <option value="{{tiposDocumento.id}}"> {{tiposDocumento.nombre}}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col">
+
+                                            <label class="col-sm-1 control-label"
+                                                   for="busDocumentoSelTriage">Documento:</label>
+                                            <input type="text" class="form-control" id="busDocumentoSelTriage"
+                                                   name="busDocumentoSelTriage" required>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="motivo">Motivo:</label>
+                                            <input type="text" class="form-control" id="motivo" name="motivo" required>
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label"
+                                                   for="examenFisico">ExamenFisico:</label>
+                                            <input type="text" class="form-control" id="examenFisico"
+                                                   name="examenFisico" required>
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="frecCardiaca">Frecuencia
+                                                cardiaca:</label>
+                                            <input type="text" class="form-control" id="frecCardiaca"
+                                                   name="frecCardiaca" required>
+
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="frecRespiratoria">Frecuencia
+                                                Respiratoria:</label>
+                                            <input type="text" class="form-control" id="frecRespiratoria"
+                                                   name="frecRespiratoria" required>
+
+
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label"
+                                                   for="taSist">TensionArterialSistolica:</label>
+                                            <input type="text" class="form-control" id="taSist" name="taSist">
+
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="taDiast">TensionArterialDiastolica:</label>
+                                            <input type="text" class="form-control" id="taDiast" name="taDiast">
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label"
+                                                   for="taMedia">TensionArterialMedia:</label>
+                                            <input type="text" class="form-control" id="taMedia" name="taMedia">
+                                        </div>
+
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="glasgow">Glasgow:</label>
+                                            <input type="text" class="form-control" id="glasgow" name="glasgow" >
+                                        </div>
+
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="peso">Peso:</label>
+                                            <input type="text" class="form-control" id="peso" name="peso" >
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label"
+                                                   for="tempreratura">Temperatura:</label>
+                                            <input type="text" class="form-control" id="temperatura" name="temperatura">
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="estatura">Estatura:</label>
+                                            <input type="text" class="form-control" id="estatura" name="estatura">
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="glucometria">Glucometria:</label>
+                                            <input type="text" class="form-control" id="glucometria" name="glucometria"
+                                                   >
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="saturacion">Saturacion:</label>
+                                            <input type="text" class="form-control" id="saturacion" name="saturacion">
+                                        </div>
+
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="escalaDolor">EscalaDolor:</label>
+                                            <input type="text" class="form-control" id="escalaDolor" name="escalaDolor" >
+                                        </div>
+
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="tipoIngreso">TipoIngreso:</label>
+                                            <input type="text" class="form-control" id="tipoIngreso" name="tipoIngreso" >
+                                        </div>
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label"
+                                                   for="observaciones">Observaciones:</label>
+                                            <input type="text" class="form-control" id="observaciones"  name="observaciones" >
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label class="col-sm-1 control-label" for="clasificacionTriage">ClasificacionTriage:</label>
+                                            <select class="form-select  h-10 w-50 form-control form-control-sm"
+                                                    aria-label=""
+                                                    id="clasificacionTriage" name="clasificacionTriage">
+                                                {% for tiposTriage in TiposTriage %}
+                                                <option value="{{tiposTriage.id}}"> {{tiposTriage.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <center>
+
+                                                <input type="submit" id="guardarTriage" name="guardarTriage"
+                                                       value="GUARDAR"></input>
+                                            </center>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+        </form>
+        </table>
+        </td>
+        <td>
+        </td>
+        <td>
+
+        </td>
+        <tr>
+            </table>
+
+<!-- Fin  Creacion Triage   -->
+
+<!-- Espacio para Modales  -->
+
+
+
+
+
+
+
+
+
+<!-- FIN Espacio para Modales  -->
+
+        <!-- Creacion Modal usuario  para Triage-->
+
+        <div class="container">
+            <div class="card">
+                <div class="myForm">
+                    <form id="ModalCaptura" method="POST" onsubmit="CierraModal()">
+                        <div class="modal fade" id="usuariosModalTriage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Actualiza Usuario</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row row-cols-8 mt-3">
+                                            <div class="col">
+                                                <label for="tipoDocTriageModal"  class="col-sm-10 col-form-label col-form-label-sm">TipoDoc:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" aria-label="" id="tipoDocTriageModal" name="tipoDocTriageModal">
+                                                    {% for tiposDoc in TiposDoc %}
+                                                    <option value="{{tiposDoc.id}}"> {{tiposDoc.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="documentoTriageModal"  class="col-form-label">Documento:</label>
+                                                <input type="text" class="form-control" id="documentoTriageModal"  name="documentoTriageModal">
+                                            </div>
+                                            <div class="col">
+                                                <label for="nombre" class="col-form-label"> Paciente :</label>
+                                                <input type="text" class="form-control" id="nombre" name="nombre"  value="">
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="genero" class="col-form-label">Genero:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="genero" name="genero">
+                                                    <option value="M"> Masculino</option>
+                                                    <option value="F"> Femenino</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="fechaNacio" class="col-form-label">Fecha Nacio:</label>
+                                                <input type="datetime-local" class="form-control" id="fechaNacio"
+                                                       name="fechaNacio">
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="departamentos" class="col-form-label">Departamento:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="departamentos" name="departamentos">
+                                                    {% for departamentos in Departamentos %}
+                                                    <option value="{{departamentos.id}}"> {{departamentos.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col">
+                                                <label for="municipios" class="col-form-label">Municipio:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="municipios" name="municipios">
+                                                    {% for municipios in Municipios %}
+                                                    <option value="{{municipios.id}}"> {{municipios.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row row-cols-8 mt-3">
+
+                                            <div class="col">
+                                                <label for="localidades" class="col-form-label">Localidad:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="localidades" name="localidades">
+                                                    {% for localidades in Localidades %}
+                                                    <option value="{{localidades.id}}"> {{localidades.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="ciudades" class="col-form-label">Ciudad:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="ciudades" name="ciudades">
+                                                    {% for ciudades in Ciudades %}
+                                                    <option value="{{ciudades.id}}"> {{ciudades.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="direccion" class="col-form-label">Direccion:</label>
+                                                <input type="text" class="form-control" id="direccion" name="direccion" value="">
+
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="telefono" class="col-form-label">Telefono:</label>
+                                                <input type="text" class="form-control" id="telefono" name="telefono" value="">
+                                            </div>
+                                            <div class="col">
+                                                <label for="contacto" class="col-form-label">Contacto:</label>
+                                                <input type="text" class="form-control" id="contacto" name="contacto" value="">
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="estadoCivil" class="col-form-label">Estado Civil:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="estadoCivil" name="estadoCivil">
+                                                    {% for estadoCivil in EstadoCivil %}
+                                                    <option value="{{estadoCivil.id}}"> {{estadoCivil.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="ocupaciones" class="col-form-label">Ocupacion:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm"  id="ocupaciones" name="ocupaciones">
+                                                    {% for ocupaciones in Ocupaciones %}
+                                                    <option value="{{ocupaciones.id}}"> {{ocupaciones.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="correo" class="col-form-label">Correo:</label>
+                                                <input type="text" class="form-control" id="correo" name="correo" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row row-cols-8 mt-3">
+
+                                            <div class="col">
+                                                <label for="centrosC" class="col-form-label">Centros:</label>
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="centrosC" name="centrosC">
+                                                    {% for centros in Centros %}
+                                                    <option value="{{centros.id}}"> {{centros.nombre}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="tiposUsuario" class="col-form-label">Tipos Usuario:</label>
+
+                                                <select class="form-select  h-10 w-100 form-control form-control-sm" id="tiposUsuario" name="tiposUsuario">
+                                                    {% for tiposUsuario in TiposUsuario %}
+                                                    <option value="{{tiposUsuario.id}}"> {{tiposUsuario.nombre}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div> <!-- Cierra col -->
+                                        </div> <!-- Cierra row -->
+                                    </div> <!-- Cierra body -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"  onclick="CierraModalUsuarioTriage()">Close
+                                        </button>
+                                        <input type="button" class="btn btn-primary" value="save"  onclick="AUsuarioTriage()">
+                                    </div> <!-- Cierra footer-->
+                                </div> <!-- Cierra content -->
+                            </div> <!-- Cierra modal dialog -->
+                        </div> <!-- Cierra modal -->
+                    </form> <!-- Cierra cla forma-->
+                </div> <!-- Cierra muform -->
+            </div> <!-- Cierra el Card-->
+        </div> <!-- Cierra container -->
+
+            <!-- Fin Creacion Modal usuario  -->
+
+
+</article>
+
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+     <span id="mensajes" name="mensajes" style= "color:blue; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+     <span id="mensajesError" name="mensajesError" style= "color:red; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+
+{% endblock %}

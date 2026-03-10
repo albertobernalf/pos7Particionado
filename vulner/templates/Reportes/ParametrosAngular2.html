@@ -1,0 +1,406 @@
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" />
+<link rel="stylesheet" href="{% static 'css/grupos.css' %}">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+
+
+<script language="JavaScript">
+    function posicionaReporte() {
+
+        var numreporte = document.getElementById("numreporte").value;
+
+        var lista = document.getElementById("reportesUsuarioSel");
+        lista.value = numreporte;
+
+
+
+    }
+</script>
+
+
+       <input type="hidden" id="reporteSeleccionado" name="reporteSeleccionado" value="nada">
+   <input type="hidden" id="username" name="username" value="{{Username}}">
+                                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+                                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada"
+                                       value="{{SedeSeleccionada}}">
+                                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                                <!--  Estos si de la Aplixcacion bse -->
+
+
+                                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                                <input type="hidden" id="permisosGrales" name="permisosGrales"
+                                       value="{{PermisosGrales}}">
+                                <input type="hidden" id="permisosDetalle" name="permisosDetalle"
+                                       value="{{PermisosDetalle}}">
+                                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+		<input type="hidden" id="parametrosSeleccionado" name="parametrosSeleccionado" value="{{Parametros}}">
+
+<body onload="posicionaReporte()" style="margin: 0; padding: 0; background-color: #eee !important; overflow-x: hidden;">
+    <!-- <nav style="background-color: #0D2053;height: 6em;text-align: center;" class="navbar">
+        <span class="navbar-text">
+            <div>
+                <p style="color: white;  text-align: center;font-weight: 600;font-size: calc(1em + 1vw);font-family: sans-serif;margin: 0.5em;padding-top: 25px">CLINIREPORT</p>
+            </div>
+
+        </span>
+  </nav> 
+
+    <nav class="navbar">
+        <div class="row nav-bar-1"
+            style="display: flex; justify-content: space-between; align-items: center;  height: 100%; padding: 0 50px;">
+            <div class="col home">
+                <a href="/emergenteGrupos/{{Username}}, {{SedeSeleccionada}}, {{Grupo}} "
+                    style="display: flex; text-decoration: none; justify-content: center; align-items: center;">
+                    <img src="{% static '/IMG/logoMedicalBlanco.png' %}"
+                        style="width: 75px; margin-right: 20px; border-right: 3px solid white; padding-right: 20px;"
+                        alt="logo">
+                    <p style="color: white;font-weight: 600; font-size: 36px;font-family: sans-serif;"> CLINIREPORT</p>
+                </a>
+            </div>
+            <div class="col home">
+                <h3 style="margin-right: 20px; color: #FFFFFF;">{{Username}} | {{SedeSeleccionada}}</h3>
+                <a id="navbar-login" class="button-link" href="/salir">
+                    <img src="{% static '/IMG/salir-blanco.svg' %}" style="width: 40px; color: white;" alt="Salir">
+                    <span class="tooltip-text">Salir</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+-->
+    <div class="row" style=" height: 55px; width: 100vw; margin: 0;">
+        <div class="col" style="margin: 0; width: 100vw; padding: 0;">
+            <div class="mx-auto"
+                style="width: 100vw; background-color:#5b92b9; margin: 0; position: relative; height: 100%;">
+                <a href="/pantallaSubgrupos/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}" class="button-link-2"
+                    style="padding:0; position: absolute; top: 6px; left: 40px;">
+                    <img src="{% static '/img/Regresar-blanco.svg'' %}" style="width:120px; " alt="regresar">
+                </a>
+                <center>
+                    <figure class="figure" style="margin: 0;">
+                        <figcaption class="figure-caption text-center" style="margin: 0;">
+                            {% for nombreSubGrupoSeleccionado in NombreSubGrupoSeleccionado %}
+                            <h1 style="color:  #FFFFFF; margin: 0; font-size: 25px; padding: 10px; font-weight: 600;">
+                                REPORTES {{nombreSubGrupoSeleccionado.nombreSubGrupo}}
+                                {% endfor %}
+                        </figcaption>
+                    </figure>
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <!-- <nav style="background-color: #284596;height: 6em; margin-bottom: 20px;text-align: center;padding-top: 25px"
+        class="navbar2">
+        <div>
+            <span class="navbar-text">
+
+                {% for nombreSubGrupoSeleccionado in NombreSubGrupoSeleccionado %}
+                <p
+                    style="color: white;  text-align: center;font-weight: 600;font-size: calc(1em + 1vw);font-family: sans-serif;margin: 0.5em;">
+                    REPORTES {{nombreSubGrupoSeleccionado.nombreSubGrupo}} <a id="navbar-login"
+                        href="/emergenteGrupos/{{Username}}, {{SedeSeleccionada}}, {{Grupo}} "><button
+                            style="background-color: #0D2053;border-radius: 30px;height: 50px;width: 150px;color: #FFFFFF;font-size: 15px;"
+                            type="button" class="btn btn-outline-primary">INICIO</button></a></p>
+
+                {% endfor %}
+
+            </span>
+        </div>
+    </nav> -->
+
+
+    <div class="container"
+        style="height: calc(100vh - 135px) !important; display: flex; justify-content: center; align-items: start; padding-top: 20px; padding-bottom: 20px; max-height: none !important;">
+        <center>
+            <div class="card" style="justify-content: center !important; max-height: none !important;">
+                <div class="card-block" align="center">
+                    <div id="grilla_data" class="mt-5"></div>
+
+                    <table>
+                        <center>
+
+                            <tr>
+                                <!-- INSERTO EL COMBO -->
+                                <div class="col-xl-4" style="
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        margin-bottom: 30px;
+
+                                    ">
+                                    <form id="combo" action="/Reporte1" method="GET">
+                                        <form method="get" action="#">
+                                            <label style="color: #333; font-weight: 600;" for="favoriteOnly">Informe a Revisar:</label>
+                                            <select class="input-modern"
+                                                style="font-size: 15px;margin-left: 20px;text-align: center;"
+                                                name="reportesUsuarioSel" id="reportesUsuarioSel">
+
+                                                {% for reportesUsuario in ReportesUsuario %}
+                                                <option value="{{reportesUsuario.numreporte}}">
+                                                    {{reportesUsuario.reporte}}
+                                                </option>
+                                                {% endfor %}
+
+                                            </select>
+                                            <span id="vale"><img id="boton1" onClick="dispara()"
+                                                    style="width: 25px; margin-left: 16px; cursor: pointer;"
+                                                    src="{% static '/img/buscar-ico.svg' %}"></span>
+                                        </form>
+                                    </form>
+                                </div>
+                            </tr>
+                        </center>
+                    </table> <!-- Cierra Table  -->
+                    <!-- FIN INSERTO COMBO -->
+
+                    <form id="Parametros" method="post">
+                        <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                        <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                        <div class="myDiv" id="mensajes"> {{mensaje.mensaje}}</div>
+
+                        {% for parametrosSeleccionado in ParametrosSeleccionado %}
+
+                        <div class="form-control" style="text-align: center;font-size: 16px;">
+
+                            <div class="form-group">
+
+                                <span style="color: #333; font-weight: 600;">
+                                    {{parametrosSeleccionado.param_texto }}
+                                </span>
+
+                                <label for="{{parametrosSeleccionado.parametro}}" style="color: #333; font-weight: 600;"></label>
+                                <input class="form-control input-modern" type="{{parametrosSeleccionado.param_tipocampo}}"
+                                    id="{{parametrosSeleccionado.parametro}}"
+                                    placeholder="{{parametrosSeleccionado.param_texto }}"
+                                    name="{{parametrosSeleccionado.parametro}}" value="">
+                            </div> <!-- Cierra Form group   -->
+                        </div> <!-- Cierra el flexbox   -->
+
+                        <br>
+                        {% endfor %}
+
+                        <div class="panel">
+                            {% for reporteSeleccionado in ReporteSeleccionado %}
+                            <div>
+                                {%if reporteSeleccionado.excel == 'A' %}
+                                <input type="radio" name="tipoArchivo" onclick="check(this.value)"
+                                    value="excel"></input>
+                                <img style="width: 70px !important;" src="{% static '/img/excel-ico.png' %}" class="figure-img img-fluid rounded"
+                                    alt="...">
+                                {% endif %}
+
+                                {%if reporteSeleccionado.pdf == 'A' %}
+                                <input type="radio" name="tipoArchivo" onclick="check(this.value)" value="pdf"></input>
+                                <img style="width: 70px !important;" src="{% static '/img/pdf-ico.png' %}"
+                                    class="figure-img img-fluid rounded" alt="...">
+                                {% endif %}
+
+                                {%if reporteSeleccionado.csv == 'A' %}
+                                <input type="radio" name="tipoArchivo" onclick="check(this.value)" value="csv"></input>
+                                <img style="width: 70px !important;" src="{% static '/img/csv-ico.png' %}"
+                                    class="figure-img img-fluid rounded" alt="...">
+                                {% endif %}
+
+                                {%if reporteSeleccionado.grilla == 'A' %}
+                                <input type="radio" name="tipoArchivo" onclick="check(this.value)"
+                                    value="grilla"></input>
+                                <img style="width: 70px !important;" src="{% static '/img/web-ico.png' %}"
+                                    class="figure-img img-fluid rounded" alt="...">
+                                {% endif %}
+
+                            </div>
+
+                            {% endfor %}
+                        </div> <!-- Cierra Div Panel  -->
+
+
+                        {% for reporteSeleccionado in ReporteSeleccionado %}
+
+                        <input type="hidden" id="cuerpoSql" name="cuerpoSql" value="{{reporteSeleccionado.cuerpo_sql}}">
+                        <input type="hidden" id="encabezados" name="encabezados"
+                            value="{{reporteSeleccionado.encabezados}}">
+                        <input type="hidden" id="numReporte" name="numReporte"
+                            value="{{reporteSeleccionado.numreporte}}">
+                        <input type="hidden" id="nombreReporte" name="nombreReporte"
+                            value="{{reporteSeleccionado.reporte}}">
+
+                        <input type="hidden" id="username" name="username" value="{{Username}}">
+                        <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                        <input type="hidden" id="reportesUsuario" name="reportesUsuario" value="{{ReportesUsuario}}">
+
+
+                        {% endfor %}
+
+
+                        <div class="form-group">
+                            <figure class="figure">
+                                <button style="
+                                        border: none;
+                                        padding: 10px !important;
+                                        color: white !important;
+                                        font-weight: bold !important;
+                                        border-radius: 5px !important;
+                                        transition: background-color 0.3s !important;
+                                        width: 200px !important;
+                                        background-color: #233a5d !important;
+                                        cursor: pointer;
+                                    " onclick="document.getElementById('aviso').setAttribute('data-on','on')"
+                                    onmouseover="this.style.backgroundColor='#4988c4';"
+                                    onmouseout="this.style.backgroundColor='#233a5d';">
+                                    DESCARGAR
+                                </button>
+                            </figure>
+
+                        </div>
+
+                    </form> <!-- Cierra Form  -->
+
+
+                </div> <!-- Cierra Card block  -->
+            </div> <!-- Cierra Card  -->
+
+            <br>
+
+            <center>
+
+                {% for reporteSeleccionado in ReporteSeleccionado %}
+                Informe: {{reporteSeleccionado.reporte}}
+                {% endfor %}
+                <br>
+
+                {% for nombreUsuario in NombreUsuario %}
+                Usuario: {{nombreUsuario.nom_usuario}}
+                {% endfor %}
+
+            </center>
+
+        </center> <!-- Cierra Center  -->
+    </div> <!-- Cierra Container  -->
+
+
+    <script>
+
+
+        function mandoEjecutar() {
+
+
+            document.getElementById('proceso').innerHTML = 'Procesando ...';
+            document.getElementById('proceso').style.color = '#3380FF';
+            return true;
+        }
+
+
+        function dispara() {
+
+            username = document.getElementById("username").value;
+            sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
+            grupo = document.getElementById("grupo").value;
+            subGrupo = document.getElementById("subGrupo").value;
+
+
+            var reporteSeleccionado = document.getElementById("reportesUsuarioSel").value;
+
+
+
+            document.getElementById("numreporte").value = reporteSeleccionado;
+
+            // INICIO DISPARA PREVIO
+
+
+            let numreporte = $("#reportesUsuarioSel").find("option:selected").val();
+
+
+
+            var combo = document.getElementById("reportesUsuarioSel");
+
+            let selected = $("#reportesUsuarioSel").find("option:selected").val();
+
+
+
+            var lista = document.getElementById("reportesUsuarioSel");
+            lista.value = selected;
+
+            document.getElementById("numreporte").value = numreporte;
+
+            // FIN DISPARA PREVIO
+
+
+            var final = "/Reporte1/" + reporteSeleccionado + "," + username + "," + sedeSeleccionada + "," + grupo + "," + subGrupo;
+
+            //	var apasar = id + ',' + username + ',' + sedeSeleccionada+ ',' + nombreUsuario + ',' + nombreSede+ ',' + empleadoId  + ',' + perfil + ',' + ano + ',' + mes + ',' + sedeMalla + ',' + areaMalla + ',' + nombreMalla ;
+
+            $(location).attr('href', final);
+
+            // document.getElementById("vale").innerHTML=    "<a href ='"  + final + "'>Ingresa Aqui</a>";
+
+
+
+        }
+
+        function check(browser) {
+
+            // document.getElementById("answer").value=browser;
+
+            document.getElementById('proceso').innerHTML = '';
+            document.getElementById('proceso').style.color = '#3380FF';
+            // ReportesUsuario.encabezados es donde estan las columnas del reporte
+
+
+            if (browser == "grafica") {
+
+                encabezados = document.getElementById("encabezados").value;
+
+
+                var provincias = ["sede", "edad", "genero", "especialidad"]; //Tu array de provincias
+                var select = document.getElementById("campos"); //Seleccionamos el select
+                var select1 = document.getElementById("campos1"); //Seleccionamos el select
+                var llave = '';
+
+                for (var i = 0; i < encabezados.length; i++) {
+                    if (encabezados[i] != ",") {
+                        llave = llave + encabezados[i];
+                    }
+                    else {
+                        var option = document.createElement("option"); //Creamos la opcion
+                        //option.innerHTML = provincias[i]; //Metemos el texto en la opción
+                        option.innerHTML = llave; //Metemos el texto en la opción
+                        select.appendChild(option); //Metemos la opción en el select
+                        llave = '';
+                    }
+
+                }
+
+                var option = document.createElement("option"); //Creamos la opcion
+                option.innerHTML = "Barras";
+                select1.appendChild(option);
+
+
+                var option = document.createElement("option"); //Creamos la opcion
+                option.innerHTML = "Pie";
+                select1.appendChild(option);
+
+
+            }
+
+
+
+
+
+        }
+
+    </script>
+</body>

@@ -1,0 +1,106 @@
+{% extends "Reportes/pantallaSubGrupos.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!--Inicia PantallaGrupos       -->
+
+
+
+<!--Fin PantallaGrupos       -->
+
+<!--Inicia PantallaSubGrupos       -->
+
+
+<!--Fin PantallaSubGrupos       -->
+<center>
+    <div class="col-xl-4"></div>
+
+    <div class="col-xl-4">
+    <form id="combo" action="/Reporte1" method="GET">
+
+        <input type="hidden" id="username" name="username" value="{{Username}}">
+        <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+        <input type="hidden" id="reporteSeleccionado" name="reporteSeleccionado" value="nada">
+
+         <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+         <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+          <input type="hidden" id="numreporte" name="numreporte" value="">
+
+
+          <br>
+                <br>
+
+        <div class="form-row">
+            <div class="form-group col-md-2 ">
+
+            </div>
+
+            <div class="form-group col-md-8 ">
+
+
+                Seleccione el reporte a revizar
+
+                    <select class="form-control" id="reportesUsuarioSel" name="reportesUsuarioSel"  style="width:250px;height:50px;">
+                        {% for reportesUsuario in ReportesUsuario %}
+                        <option value="{{reportesUsuario.numreporte}}"> {{reportesUsuario.reporte}}
+
+
+                        </option>
+
+                        {% endfor %}
+                    </select>
+
+
+
+            </div>
+
+            <div class="form-group col-md-2 ">
+                <br>
+                <br>
+                <br>
+                <span id="vale"> <button type="button" id="boton1" onclick="dispara()"> BUSCAR</button> </span>
+
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+
+</center>
+
+<script>
+
+function dispara()
+{
+
+    username = document.getElementById("username").value;
+    sedeSeleccionada=  document.getElementById("sedeSeleccionada").value;
+     grupo = document.getElementById("grupo").value;
+      subGrupo = document.getElementById("subGrupo").value;
+
+
+        var reporteSeleccionado =  document.getElementById("reportesUsuarioSel").value;
+
+        document.getElementById("numreporte").value = reporteSeleccionado;
+
+        var final = "/Reporte1/" + reporteSeleccionado + "," + username +"," + sedeSeleccionada + "," + grupo + "," + subGrupo;
+
+
+
+
+   // document.getElementById("vale").value=    "<a href ='"  + final + "'>Pica Aqui</a>";
+    document.getElementById("vale").innerHTML=    "<a href ='"  + final + "'>Ingresa Aqui</a>";
+   // document.getElementById("boton2").innerHTML=    "<a href ='"  + final + "'>Aqui</a>";
+
+    //document.getElementById("combo").submit();
+
+    }
+
+</script>
+
+
+{% endblock %}

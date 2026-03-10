@@ -1,0 +1,159 @@
+{% extends "Reportes/PantallaSubGrupos.html" %}
+{% load static %}
+<head>
+    <style type="text/css">
+        thead tr th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+
+        .table-responsive {
+            height:200px;
+            overflow:scroll;
+        }
+    </style>
+
+</head>
+
+{% block content %}
+
+<input type="hidden" id="username" name="username" value="{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+<input type="hidden" id="reporteSeleccionado" name="reporteSeleccionado" value="{{ReporteSeleccionado}}">
+
+
+<!--Inicia PantallaGrupos       -->
+<!--Fin PantallaGrupos       -->
+
+<!--Inicia PantallaSubGrupos       -->
+
+
+<!--Fin PantallaSubGrupos       -->
+
+
+<div class="row" style="width:1800px;height:1px;">
+    <div class="col-xl-8">   </div>
+    <div class="col-xl-2">
+        <!--    AQUI LOS ARCHIVOS  A SELECCIONAR Y PARAMETROS REGISTRADOS-->
+
+        <form id="Grilla" action="/Reporte1/numReporte,username,sedeSeleccionada, grupo, subGrupo"
+              method="POST">
+
+            {% for reporteSeleccionado in ReporteSeleccionado %}
+
+            <input type="hidden" id="cuerpoSql" name="cuerpoSql" value="{{reporteSeleccionado.cuerpo_sql}}">
+            <input type="hidden" id="encabezados" name="encabezados"
+                   value="{{reporteSeleccionado.encabezados}}">
+            <input type="hidden" id="numReporte" name="numReporte" value="{{reporteSeleccionado.numreporte}}">
+            <input type="hidden" id="nombreReporte" name="nombreReporte"
+                   value="{{reporteSeleccionado.reporte}}">
+
+            <input type="hidden" id="username" name="username" value="{{Username}}">
+
+            <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+            <input type="hidden" id="parametrosSeleccionado" name="parametrosSeleccionado" value="{{Parametros}}">
+            {% for parametros1 in Parametros1 %}
+
+            <input type="hidden" id="{{parametros1.campo}}" name="{{parametros1.campo}}" value="{{parametros1.valor}}">
+
+            {% endfor %}
+
+
+            {% endfor %}
+
+
+            {% for reporteSeleccionado in ReporteSeleccionado %}
+            <div>
+
+
+            {%if reporteSeleccionado.excel == 'A' %}
+            <input type="radio" name="tipoArchivo" value="excel"></input>
+            <img src="{% static '/img/EXCEL.JPG' %}" class="figure-img img-fluid rounded" style="width:60px;height:30px;" alt="...">
+            {% endif %}
+
+            {%if reporteSeleccionado.pdf == 'A' %}
+            <input type="radio" name="tipoArchivo" value="pdf"></input>
+            <img src="{% static '/img/PDF1.JPG' %}" class="figure-img img-fluid rounded" style="width:60px;height:30px;" alt="...">
+            {% endif %}
+
+            {%if reporteSeleccionado.csv == 'A' %}
+            <input type="radio" name="tipoArchivo" value="csv"></input>
+            <img src="{% static '/img/CSV.JPG' %}" class="figure-img img-fluid rounded" style="width:60px;height:30px;" alt="...">
+            {% endif %}
+
+            {% endfor %}
+
+            <input type="submit" value="DESCARGAR" onclick="return mandoEjecutar();">
+
+
+            </p>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="col-xl-2">
+
+        <figure class="figure">
+
+            <img src="{% static '/img/inicio.jpg'' %}" class="figure-img img-fluid rounded"
+                 style="width:150px;height:50px;" alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/emergenteGrupos/{{Username}}, {{SedeSeleccionada}}, {{Grupo}} "> Retorno </a>
+            </figcaption>
+        </figure>
+    </div>
+
+</div>
+
+<div class="row" style=" height: 350px;">
+
+     <div class="col-xl-12">
+
+        <div class="card-block">
+            <div style="height: 650px; overflow: auto">
+                <table id="grilla" class="table table-hover"
+                       style="height: 650px , background-color:LightGray; border: 3px solid black; border-radius: 10px; width:99%;">
+                    <thead class="thead-dark">
+
+                    <bold>
+                        {% for lasColumnas in LasColumnas %}
+                        <th class="header" scope="col">
+                            {{lasColumnas}}
+                        </th>
+
+                        {% endfor %}
+                    </bold>
+                    </thead>
+
+                    {% for grilla in Grilla %}
+
+
+                    <tr style="color:blue; height:5px ; font-size: 12px">
+                        {% for value in grilla %}
+
+                        <td class="w-10" style="color:#3366BC; width:10 ; font-size: 12px; white-space: nowrap;"  >
+
+                            {{ value }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+
+                    {% endfor %}
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

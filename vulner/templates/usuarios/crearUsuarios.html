@@ -1,0 +1,89 @@
+{% extends "admisiones/menuAdmisiones.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+th ,tr{
+  border-style:solid;
+  border-color: #96D4D4;
+}
+
+</style>
+
+
+<script>
+
+</script>
+
+
+<table class="table  " style="height: 100px; background-color:LightGray;  width:100%;">
+    <tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+
+            <table class="table  "
+                   style="height: 100px; background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black; border-color: #96D4D4;  width:99%;">
+
+
+                <form class="form-inline" action="" method="POST" id="grabacionForma">
+
+                    <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
+                    <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
+                    <input type="hidden" id="Perfil" name="Perfil" value="{{Perfil}}">
+                    <input type="hidden" id="Username" name="Username" value="{{Username}}">
+                    <input type="hidden" id="Username_id" name="Username_id" value="{{Username_id}}">
+                    <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+
+
+                    {{form}}
+
+                    <center>
+
+
+                        <input type="submit" id="guardarAdmision" name="guardarAdmision" value="GUARDAR"></input>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Colaborador : {{Username}}
+                    </center>
+
+
+                </form>
+
+                <form class="form-inline"
+                      action="/retornarAdmision/{{Sede }},  {{Perfil }} , {{Username }},  {{Username_id }}, {{NombreSede }} "
+                      method="POST" id="login-form"><input type="hidden" name="csrfmiddlewaretoken"
+                                                           value="MJ1CwN7LHRoBZUnyQoPpHBnb4M3PwGYmsLJeNsN92l41zY9ZaUPztrhcMWyUTHxc">
+
+                    <input type="hidden" id="Sede" name="Sede" value="{{Sede}}">
+                    <input type="hidden" id="Servicio" name="Servicio" value="{{Servicio}}">
+                    <input type="hidden" id="Perfil" name="Perfil" value="{{Perfil}}">
+                    <input type="hidden" id="Username" name="Username" value="{{Username}}">
+                    <input type="hidden" id="Username_id" name="Username_id" value="{{Username_id}}">
+                    <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+
+                    <center>
+                        <input type="submit" id="retornarAdmision" name="retornarAdmision" value="CANCELAR"></input>
+                    </center>
+
+                </form>
+
+            </table>
+        </td>
+        <td>
+        </td>
+        <td>
+
+        </td>
+    <tr>
+</table>
+
+
+{% endblock %}

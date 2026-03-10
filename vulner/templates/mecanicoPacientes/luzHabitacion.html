@@ -1,0 +1,34 @@
+{% extends "menuAdmisiones.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+<form method="post">
+        <br>
+     <br>
+     <br>
+
+
+
+    <center>
+
+          <p>Seleccione Estado del FOCO:</p>
+             <br>
+     <br>
+
+
+        <input type="radio" id="encendido" name="luz" value=E>
+    {{info}}
+
+
+        <label for="encendido">On</label><br>
+        <input type="radio" id="apagado" name="luz" value="A">
+     {{infoA}}
+        <label for="apagado">Off</label><br>
+
+        <input type="submit" value="Enviar">
+        </center>
+</form>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "menuAccesoAngular.html" %}
+{% load static %}
+
+{% block content %}
+
+    <br>
+    <br>
+
+<!-- Container -->
+ <div class="fondo-trama">
+        <img src="{% static   '/IMG/fondo-trama.png' %}" alt="">
+    </div>
+<div style="border-radius: 10px;" id="container">
+    
+   <!-- Header -->
+   <div style="background-color:transparent" id="header">
+      <div id="branding" >
+        <h1 style="text-align: center; margin: 0 !important;">
+            <img style="max-width:200px;" src="{% static   '/IMG/logoMedicalBlanco.png' %}" class="figure-img img-fluid rounded">
+        </h1>
+        <br>
+        <h1 id="site-name" style="color: #FFFFFF; font-weight: bold; text-align: center; margin: 0 !important;">INICIO SESIÓN</h1>
+      </div>
+   </div>
+   <!-- END Header -->
+   <div class="main shifted" id="main">
+      <div class="content">
+         <!-- Content -->
+         <div id="content" class="colM">
+            <div id="content-main">
+               <form action="/validaAcceso/" method="post" id="login-form">
+                  <input type="hidden"
+                     name="csrfmiddlewaretoken"
+                     value="MJ1CwN7LHRoBZUnyQoPpHBnb4M3PwGYmsLJeNsN92l41zY9ZaUPztrhcMWyUTHxc">
+                  <div  class="form-row">
+                     <label style="color:#FFFFFF; font-weight: bold;" class="required" for="id_username">Usuario:</label> <input type="text"
+                        name="username"
+                        autofocus=""
+                        autocapitalize="none"
+                        autocomplete="username"
+                        maxlength="150"
+                        required=""
+                        id="id_username"
+                        placeholder="Ingrese su usuario"
+                        class="input-modern">
+                  </div>
+                  <div class="form-row">
+                     <label style="color:#FFFFFF; font-weight: bold;"class="required" for="id_password">Contraseña:</label> <input type="password"
+                        name="password"
+                        autocomplete="current-password"
+                        required=""
+                        id="id_password"
+                        class="input-modern"
+                        placeholder="Ingrese su contraseña">
+                     <input type="hidden" name="next" value="/admin/">
+                  </div>
+                  <div class="form-row">
+                     <label style="color:#FFFFFF; font-weight: bold;" for="seleccion2" class="required">Sedes:</label>
+                     <select style="text-align:center; width: 100%;" id="seleccion2" name="seleccion2" class="input-modern">
+                        {% for sedes in Sedes %}
+                        <option value="{{sedes.codreg_sede}}"> {{sedes.nom_sede}}</option>
+                        {% endfor %}
+                     </select>
+                     <!--  <label class="required" for="id_perfil">Perfil:</label> <input type="text" name="perfil" autofocus="" autocapitalize="none" autocomplete="perfil" maxlength="150" required="" id="id_perfil">  -->
+                  </div>
+                  <!--
+                     <div class="form-row">
+                     
+                     
+                         <label for="seleccion1" class="col-form-label">Seleccione Perfil:</label>
+                         <select id="seleccion1" name="seleccion1">
+                             {% for perfiles in Perfiles %}
+                             <option value="{{perfiles.codreg_perfil}}"> {{perfiles.nom_perfil}}</option>
+                             {% endfor %}
+                         </select>
+                     
+                     
+                     </div>
+                     
+                     -->
+                  <!--  <label class="required" for="id_perfil">Perfil:</label> <input type="text" name="perfil" autofocus="" autocapitalize="none" autocomplete="perfil" maxlength="150" required="" id="id_perfil">  -->
+                  <span id="error" name="error" style="color:#ff5050">{{Error}}</span>
+                  <div class="submit-row">
+                     <input class="button-link" type="submit" value="LOG IN">
+                  </div>
+               </form>
+            </div>
+            <br class="clear">
+         </div>
+         <!-- END Content -->
+         <div id="footer">
+            <!--		<a  href="/findOne/19456673 ,75AAbb??" role="button" class="btn btn-primary eBtn" data-toggle="modal" onclick="$('#exampleModal').modal('show')"> Cambio Contrasena</a> -->
+         </div>
+      </div>
+   </div>
+</div>
+<!-- END Container -->
+
+<script>
+
+  function Agrabar1()
+{
+
+	var envios = new FormData();
+
+
+
+
+	var username = document.getElementById("usuario").value;
+
+	var contrasenaAnt = document.getElementById("contrasenaAnt").value;
+	var contrasenaNueva = document.getElementById("contrasenaNueva").value;
+	var contrasenaNueva2 = document.getElementById("contrasenaNueva2").value;
+
+
+
+
+<!--
+window.location.pathname,
+-->
+
+	$.ajax({
+		type: 'POST',
+    	url: '/grabar1/username,contrasenaAnt,contrasenaNueva,contrasenaNueva2',
+		data: {'username':username,'contrasenaAnt':contrasenaAnt, 'contrasenaNueva':contrasenaNueva, 'contrasenaNueva2': contrasenaNueva2},
+		success: function (respuesta) {
+
+
+
+
+            	document.getElementById("mensaje").innerHTML = respuesta;
+            	  $('#error').val(respuesta);
+			$('#exampleModal1').modal().hide();
+			<!-- window.location.reload(); -->
+             $('#error').val(respuesta);
+             	document.getElementById("error").innerHTML = respuesta;
+
+                    },
+	   		    error: function (request, status, error) {
+	   	    	}
+	});
+};
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <root>
+     <tipoDocumento>01</tipoDocumento>
+     <numero>9</numero>
+     <fecha>2026-03-10 14:35:05.309916-05</fecha>
+     <moneda>COP</moneda>
+     <emisor>
+         <nit>830507718-8</nit>
+         <dv>8</dv>
+         <nombreRazonSocial>CLINICA MEDICAL S.A.S</nombreRazonSocial>
+         <tipoPersona>1</tipoPersona>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>Calle 36 Sur 77 -33</direccion>
+             <departamento>CUNDINAMARCA</departamento>
+         </direccion>
+     </emisor>
+     <receptor>
+         <nit>1000200400</nit>
+         <dv>0</dv>
+         <nombreRazonSocial>MARIA PAULA BERNAL CAMACHO</nombreRazonSocial>
+         <tipoPersona>2</tipoPersona>
+         <tipoDocumentoIdentificacion>13</tipoDocumentoIdentificacion>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>CALLE 87 NRO 103C -50</direccion>
+             <departamento>CUNDINAMARCA</departamento>
+         </direccion>
+     </receptor>
+     <items>
+         <codigoProducto>1982869-1</codigoProducto>
+         <nombreProducto>3M DURAPREP SURGICAL SOLUTION</nombreProducto>
+         <cantidad>1</cantidad>
+         <unidadMedida>94</unidadMedida>
+         <valorUnitario>20000</valorUnitario>
+         <valorTotal>20000</valorTotal>
+         <impuestos>
+             <tipo>01</tipo>
+             <porcentaje>19</porcentaje>
+             <valor>19000</valor>
+         </impuestos>
+     </items>
+     <totales>
+         <valorBruto>35837830</valorBruto>
+         <valorNeto>35837830</valorNeto>
+         <valorTotalImpuestos>0</valorTotalImpuestos>
+         <valorTotal>35837830</valorTotal>
+     </totales>
+ </root>
