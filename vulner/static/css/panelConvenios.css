@@ -177,22 +177,8 @@ ul.tabs li a .tab-text{
   background-repeat: no-repeat, repeat;
 
 }
-
-
 .classOfElementToColor:hover {background-color:red; color:black}
 
-.select-css option[selected] {
-    background-color: orange;
-}
-
-.form-control-sm
-{
-height: calc(0.5em + .5 rem + 1px);
-padding: .25rem .5 rem;
-font-size: .875 rem;
-line-height: 0.5;
-border-radius: .2 rem;
-}
 
 input[type="date"] {
   --color: gray;
@@ -228,6 +214,7 @@ input[type="date"] {
     filter:invert(1);
   }
 }
+
 
 input[type="datetime-local"] {
   --color: gray;
@@ -265,6 +252,15 @@ input[type="datetime-local"] {
 }
 
 
+ .tabla-contenedor {
+        height: 130px; /* Define la altura deseada para tu tabla */
+        overflow: auto; /* Permite el desplazamiento si el contenido excede la altura */
+    }
+
+    .tabla-contenedor table {
+        width: 100%; /* Asegura que la tabla ocupe el ancho del contenedor */
+    }
+
 .dataTables_filter input {
     height: 25px !important; /* Ajusta según sea necesario */
     padding: 2px !important;
@@ -283,6 +279,28 @@ input[type="datetime-local"] {
     display: none;
 }
 
+/* Reduce vertical spacing */
+
+div.dataTables_wrapper div.dataTables_info {
+  padding-top: 0px;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  padding: 4px 8px 4px 8px;
+}
+/* End Reduce vertical spacing */
+
+/* para el texto */
+
+table.dataTable td {
+font-size: 0.5em;
+}
+
+
+table.dataTable tr.dtrg-level-0 td {
+font-size: 1.1em;
+}
+
 .texto-span {
      
         align-items: center;
@@ -296,16 +314,14 @@ input[type="datetime-local"] {
 }
 
 
-
 #flex-container-editarConvenio{
-  display: inline-flex;
+  display: flex;
   justify-content: left;
 }
 
-
 #flex-container-editarConvenio div{
-  width: 1200px;
-  height: 300px;
+  width: 800px;
+  height: 150px;
   color: #FFF;
   flex-wrap: wrap;
   text-align: left;
@@ -317,14 +333,9 @@ input[type="datetime-local"] {
   /* margin:10 */
 }
 
-#flex-container-editarConvenio label{
-  display: block;
-  width: 20%;
-}
-
 
 #flex-container-crearConvenio{
-  display: inline-flex;
+  display: flex;
   justify-content: left;
 }
 
@@ -341,10 +352,5 @@ input[type="datetime-local"] {
   font-family: 'Roboto', sans-serif;
   /* background-color: #9B59B6;*/
   /* margin:10 */
-}
-
-#flex-container-crearConvenio label{
-  display: block;
-  width: 100%;
 }
 

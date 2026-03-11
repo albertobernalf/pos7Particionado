@@ -35,6 +35,8 @@ class Autorizaciones(models.Model):
     numeroSolicitud = models.DecimalField(max_digits=6, decimal_places=2 , null=True, blank=True)
     fechaVigencia = models.DateTimeField( editable=True, null=True, blank=True)
     convenio = models.ForeignKey('contratacion.Convenios', blank=True, null=True, editable=True, on_delete=models.PROTECT  , related_name='convenios02271')
+    ingreso =  models.ForeignKey('admisiones.Ingresos',  blank=True, null=True, editable=True, on_delete=models.PROTECT,   related_name='adm1476')  
+    triage =  models.ForeignKey('triage.Triage',  blank=True, null=True, editable=True, on_delete=models.PROTECT,   related_name='Triage1476')  
     #medicoAutoriza = models.ForeignKey('clinico.Medicos',blank=True,null= True, editable=True, on_delete=models.PROTECT)
     #dxPrinc = models.ForeignKey('clinico.Diagnosticos',blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dx21' )
     #dxRel1      = models.ForeignKey('clinico.Diagnosticos',blank=True,null= True, editable=True, on_delete=models.PROTECT ,  related_name='dx22' )

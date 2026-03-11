@@ -1387,6 +1387,13 @@ function arrancaCirugia(valorTabla,valorData)
                  type: "POST",
                  dataSrc: ""
             },
+            "createdRow": function( row, data, dataIndex){
+                if( data[8] ==  'DISPONIBLE'){
+                    $(row).addClass('dark-background');
+                } else if(data[8] ==  'OCUPADA') {
+                    $(row).addClass('light-background');
+                 }
+        },
             columns: [
                 { data: "fields.id"},
                 { data: "fields.salaId"},

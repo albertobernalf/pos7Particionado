@@ -13,38 +13,12 @@
 
 <div class="marco">
     <ul class="tabs">
-        <li><a href="#Convenios"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
-        <li><a href="#TarifariosDescripcionProcedimientos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> TarifariosProcedimientos </a></li>
-        <li><a href="#TarifariosDescripcionSum"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> TarifariosSuministros</a></li>
-
-            Convenios </a></li>
+        <li><a href="#Convenios"><span class="fa-solid fa-user-doctor-message"></span><span class="tab-text"> Convenios  </span>
+        <li><a href="#TarifariosDescripcionProcedimientos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> TarifariosProcedimientos</span>  </a></li>
+        <li><a href="#TarifariosDescripcionSum"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> TarifariosSuministros</span> </a></li>
     </ul>
 </div>
 
-<style>
-div.dataTables_wrapper  div.dataTables_filter input {
-   height: 5px;
-   padding:10px;
-   border-radius:8px;
-}
-#tablaConvenios {
-     /*    font-family: 'Verdana', sans-serif;  */  /* Times*/
- font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
-        font-size: 50px;
-	 padding: 1px;
-	 /* Alto de las celdas */
-	  height: 1px;
-    }
-
-table.dataTable tbody tr {
-  min-height: 60px;
-}
-
-
-.my-row-class {
-    height: 30px;
-}
-</style>
 <script>
 
 function RefrescarPantalla() {
@@ -83,9 +57,8 @@ function RefrescarPantalla() {
 <div class="marco">
     <div class="secciones">
         <article id="Convenios">
-       
-	
-            <form action="/Conven" method="get" id="FormConvenios">
+       	
+            <form action="/Convenios" method="get" id="FormConvenios">
 
                 <input type="hidden" id="username" name="username" value="{{Username}}">
                 <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
@@ -112,10 +85,7 @@ function RefrescarPantalla() {
                <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnAdicionarConvenio"  name="BtnAdicionarConvenio" value="Adicionar" onclick= "AdicionarConvenio()" >
 		<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
 		</div>
-
    			   <div class="row">
-
-
                                         <table  id= "tablaConvenios" class=" display table table-striped  table-sm fs-6 nowrap" style="width: 100%";>
                                            <thead>
                                             <tr>    
@@ -134,19 +104,15 @@ function RefrescarPantalla() {
                                                 <th>Id2</th>                    
                                                 <th>tarifariosDescripcionSum</th>
                                                 <th>Id3</th>                    
-                                                <th>tarifariosDescripcionHon</th>
-                                          
+                                                <th>tarifariosDescripcionHon</th>                                       
 						</bold>                                  
-
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            </tbody>
-                                         
-
-                                        </table>
+                                            </tbody>                                       
+                                       </table>
                                     </div>  <!-- cierra row -->
-                                </div>  <!-- cierra row  -->
+                                </div>  <!-- cierra container  -->
 
 	<!-- Espacio para Modales  -->
 
@@ -154,7 +120,7 @@ function RefrescarPantalla() {
 		<!-- Modal Editar Convenio -->
 
          <div class="modal fade" id="editarModelConvenios" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                <div class="modal-dialog modal-lg modal-dialog-scrollable  "  modal-dialog-center role="document" >
+                <div class="modal-dialog modal-lg modal-dialog-scrollable"  modal-dialog-center role="document" >
                     <div class="modal-content">
                         <div class="modal-header">
 	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Editar Convenios</font> </div>
@@ -163,8 +129,7 @@ function RefrescarPantalla() {
                         </div>
 
                         <div class="modal-body">
-                 
-			
+                 	
   			  <form id="postFormEditarConvenios" name="postFormEditarConvenios">
 
                                 <input type="text" name="postConvenio_id" id="postConvenio_id">
@@ -172,7 +137,7 @@ function RefrescarPantalla() {
 			<div id="flex-container-editarConvenio">
 			 <div>
                                         <label for="serviciosAdministrativos_id" class="col-sm-1 control-label">SeviciosAdmon:</label>
-                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos_id"  tabindex= "0"
+                                            <select class="select-css" id="serviciosAdministrativos_id"  tabindex= "0"
                                                     name="serviciosAdministrativos_id"
                                                     required>
                                                 {% for serviciosAdministrativos in ServiciosAdministrativos %}
@@ -183,14 +148,10 @@ function RefrescarPantalla() {
 				 <label  for="nombreConvenio">Convenio:</label>
                                     <input type="text" id="nombreConvenio" name="nombreConvenio" value="0" placeholder="nombreConvenio:" readonly></input>
                                 </div>
-
-
 				
  				<label  for="vigenciaDesde">VigenciaDesde:</label>
                                
 					 <input type="date"  id="vigenciaDesde" name="vigenciaDesde" placeholder="vigenciaDesde"  >
-
-		
 
  				<label  for="vigenciaHasta">VigenciaHasta:</label>
                                
@@ -217,9 +178,8 @@ function RefrescarPantalla() {
                                                                 {{tarifariosDescripcionSum.nombre}}
                                                             </option>
                                                             {% endfor %}
-                                                        </select>
-                              
-			
+                                                        </select>                            
+		
 					    Tarifario Honorarios:
                 	           	<select class="select-css"  id="tarifariosDescripcionHono_id"
                                                                 name="tarifariosDescripcionHono_id">
@@ -280,7 +240,7 @@ function RefrescarPantalla() {
 
 			
 				 <label  for="facturacionSuministros">facturacionSuministros:</label>
-                                    <input type="text" class="form-control form-control-sm" id="facturacionSuministros" name="facturacionSuministros" placeholder="facturacionSuministros:"></input>
+                                    <input type="text"  id="facturacionSuministros" name="facturacionSuministros" placeholder="facturacionSuministros:"></input>
                        
 
 				
@@ -297,14 +257,10 @@ function RefrescarPantalla() {
 				 <label  for="requisitos">requisitos:</label>
                                     <input type="text" id="requisitos" name="requisitos" placeholder="requisitos:"></input>
      
-
-
 	
 				 <label  for="fechaRegistro">fechaRegistro:</label>
                                     <input type="text" id="fechaRegistro" name="fechaRegistro" placeholder="fechaRegistro:"></input>
           
-
-
 		
 				 <label  for="estadoReg">estadoReg:</label>
                                     <input type="text"  id="estadoReg" name="estadoReg" placeholder="estadoReg:"></input>
@@ -313,8 +269,7 @@ function RefrescarPantalla() {
 				 <label  for="empresa_id">empresa_id:</label>
                                     <input type="text" id="empresa_id" name="empresa_id" placeholder="empresa_id:"></input>
                     
-
-				
+			
 				 <label  for="usuarioRegistro_id">usuarioRegistro_id:</label>
                                     <input type="text"  id="usuarioRegistro_id" name="usuarioRegistro_id" placeholder="usuarioRegistro_id:"></input>
                     
@@ -322,9 +277,7 @@ function RefrescarPantalla() {
 				 <label  for="descripcion">descripcion:</label>
                                     <input type="text" id="descripcion" name="descripcion" placeholder="descripcion:" readonly></input>
                           
-
-
-		
+	
 				 <label  for="particular">Es Particular : </label>
                                     <input type="checkbox"  id="particular" name="particular"></input>
 
@@ -350,17 +303,13 @@ function RefrescarPantalla() {
                     </div> <!-- CIERRA MODAL DIALOG -->
                 </div>  <!-- CIERRA MODAL FADE -->
 
-
-
 		<!-- Fin Modal Editar Convenio -->
-
-
 
 		<!-- Modal Crear Convenio -->
 
 
        <div class="modal fade" id="crearModelConvenios" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                <div class="modal-dialog modal-lg modal-dialog-scrollable  modal-dialog-center" role="document" >
+                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document" >
                     <div class="modal-content">
                         <div class="modal-header">
 		     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Creacion Convenios</font> </div>
@@ -378,30 +327,18 @@ function RefrescarPantalla() {
 		<div id="flex-container-crearConvenio">
 			 <div>
 
-
-
                                         <label for="serviciosAdministrativosC_id" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
 
-                                            <select class="select-css h-40 w-20" id="serviciosAdministrativosC_id"  tabindex= "0"
+                                            <select class="select-css" id="serviciosAdministrativosC_id"  tabindex= "0"
                                                     name="serviciosAdministrativosC_id"
                                                     required>
                                                 {% for serviciosAdministrativos in ServiciosAdministrativos %}
                                                 <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
                                                 {% endfor %}
                                             </select>
-
-
-
-
-
-
-
                                     
 				 <label  for="nombreConvenio">Nombre Convenio:</label>
                                     <input type="text"  id="nombreConvenioC" name="nombreConvenioC" value="0" placeholder="nombreConvenio:" ></input>
-
-
-
 				
  				<label  for="vigenciaDesdeC">VigenciaDesde:</label>
                                
@@ -491,12 +428,8 @@ function RefrescarPantalla() {
 				 <label  for="ambulatorioC">ambulatorio:</label>
                                     <input type="text"  id="ambulatorioC" name="ambulatorioC" placeholder="ambulatorio:"></input>
 
-
-
 				 <label  for="consultaExternaC">consultaExterna:</label>
                                     <input type="text"  id="consultaExternaC" name="consultaExternaC" placeholder="consultaExterna:"></input>
-
-
 
 				 <label  for="copagoC">copago:</label>
                                     <input type="text"  id="copagoC" name="copagoC" placeholder="copago:"></input>
@@ -504,12 +437,8 @@ function RefrescarPantalla() {
 				 <label  for="moderadoraC">moderadora:</label>
                                     <input type="text"  id="moderadoraC" name="moderadoraC" placeholder="moderadora:"></input>
 
-
-
 				 <label  for="tipofacturaC">tipofactura:</label>
                                     <input type="text"  id="tipofacturaC" name="tipofacturaC" placeholder="tipofactura:"></input>
-
-
 
 				 <label  for="agrupadaC">tipofactura:</label>
                                     <input type="text"  id="agrupadaC" name="agrupadaC" placeholder="agrupada:"></input>
@@ -518,15 +447,11 @@ function RefrescarPantalla() {
 				 <label  for="facturacionSuministrosC">facturacionSuministros:</label>
                                     <input type="text"  id="facturacionSuministrosC" name="facturacionSuministrosC" placeholder="facturacionSuministros:"></input>
 
-
-
 				 <label  for="facturacionCupsC">facturacionCups:</label>
                                     <input type="text"  id="facturacionCupsC" name="facturacionCupsC" placeholder="facturacionCups:"></input>
 
-
 				 <label  for="cuentaContableC">cuentaContable:</label>
-                                    <input type="text"  id="cuentaContableC" name="cuentaContableC" placeholder="cuentaContable:"></input>
-
+                                   <input type="text"  id="cuentaContableC" name="cuentaContableC" placeholder="cuentaContable:"></input>
 
 				 <label  for="requisitosC">requisitos:</label>
                                     <input type="text" id="requisitosC" name="requisitosC" placeholder="requisitos:"></input>
@@ -538,18 +463,12 @@ function RefrescarPantalla() {
                                     <input type="text"  id="estadoRegC" name="estadoRegC" placeholder="estadoReg:"></input>
 
 
-	
-
 				 <label  for="usuarioRegistroC_id">usuarioRegistro_id:</label>
                                     <input type="text"  id="usuarioRegistroC_id" name="usuarioRegistroC_id" placeholder="usuarioRegistro_id:"></input>
 
 
-
-
 				 <label  for="descripcionC">descripcion:</label>
                                     <input type="text"  id="descripcionC" name="descripcionC" placeholder="descripcion:" ></input>
-
-
 
 				 <label  for="particularC">Es Particular : </label>
                                     <input type="checkbox"  id="particularC" name="particularC" placeholder="particular:"></input>
@@ -582,13 +501,7 @@ function RefrescarPantalla() {
                     </div> <!-- CIERRA MODAL DIALOG -->
                 </div>  <!-- CIERRA MODAL FADE -->
 
-
-
 		<!-- Modal Crear Convenio -->
-
-
-
-
 
 	<!-- FIN Espacio para Modales  -->
 
@@ -673,16 +586,12 @@ function RefrescarPantalla() {
 					
    </table>
 
-	
-
-
-
-
 
 	</div> <!--  Cierra el Div -->
 
 
 </article>
+
 <article id="TarifariosDescripcionSum">
 	
       
