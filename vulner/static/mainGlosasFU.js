@@ -61,9 +61,9 @@ function arrancaGlosas(valorTabla,valorData)
     if (valorTabla == 1)
     {
         let dataTableOptionsGlosas  ={
-   dom: "<'row mb-1'<'col-sm-3'B><'col-sm-3'><'col-sm-6'f>>" + // B = Botones a la izquierda, f = filtro a la derecha
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+ dom: "<'row mb-0'<'col-sm-6'f><'col-sm-4'><'col-sm-2'B>>" + // B = Botones a la izquierda, f = filtro a la derecha
+            "<'row'<'col-sm-12'tr>>" +
+             "<'row mt-0'<'col-sm-5'i><'col-sm-7'p>>",
   buttons: [
     {
       extend: 'excelHtml5',
@@ -108,7 +108,7 @@ function arrancaGlosas(valorTabla,valorData)
 		    emptyTable: 'Ningún dato disponible en esta tabla',
 		    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
 		    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-		    search: 'Buscar:',
+		    search: "<i class='fa fa-search'></i> Buscar: _INPUT_",
 		    infoThousands: ',',
 		    loadingRecords: 'Cargando...',
 		    paginate: {
@@ -168,9 +168,9 @@ function arrancaGlosas(valorTabla,valorData)
     if (valorTabla == 2)
     {
         let dataTableOptionsGlosasDetalle  ={
-   dom: "<'row mb-1'<'col-sm-3'B><'col-sm-3'><'col-sm-6'f>>" + // B = Botones a la izquierda, f = filtro a la derecha
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+ dom: "<'row mb-0'<'col-sm-6'f><'col-sm-4'><'col-sm-2'B>>" + // B = Botones a la izquierda, f = filtro a la derecha
+            "<'row'<'col-sm-12'tr>>" +
+             "<'row mt-0'<'col-sm-5'i><'col-sm-7'p>>",
   buttons: [
     {
       extend: 'excelHtml5',
@@ -213,7 +213,7 @@ function arrancaGlosas(valorTabla,valorData)
 		    emptyTable: 'Ningún dato disponible en esta tabla',
 		    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
 		    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-		    search: 'Buscar:',
+		    search: "<i class='fa fa-search'></i> Buscar: _INPUT_",
 		    infoThousands: ',',
 		    loadingRecords: 'Cargando...',
 		    paginate: {
@@ -279,9 +279,9 @@ function arrancaGlosas(valorTabla,valorData)
     {
 
        let dataTableOptionsGlosasDetalleRips  ={
-   dom: "<'row mb-1'<'col-sm-3'B><'col-sm-3'><'col-sm-6'f>>" + // B = Botones a la izquierda, f = filtro a la derecha
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+ dom: "<'row mb-0'<'col-sm-6'f><'col-sm-4'><'col-sm-2'B>>" + // B = Botones a la izquierda, f = filtro a la derecha
+            "<'row'<'col-sm-12'tr>>" +
+             "<'row mt-0'<'col-sm-5'i><'col-sm-7'p>>",
   buttons: [
     {
       extend: 'excelHtml5',
@@ -326,7 +326,7 @@ function arrancaGlosas(valorTabla,valorData)
 		    emptyTable: 'Ningún dato disponible en esta tabla',
 		    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
 		    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-		    search: 'Buscar:',
+		    search: "<i class='fa fa-search'></i> Buscar: _INPUT_",
 		    infoThousands: ',',
 		    loadingRecords: 'Cargando...',
 		    paginate: {
@@ -387,9 +387,9 @@ function arrancaGlosas(valorTabla,valorData)
     if (valorTabla == 11)
     {
         let dataTableOptionsGlosasTotalesDetalle  ={
-   dom: "<'row mb-1'<'col-sm-3'B><'col-sm-3'><'col-sm-6'f>>" + // B = Botones a la izquierda, f = filtro a la derecha
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+ dom: "<'row mb-0'<'col-sm-6'f><'col-sm-4'><'col-sm-2'B>>" + // B = Botones a la izquierda, f = filtro a la derecha
+            "<'row'<'col-sm-12'tr>>" +
+             "<'row mt-0'<'col-sm-5'i><'col-sm-7'p>>",
   buttons: [
     {
       extend: 'excelHtml5',
@@ -432,7 +432,7 @@ function arrancaGlosas(valorTabla,valorData)
 		    emptyTable: 'Ningún dato disponible en esta tabla',
 		    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
 		    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-		    search: 'Buscar:',
+		    search: "<i class='fa fa-search'></i> Buscar: _INPUT_",
 		    infoThousands: ',',
 		    loadingRecords: 'Cargando...',
 		    paginate: {
@@ -487,9 +487,9 @@ function arrancaGlosas(valorTabla,valorData)
     if (valorTabla == 12)
     {
         let dataTableOptionsNotasCredito  ={
-   dom: "<'row mb-1'<'col-sm-3'B><'col-sm-3'><'col-sm-6'f>>" + // B = Botones a la izquierda, f = filtro a la derecha
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+ dom: "<'row mb-0'<'col-sm-6'f><'col-sm-4'><'col-sm-2'B>>" + // B = Botones a la izquierda, f = filtro a la derecha
+            "<'row'<'col-sm-12'tr>>" +
+             "<'row mt-0'<'col-sm-5'i><'col-sm-7'p>>",
   buttons: [
     {
       extend: 'excelHtml5',
@@ -534,7 +534,7 @@ function arrancaGlosas(valorTabla,valorData)
 		    emptyTable: 'Ningún dato disponible en esta tabla',
 		    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
 		    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-		    search: 'Buscar:',
+		    search: "<i class='fa fa-search'></i> Buscar: _INPUT_",
 		    infoThousands: ',',
 		    loadingRecords: 'Cargando...',
 		    paginate: {
@@ -584,9 +584,9 @@ function arrancaGlosas(valorTabla,valorData)
     if (valorTabla == 13)
     {
         let dataTableOptionsNotasCreditoDetalle  ={
-   dom: "<'row mb-1'<'col-sm-3'B><'col-sm-3'><'col-sm-6'f>>" + // B = Botones a la izquierda, f = filtro a la derecha
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+ dom: "<'row mb-0'<'col-sm-6'f><'col-sm-4'><'col-sm-2'B>>" + // B = Botones a la izquierda, f = filtro a la derecha
+            "<'row'<'col-sm-12'tr>>" +
+             "<'row mt-0'<'col-sm-5'i><'col-sm-7'p>>",
   buttons: [
     {
       extend: 'excelHtml5',
@@ -631,7 +631,7 @@ function arrancaGlosas(valorTabla,valorData)
 		    emptyTable: 'Ningún dato disponible en esta tabla',
 		    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
 		    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-		    search: 'Buscar:',
+		    search: "<i class='fa fa-search'></i> Buscar: _INPUT_",
 		    infoThousands: ',',
 		    loadingRecords: 'Cargando...',
 		    paginate: {
@@ -679,9 +679,9 @@ function arrancaGlosas(valorTabla,valorData)
     if (valorTabla == 14)
     {
         let dataTableOptionsNotasCreditoDetalleRips  ={
-   dom: "<'row mb-1'<'col-sm-3'B><'col-sm-3'><'col-sm-6'f>>" + // B = Botones a la izquierda, f = filtro a la derecha
-             "<'row'<'col-sm-12'tr>>" +
-             "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
+  dom: "<'row mb-0'<'col-sm-6'f><'col-sm-4'><'col-sm-2'B>>" + // B = Botones a la izquierda, f = filtro a la derecha
+            "<'row'<'col-sm-12'tr>>" +
+             "<'row mt-0'<'col-sm-5'i><'col-sm-7'p>>",
   buttons: [
     {
       extend: 'excelHtml5',
@@ -726,7 +726,7 @@ function arrancaGlosas(valorTabla,valorData)
 		    emptyTable: 'Ningún dato disponible en esta tabla',
 		    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
 		    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-		    search: 'Buscar:',
+		    search: "<i class='fa fa-search'></i> Buscar: _INPUT_",
 		    infoThousands: ',',
 		    loadingRecords: 'Cargando...',
 		    paginate: {
@@ -878,8 +878,8 @@ window.addEventListener('load', async () => {
 	// AQUI tengo que colocar los datosde la Glosa en el Formulario de General y demas
 
 	document.getElementById("post_idGlo").innerHTML =dato3.id;
-	document.getElementById("factura_idGlo").innerHTML = dato3.factura_id;
-	document.getElementById("facturaAdicionar_id").value = dato3.factura_id;
+	 document.getElementById("factura_idGlo").innerHTML = dato3.factura_id;
+	 document.getElementById("facturaAdicionar_id").value = dato3.factura_id;
 	//document.getElementById("convenio_idGlo").value = dato3.convenio_id;
 	//document.getElementById("convenioAdicionar_id").value = dato3.convenio_id;
 	document.getElementById("tipoGlosa_idGlo").value = dato3.tipoGlosa_id;
@@ -1437,7 +1437,9 @@ function GlosasAdicionar()
             $('#post_id').val('');
             $('#postFormCrearGlosasAdicionar').trigger("reset");
             $('#modelHeadingGlosas').html("Creacion Glosas  Factura");
+		alert("voy a abrir");
             $('#crearModelGlosasAdicionar').modal('show');
+		alert("ya abri");
         
 }
 

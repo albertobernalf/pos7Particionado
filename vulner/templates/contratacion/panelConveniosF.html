@@ -10,12 +10,11 @@
 <script src={% static 'js/panelTabsConvenios.js' %} defer >         </script>
 <script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
 
-
 <div class="marco">
     <ul class="tabs">
-        <li><a href="#Convenios"><span class="fa-solid fa-user-doctor-message"></span><span class="tab-text"> Convenios  </span>
-        <li><a href="#TarifariosDescripcionProcedimientos"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> TarifariosProcedimientos</span>  </a></li>
-        <li><a href="#TarifariosDescripcionSum"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> TarifariosSuministros</span> </a></li>
+        <li><a href="#Convenios">				<span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> Convenios  		</span> </a></li>
+        <li><a href="#TarifariosDescripcionProcedimientos">	<span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> TarifariosProcedimientos  </span> </a></li>
+        <li><a href="#TarifariosDescripcionSum">		<span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> TarifariosSuministros     </span> </a></li>
     </ul>
 </div>
 
@@ -35,7 +34,6 @@ function RefrescarPantalla() {
         data['username_id'] = username_id;
  	    data = JSON.stringify(data);
 
-
         arrancaConvenios(1,data);
 
 	    dataTableConveniosInitialized = true;
@@ -47,10 +45,7 @@ function RefrescarPantalla() {
 
 {% block tarifas %}
 
-
-
 {% endblock %}
-
 
 {% block content %}
 
@@ -79,8 +74,9 @@ function RefrescarPantalla() {
             </form>
 
             <!-- INICIO TABLE DE  EL DATATABLE  -->
+
 		<div class="container my-2">
-             
+            
 		<div align="right" height="15px" width="50px">
                <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnAdicionarConvenio"  name="BtnAdicionarConvenio" value="Adicionar" onclick= "AdicionarConvenio()" >
 		<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
@@ -120,25 +116,25 @@ function RefrescarPantalla() {
 		<!-- Modal Editar Convenio -->
 
          <div class="modal fade" id="editarModelConvenios" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                <div class="modal-dialog modal-lg modal-dialog-scrollable"  modal-dialog-center role="document" >
+                <div class="modal-dialog modal-lg modal-dialog-scrollable"  role="document" >
                     <div class="modal-content">
                         <div class="modal-header">
-	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Editar Convenios</font> </div>
-                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+	 		    <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Editar Convenios</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true"></span>  </button>
 			<button type="button" class="btn btn-primary" id="saveBtnEditarConvenios1" onclick="EditarGuardarConvenios()">Grabar!</button> 
-                        </div>
-
+                  
+			  </div>
                         <div class="modal-body">
                  	
   			  <form id="postFormEditarConvenios" name="postFormEditarConvenios">
 
                                 <input type="text" name="postConvenio_id" id="postConvenio_id">
 
-			<div id="flex-container-editarConvenio">
-			 <div>
-                                        <label for="serviciosAdministrativos_id" class="col-sm-1 control-label">SeviciosAdmon:</label>
-                                            <select class="select-css" id="serviciosAdministrativos_id"  tabindex= "0"
-                                                    name="serviciosAdministrativos_id"
+		<!--	<div id="flex-container-editarConvenio">  -->
+		<!--		 <div> -->
+
+                                        <label for="serviciosAdministrativos_id" >ServiciosAdmon:</label>
+                                            <select class="select-css" id="serviciosAdministrativos_id"   name="serviciosAdministrativos_id"
                                                     required>
                                                 {% for serviciosAdministrativos in ServiciosAdministrativos %}
                                                 <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
@@ -155,41 +151,15 @@ function RefrescarPantalla() {
 
  				<label  for="vigenciaHasta">VigenciaHasta:</label>
                                
-					 <input type="date"   id="vigenciaHasta" name="vigenciaHasta" placeholder="vigenciaHasta"  >
+					 <input type="date"   id="vigenciaHasta" name="vigenciaHasta" placeholder="vigenciaHasta"  > </input>
                        
-
-			
                                     Tarifario Procedimientos:
-				<select class="select-css"  id="tarifariosDescripcionProc_id"
-                                                                name="tarifariosDescripcionProc_id">
-                                                            {% for tarifariosDescripcionProc in TarifariosDescripcionProc%}
-                                                            <option value="{{tarifariosDescripcionProc.id}}">
-                                                                {{tarifariosDescripcionProc.nombre}}
-                                                            </option>
-                                                            {% endfor %}
-                                                        </select>                       
-
-			
+			    <input type="text" id="tarifariosDescripcionProc_id" name="tarifariosDescripcionProc_id" value="0" placeholder="tarifariosDescripcionProc_id:" readonly></input>
                                     Tarifario Suministros:
-				<select class="select-css"  id="tarifariosDescripcionSum_id"
-                                                                name="tarifariosDescripcionSum_id">
-                                                            {% for tarifariosDescripcionSum in TarifariosDescripcionSum %}
-                                                            <option value="{{tarifariosDescripcionSum.id}}">
-                                                                {{tarifariosDescripcionSum.nombre}}
-                                                            </option>
-                                                            {% endfor %}
-                                                        </select>                            
-		
+			    <input type="text" id="tarifariosDescripcionSum_id" name="tarifariosDescripcionSum_id" value="0" placeholder="tarifariosDescripcionSum_id:" readonly></input>
 					    Tarifario Honorarios:
-                	           	<select class="select-css"  id="tarifariosDescripcionHono_id"
-                                                                name="tarifariosDescripcionHono_id">
-                                                            {% for tarifariosDescripcionHonorarios in TarifariosDescripcionHonorarios %}
-                                                            <option value="{{tarifariosDescripcionHonorarios.id}}">
-                                                                {{tarifariosDescripcionHonorarios.nombre}}
-                                                            </option>
-                                                            {% endfor %}
-                                                        </select>
-                      
+			    <input type="text" id="tarifariosDescripcionHono_id" name="tarifariosDescripcionHono_id" value="0" placeholder="tarifariosDescripcionHono_id:" readonly></input>
+	                      
                		
 				 <label  for="porcTarifario">porcTarifario:</label>
                                     <input type="text"  id="porcTarifario" name="porcTarifario" placeholder="porcTarifario:"></input>
@@ -282,8 +252,8 @@ function RefrescarPantalla() {
                                     <input type="checkbox"  id="particular" name="particular"></input>
 
 
-                                </div>
-                                </div> <!-- cierra flexbox -->
+                            <!--    </div> -->
+                           <!--     </div>  --><!-- cierra flexbox -->
 
                             </form>
 
@@ -299,7 +269,7 @@ function RefrescarPantalla() {
 
                                </div> <!-- CIERRA EL FOOTER-->
 
-                        </div> <!-- CIERRA MODAL CONTENTE -->
+                        </div> <!-- CIERRA MODAL CONTENT -->
                     </div> <!-- CIERRA MODAL DIALOG -->
                 </div>  <!-- CIERRA MODAL FADE -->
 
@@ -359,7 +329,6 @@ function RefrescarPantalla() {
                                                             </option>
                                                             {% endfor %}
                                                         </select>
-
 
 
                                     Tarifario Procedimientos:
@@ -647,9 +616,6 @@ function RefrescarPantalla() {
 
 
 </article>
-
-
-
   
     </div>
 </div>

@@ -287,38 +287,28 @@ table.dataTable tbody tr {
 
 		
 <!-- DESDE AQUI ENCABEZADO GLOSA-->
-	<div style="position: relative; left: 150px; width:1200px; height:50px;>
+	<!-- <div style="position: relative; left: 150px; width:1200px; height:50px;>  -->
+	<div>
+	
+
 	  <form id="postFormGlosas" name="postFormGlosas">
 		<input type="hidden" name="post_id" id="post_id">
-		
-                      <div class="row">
-			<div class="col-sm-1">							
+		                
+			<div id="flex-container-detalleglosas">		
+				<div>
+			
 					Factura:                                 	                              
 					<span class="miTexto" name="factura_idGlo" id="factura_idGlo"></span>
 				                             
-			</div>
-
-
-			<div class="col-sm-1">
+			
 			 <label for="post_idGlo">Glosa No</label>
 				<span class="miTexto" name="post_idGlo" id="post_idGlo"></span>
-			</div>
-
-
-			<div class="col-sm-1">
+			
 			 <label for="post_idGloDet">Detalle Glosa No</label>
 				<span class="miTexto" name="post_idGloDet" id="post_idGloDet"></span>
-			</div>
-
-
-			<div class="col-sm-1">		                                   
+				                                   
                                    <span class="miTexto" name="sedesClinica_idGlo" id="sedesClinica_idGlo" hidden></span>
-			</div>
-
-					
-
-                     				   <div class="col-sm-1">
-
+			
                                     EstadoRadica:
 				<select class="select-css"  id="estadoRadicacion_idGlo"  name="estadoRadicacion_idGlo">
                                                            {% for estadosRadicacion in EstadosRadicacion %}
@@ -328,12 +318,7 @@ table.dataTable tbody tr {
                                                             {% endfor %}
                                                           
                                                         </select>
-                                </div>
-		
-
-		
-
-				<div class="col-sm-1">
+                             
                                     Tipo Glosa:
 				<select class="select-css"  id="tipoGlosa_idGlo"  name="tipoGlosa_idGlo" >
                                                            {% for tiposGlosas in TiposGlosas %}
@@ -343,9 +328,7 @@ table.dataTable tbody tr {
                                                             {% endfor %}
                                                           
                                                         </select>
-                                </div>
-
-			<div class="col-sm-1">
+                             
                                     EstadoRecepcion:
 				<select class="select-css"  id="estadoRecepcion_idGlo"  name="estadoRecepcion_idGlo">
                                                            {% for estadosRecepcion in EstadosRecepcion %}
@@ -355,20 +338,17 @@ table.dataTable tbody tr {
                                                             {% endfor %}
                                                           
                                                         </select>
-                                </div>
-		
+                           
 
-		<div class="col-sm-1">
 			<button type="button" class="btn btn-primary btn-sm" id="saveBtnGuardarGlosa" onclick="GuardaGlosasEstados()">Guardar !</button> 
-		 </div>
-		<div class="col-sm-1">
-               <input type="button" style="height:10px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnGlosas"  name="BtnGlosas" value="AdicionarFactura" onclick= "GlosasAdicionar()" >				    
-		</div>
-
-
-                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+	
+            <!--    <input type="button" style="height:10px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"   id="BtnGlosas"  name="BtnGlosas" value="AdicionarFactura" onclick= "GlosasAdicionar()" >				     -->
+                <input type="button"   id="BtnGlosas"  name="BtnGlosas" value="AdicionarFactura" onclick= "GlosasAdicionar()">Adicionar Factura</button> 		     
+				</div> 			
+			</div> 	
 
                             </form>
+	
 	</div>
 <!-- FIN ENCABEZADO -->
 
@@ -456,11 +436,9 @@ table.dataTable tbody tr {
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                         </div>
-		<div style="width:500px; heigth:100px; ">
+		<!-- <div style="width:500px; heigth:100px; ">    LE SOBRA -->
                         <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
+                        
 			
   			  <form id="postFormGlosasDetalleRips" name="postFormGlosasDetalleRips">
                                
@@ -610,81 +588,62 @@ table.dataTable tbody tr {
                     </div> <!-- CIERRA MODAL DIALOG -->
                 </div>  <!-- CIERRA MODAL FADE -->
 
-
 	            <!-- Espacio Modal  Glosa Adicionar -->
 
             <div class="modal fade" id="crearModelGlosasAdicionar" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                <div class="modal-dialog modal-dialog-scrollable  modal-dialog-center" role="document" modal-lg>
+                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document" >
                     <div class="modal-content">
                         <div class="modal-header">
 	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Adicionar Glosa a Factura</font> </div>
-                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
-			<button type="button" class="btn btn-primary" id="saveBtnCrearGlosasAdicionar" onclick="CrearGlosasAdicionar()">Grabar!</button> 
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true"></span>  </button>
+			
                         </div>
 		
-                        <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
+                        <div class="modal-body">                         
 			
   			  <form id="postFormGlosasAdicionar" name="postFormGlosasAdicionar">
+				<div id="flex-container-detalleglosasadicionar">
+					  <div>
+					                              <input type="hidden" name="post_id" id="post_id">
 
-                                <input type="hidden" name="post_id" id="post_id">
+                  
 
-                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
-
-
-				  <div class="col-4">
+				
 					                                   
                                     <input type="hidden" class="form-control" id="sedesClinicaAdicionar_id" name="sedesClinicaAdicionar_id"  value="{{Sede}}" readonly></input>
-                                </div>
-
-
-				<div class="col-12">
+                        
                                    	 <label class="visually-hidden" for="observacionesAdicionar">observaciones:</label>
                                
 					 <input type="text"  class="form-control" id="observacionesAdicionar" name="observacionesAdicionar" placeholder="observaciones"  >
-                                </div>
-
-
-				<div class="col-12">
+                             
                                    	 Factura:
                                
 					 <input type="text" class="form-control" id="facturaAdicionar_id" name="facturaAdicionar_id" placeholder="factura_id"  >
-                                </div>
-
-
-			
-				<div class="col-12">
+                               
                                     
 				 <label  for="totalGlosaAdicionar">valorGlosa:</label>
                                     <input type="text" class="form-control" id="totalGlosaAdicionar" name="totalGlosaAdicionar" value="0" placeholder="totalrGlosa:" ></input>
-                                </div>
-
-			
-                                <div class="col-12">
+                             
                                    
                                     <input type="hidden" id="fechaRegistroAdicionar" name="fechaRegistroAdicionar" value="" > </input>
-                                </div>
-
-                                <div class="col-12">
+                               
 				 <label  for="estadoRegAdicionar">EstadoRegistro:</label>
                                     
                                     <input type="text" class="form-control" id="estadoRegAdicionar" name="estadoRegAdicionar" value="A" placeholder="CantidadRechazadas:"  readonly> </input>
-                                </div>
-
-                                <div class="col-12">
+                              
                                     Usuario:
                                     <input type="text" id="usuarioRegistroAdicionar_id" name="usuarioRegistroAdicionar_id" value="{{Username_id}}" readonly > </input>
-                                </div>
+                           
 
-                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+
+			  </div>
+			  </div>
 
                             </form>
 
                         </div> <!-- CIERRA BODY -->
-			<div class="modal-footer">
-		
+			<div class="modal-footer">		
 		
 		<textarea id="mensajesErrorModalGlosasAdicionar" name="mensajesErrorModalGlosasAdicionar" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
 			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>

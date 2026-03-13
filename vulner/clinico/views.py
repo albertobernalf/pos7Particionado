@@ -1118,7 +1118,7 @@ def crearHistoriaClinica(request):
 
                                         print("comando = ", comando)
                                         cur3.execute(comando)
-                                        autorizacionId = curt.fetchone()[0]
+                                        autorizacionId = cur3.fetchone()[0]
                                         print("me_doy")
                                         #miConexiont.commit()
                                         #miConexiont.close()

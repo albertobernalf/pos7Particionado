@@ -496,6 +496,8 @@ class FacturacionDetalle(models.Model):
     notaDebito    = models.ForeignKey('cartera.NotasDebito', blank=True,null= True, editable=True, on_delete=models.PROTECT , related_name='TablaCups121')
     valorNotaDebito = models.DecimalField( max_digits=15, decimal_places=2 , blank=True,null= True, editable=True)
     anulado = models.CharField(max_length=1, choices=FLAG_CHOICES, default='N', blank=True, editable=False)
+    autorizacionDetalle = models.ForeignKey('autorizaciones.AutorizacionesDetalle', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='AutDet101')
+    mipres = models.CharField(max_length=50, null=True, blank=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT , related_name='Planta107') 
     estadoRegistro = models.CharField(max_length=1, choices=ESTADOREG_CHOICES,blank=True,null= True, editable=True,)
@@ -590,6 +592,8 @@ class LiquidacionDetalle(models.Model):
     observaciones =  models.CharField(max_length=120, blank=True,null= True, editable=True,)
     anulado = models.CharField(max_length=1, choices=FLAG_CHOICES, default='N', blank=True, editable=False)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta122') 
+    autorizacionDetalle = models.ForeignKey('autorizaciones.AutorizacionesDetalle', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='AutDet102')
+    mipres = models.CharField(max_length=50, null=True, blank=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoRegistro = models.CharField(max_length=1, choices=ESTADOREG_CHOICES, blank=True,null= True, editable=True,)
 
