@@ -713,8 +713,9 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
      	   var observa = document.getElementById("observa").value;
            var select = document.getElementById("lab"); /*Obtener el SELECT */
       	   var lab = select.options[select.selectedIndex].value; /* Obtener el valor */
+	   var mipres = document.getElementById("mipres").value;
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
-	        tableL.row.add([lab, text,  cantidad, observa, '<i class="fa fa-trash"></i>']).draw(false);
+	        tableL.row.add([lab, text,  cantidad, observa, mipres ,'<i class="fa fa-trash"></i>']).draw(false);
         });
       
 
@@ -873,12 +874,13 @@ function tableActionsLaboratorios() {
 			  btn = btn + " <button class='btn btn-danger deletePostLaboratorio' >" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
-                    "targets": 5
+                    "targets": 6
                }
             ],
         lengthMenu: [5],
     columns:[
 
+        { visible: true },
         { visible: true },
         { visible: true },
         { visible: true },
@@ -1375,6 +1377,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	        "cups"  : datos_tabla[i][0],
 	        "cantidad"    : datos_tabla[i][2] ,
 		"observa"    : datos_tabla[i][3] 
+		"‬mipres"    : datos_tabla[i][4] 
 	      });
 	   };
 

@@ -569,7 +569,7 @@ class LiquidacionDetalle(models.Model):
     id = models.AutoField(primary_key=True)
     liquidacion = models.ForeignKey('facturacion.Liquidacion', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='Liquid01')
     consecutivo = models.IntegerField(editable=True, null=True, blank=True)
-    #mipres  = models.CharField(max_length=30,  blank=True, null=True, editable=True)
+    mipres  = models.CharField(max_length=50,  blank=True, null=True, editable=True)
     fecha = models.DateTimeField(editable=True, null=True, blank=True)
     #autorizacion = models.ForeignKey('autorizaciones.Autorizaciones', blank=True, null=True, editable=True, on_delete=models.PROTECT , related_name='aut05') 
     historiaMedicamento = models.ForeignKey('clinico.HistoriaMedicamentos', blank=True, null=True, editable=True, on_delete=models.PROTECT , related_name='histmed02') 
@@ -593,7 +593,6 @@ class LiquidacionDetalle(models.Model):
     anulado = models.CharField(max_length=1, choices=FLAG_CHOICES, default='N', blank=True, editable=False)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT, related_name='Planta122') 
     autorizacionDetalle = models.ForeignKey('autorizaciones.AutorizacionesDetalle', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='AutDet102')
-    mipres = models.CharField(max_length=50, null=True, blank=True)
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     estadoRegistro = models.CharField(max_length=1, choices=ESTADOREG_CHOICES, blank=True,null= True, editable=True,)
 

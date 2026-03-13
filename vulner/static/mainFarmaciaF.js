@@ -84,7 +84,9 @@ $('#tablaFormulacion tbody').on('click', 'tr', function () {
 	        var cantidadMedicamento =  document.getElementById("cantidadMedicamento").value;
             var farmaciaDetalleId = document.getElementById("farmaciaDetalle").value;
 
-	    table10.row.add([  medicamentos, textMedicamentos, dosis,  textUMedidaDosis, textViasAdministracion, cantidadMedicamento   , farmaciaDetalleId,   '<i class="fa fa-trash"></i>']).draw(false);
+	var mipres =  document.getElementById("mipres").value;
+
+	    table10.row.add([  medicamentos, textMedicamentos, dosis,  textUMedidaDosis, textViasAdministracion, cantidadMedicamento   , farmaciaDetalleId, mipres  '<i class="fa fa-trash"></i>']).draw(false);
 
         });
 
@@ -1557,6 +1559,7 @@ function AdicionarDespachosDispensa()
 	        "viasAdministracion"    : datos_tabla10[i][4] ,
 	        "cantidadMedicamento"    : datos_tabla10[i][5] ,
 	       "farmaciaDetalleId"    : datos_tabla10[i][6] ,
+	       "mipres"    : datos_tabla10[i][7] ,
 
 	      });
 	   };

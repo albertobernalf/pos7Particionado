@@ -172,7 +172,7 @@ function arrancaAutorizaciones(valorTabla,valorData)
                       btn = btn + " <button class='miAutorizacionDetalle btn-primary ' data-pk='" + row.pk + "'>" + '<i class="fa fa-pencil"></i>' + "</button>";
                        return btn;
                     },
-                    "targets":11
+                    "targets":12
                }
             ],
 	 pageLength: 3,
@@ -210,6 +210,7 @@ function arrancaAutorizaciones(valorTabla,valorData)
                 { data: "fields.valorSolicitado"},
                 { data: "fields.valorAutorizado"},
                 { data: "fields.autorizado"},
+                { data: "fields.mipres"},
                 { data: "fields.usuarioRegistro_id"},
                      ]
             }
@@ -340,6 +341,7 @@ window.addEventListener('load', async () => {
 	                $('#tipoExamen').val(info[0].fields.tipoExamen);
 	                $('#usuarioRegistro2_id').val(info[0].fields.usuarioRegistro_id);
 			$('#Aconvenios').val(info[0].fields.convenio_id);
+			$('#mipres').val(info[0].fields.mipres);
 
 
 

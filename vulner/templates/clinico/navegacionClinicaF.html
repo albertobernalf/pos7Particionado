@@ -841,6 +841,11 @@
                                                         <input type="text" id="observa" name="observa" value="">
                                                     </div>
 
+					  <div class="col-sm-1">
+                                                        Mipres:
+                                                        <input type="text" id="mipres" name="mipres" value="">
+                                                    </div>
+
                                                     <div class="col-sm-2">
                                                         Numero Orden:
                                                         <input type="text" id="ordenMedicaLab" name="ordenMedicaLab" value="">
@@ -868,6 +873,7 @@
                                                             <th style="width:5%;">Nombres</th>
                                                             <th style="width:5%;">Cantidad</th>
                                                             <th style="width:5%;">Observaciones</th>
+                                                            <th style="width:5%;">Mipres</th>
                                                             <th style="width:3%;">Borrar</th>
                                                         </tr>
                                                         </thead>
@@ -878,6 +884,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
+							    <td></td>
 
                                                         </tr>
                                                         </tbody>
@@ -2306,7 +2313,7 @@
                 <td>
                     <table class="table"  style="background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black;   width:99%;">
                         <form class="form-inline" action="/crearNotasEnfermeriaDef/" method="POST"
-                              id="FormaLaboratorios">
+                              id="FormaNotas">
                             <!-- INICIO TABLE DE  EL DATATABLE  -->
                             <div class="row">
                                 <div class="col-sm-12">
@@ -2332,7 +2339,7 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
 
-                                                    <table id=tablaNotasEnfermeria  class="display nowrap table table table-bordered  tablaLaboratorios table-hover table-sm dtr-inline">
+                                                    <table id=tablaNotasEnfermeria  class="display nowrap table table table-bordered  tablaNotasEnfermeria table-hover table-sm dtr-inline">
                                                         <thead>
                                                         <tr>
                                                           

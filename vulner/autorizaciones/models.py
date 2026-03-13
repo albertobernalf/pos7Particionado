@@ -79,6 +79,7 @@ class AutorizacionesDetalle(models.Model):
     valorSolicitado = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     valorAutorizado =  models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     historiaMedicamentos = models.ForeignKey('clinico.HistoriaMedicamentos', blank=True,null= True, editable=True,  on_delete=models.PROTECT,   related_name='AutMed01')
+    mipres = models.CharField(max_length=50, null=True, blank=True)
     fechaRegistro = models.DateTimeField(default=now, blank=True,null= True, editable=True, )
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=False,null= False, editable=True, on_delete=models.PROTECT, related_name ='Planta3')
     estadoReg = models.CharField(max_length=1, choices=ESTADOREG_CHOICES, default='A', editable=False)
