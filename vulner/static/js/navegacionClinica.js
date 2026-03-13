@@ -1376,8 +1376,8 @@ formHistoriaClinica.addEventListener('submit', e=>{
         	"tiposExamen_Id"    : "1",
 	        "cups"  : datos_tabla[i][0],
 	        "cantidad"    : datos_tabla[i][2] ,
-		"observa"    : datos_tabla[i][3] 
-		"‬mipres"    : datos_tabla[i][4] 
+		"observa"    : datos_tabla[i][3] ,
+		"mipres"    : datos_tabla[i][4] 
 	      });
 	   };
 
