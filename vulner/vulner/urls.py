@@ -41,6 +41,7 @@ from tarifarios import views as viewsTarifarios
 from rips import views as viewsRips
 from cartera import views as viewsCartera
 from cirugia import views as viewsCirugia
+from cirugia import viewsReportes as viewsCirugiaReportes
 from farmacia import views as viewsFarmacia
 from enfermeria import views as viewsEnfermeria
 from Reportes import views as  viewsReportesR
@@ -474,7 +475,7 @@ urlpatterns = [
     path('buscarConveniosCirugiaPaciente/', viewsCirugia.BuscarConveniosCirugiaPaciente, name='BuscarConveniosCirugia_Paciente'),
     path('buscarProcedimientosParticipantesDeCirugia/', viewsCirugia.BuscarProcedimientosParticipantesDeCirugia, name='buscarProcedimientosParticipantesDe_Cirugia'),
     path('buscarProcedimientosMaterialesDeCirugia/', viewsCirugia.BuscarProcedimientosMaterialesDeCirugia,  name='buscarProcedimientosMaterialesDe_Cirugia'),
-
+    path('imprimirConsentimientoInformado/', viewsCirugiaReportes.ImprimirConsentimientoInformado, name='imprimirConsentimiento_informado'),
 
     # Farmacia
 

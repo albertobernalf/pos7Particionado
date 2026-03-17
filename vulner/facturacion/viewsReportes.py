@@ -415,6 +415,7 @@ def ImprimirFactura(request):
     print("que paso??xxxx = ")
     conceptoMedicamentos= Conceptos.objects.get(nombre='MEDICAMENTOS')
     print("volvi pdfp1")
+    conceptoProcedimientosNoQx= Conceptos.objects.get(nombre='PROCEDIMIENTOS NO QX')
     conceptoProcedimientosQx= Conceptos.objects.get(nombre='PROCEDIMIENTOS QX')
     print("volvi pdfp2")
     honorarioSalas = TiposHonorarios.objects.get(nombre='DERECHOS DE SALA')
@@ -483,6 +484,13 @@ def ImprimirFactura(request):
         print("Factura =", factura)
         print("Voy en concepto =", id)
         print("concepto medicamentos =" ,conceptoMedicamentos.id)
+
+
+        if (id == conceptoProcedimientosNoQx.id):
+            print ("Procedimiento Noqx")
+            #comando = 'select exa."codigoCups" cups,tarProc."codigoHomologado" homologado, exa.nombre  descripcion, detFac.cantidad cantidad, detFac."valorUnitario" valorUnitario, detFac."valorTotal" valorTotal FROM facturacion_facturaciondetalle detFac INNER JOIN facturacion_facturacion fac ON (fac.id=detFac.facturacion_id) INNER JOIN clinico_examenes exa on (exa.id=detFac.examen_id) INNER JOIN contratacion_convenios conv ON (conv.id=fac.convenio_id) LEFT JOIN tarifarios_tarifariosdescripcion tarDesc ON (tarDesc.id=conv."tarifariosDescripcionProc_id") LEFT JOIN tarifarios_tarifariosprocedimientos tarProc ON (tarProc."tiposTarifa_id"=tarDesc."tiposTarifa_id" AND tarProc."codigoCups_id" = detFac.examen_id ) where detfac.facturacion_id= ' + "'" + str(factura) + "'" +  ' AND (detfac.anulado =' + "'" + str('N') + "'" + ' or detfac.anulado=' + "'" + str('R') + "')" + " AND exa.concepto_id = " +"'" + str(id) + "'" + ' ORDER BY exa."codigoCups"'
+            pass
+
 
         if (id == conceptoProcedimientosQx.id):
             print ("Procedimiento qx")
@@ -924,6 +932,7 @@ def ImprimirLiquidacion(request):
     linea = 7
 
     conceptoMedicamentos= Conceptos.objects.get(nombre='MEDICAMENTOS')
+    conceptoProcedimientosNoQx= Conceptos.objects.get(nombre='PROCEDIMIENTOS NO QX')
     conceptoProcedimientosQx= Conceptos.objects.get(nombre='PROCEDIMIENTOS QX')
     honorarioSalas = TiposHonorarios.objects.get(nombre='DERECHOS DE SALA')
     conceptoInsumosMedicos = Conceptos.objects.get(nombre='INSUMOS MEDICOS')
@@ -986,6 +995,12 @@ def ImprimirLiquidacion(request):
         print("Factura =", factura)
         print("Voy en concepto =", id)
         print("concepto medicamentos =" ,conceptoMedicamentos.id)
+
+        if (id == conceptoProcedimientosNoQx.id):
+            print ("Procedimiento Noqx")
+            #comando = 'select exa."codigoCups" cups,tarProc."codigoHomologado" homologado, exa.nombre  descripcion, detFac.cantidad cantidad, detFac."valorUnitario" valorUnitario, detFac."valorTotal" valorTotal FROM facturacion_facturaciondetalle detFac INNER JOIN facturacion_facturacion fac ON (fac.id=detFac.facturacion_id) INNER JOIN clinico_examenes exa on (exa.id=detFac.examen_id) INNER JOIN contratacion_convenios conv ON (conv.id=fac.convenio_id) LEFT JOIN tarifarios_tarifariosdescripcion tarDesc ON (tarDesc.id=conv."tarifariosDescripcionProc_id") LEFT JOIN tarifarios_tarifariosprocedimientos tarProc ON (tarProc."tiposTarifa_id"=tarDesc."tiposTarifa_id" AND tarProc."codigoCups_id" = detFac.examen_id ) where detfac.facturacion_id= ' + "'" + str(factura) + "'" +  ' AND (detfac.anulado =' + "'" + str('N') + "'" + ' or detfac.anulado=' + "'" + str('R') + "')" + " AND exa.concepto_id = " +"'" + str(id) + "'" + ' ORDER BY exa."codigoCups"'
+            pass
+
 
         if (id == conceptoProcedimientosQx.id):
             print ("Procedimiento qx")

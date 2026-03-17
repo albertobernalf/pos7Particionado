@@ -136,31 +136,31 @@ def Load_dataFarmaciaDetalle(request, data):
     # Fin Combo
 
 
-    farmaciaDetalle = []
+    farmaciaDetallez = []
 
     miConexionx = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432", user="postgres",
                                    password="123456")
     curx = miConexionx.cursor()
 
-    detalle = 'select  det.id id,estados.nombre estadoNombre ,origen.nombre origenNombre, mov.nombre movNombre, sum.nombre || cums  suministro, 	det."dosisCantidad" dosis, dosis.descripcion unidadDosis,   vias.nombre via,	det."cantidadOrdenada" cantidad,  via.nombre viaAdministracion , det.despachado despachado FROM farmacia_farmacia far INNER JOIN farmacia_farmaciadetalle det ON (det.farmacia_id = far.id) LEFT JOIN farmacia_farmaciaestados estados  ON (estados.id = far.estado_id) INNER JOIN enfermeria_enfermeriatipoorigen origen ON (origen.id = far."tipoOrigen_id") INNER JOIN enfermeria_enfermeriatipomovimiento mov ON (mov.id = far."tipoOrigen_id") INNER JOIN facturacion_suministros sum ON (sum.id= det.suministro_id) INNER JOIN clinico_viasadministracion vias ON (vias.id= det."viaAdministracion_id") INNER JOIN clinico_unidadesdemedidadosis dosis ON (dosis.id= det."dosisUnidad_id") INNER JOIN clinico_viasadministracion via ON (via.id= det."viaAdministracion_id")  where far.id ='  + "'" + str(farmaciaId) + "' AND det.despachado = 'N' ORDER BY det.id"
+    detalle = 'select  det.id id,estados.nombre estadoNombre ,origen.nombre origenNombre, mov.nombre movNombre, sum.nombre || cums  suministro, 	det."dosisCantidad" dosis, dosis.descripcion unidadDosis,   vias.nombre via,	det."cantidadOrdenada" cantidad,  via.nombre viaAdministracion , det.despachado despachado , det.mipres mipres , autDet."numeroAutorizacion" numeroAutorizacion , autDet.id autorizacionId FROM farmacia_farmacia far INNER JOIN farmacia_farmaciadetalle det ON (det.farmacia_id = far.id) LEFT JOIN farmacia_farmaciaestados estados  ON (estados.id = far.estado_id) INNER JOIN enfermeria_enfermeriatipoorigen origen ON (origen.id = far."tipoOrigen_id") INNER JOIN enfermeria_enfermeriatipomovimiento mov ON (mov.id = far."tipoOrigen_id") INNER JOIN facturacion_suministros sum ON (sum.id= det.suministro_id) INNER JOIN clinico_viasadministracion vias ON (vias.id= det."viaAdministracion_id") INNER JOIN clinico_unidadesdemedidadosis dosis ON (dosis.id= det."dosisUnidad_id") INNER JOIN clinico_viasadministracion via ON (via.id= det."viaAdministracion_id") LEFT JOIN autorizaciones_autorizacionesDetalle autDet ON (autDet.id = det."autorizacionDetalle_id") where far.id ='  + "'" + str(farmaciaId) + "' AND det.despachado = 'N' ORDER BY det.id"
     print(detalle)
 
     curx.execute(detalle)
 
-    for id,estadoNombre, origenNombre,movNombre,suministro, dosis, unidadDosis, via, cantidad , viaAdministracion , despachado in curx.fetchall():
-        farmaciaDetalle.append(
+    for id,estadoNombre, origenNombre,movNombre,suministro, dosis, unidadDosis, via, cantidad , viaAdministracion , despachado, mipres, numeroAutorizacion, autorizacionId in curx.fetchall():
+        farmaciaDetallez.append(
             {"model": "famacia.farmaciaDetalle", "pk": id, "fields":
-                {'id': id, 'estadoNombre':estadoNombre, 'origenNombre': origenNombre ,'movNombre':movNombre,'suministro':suministro,'dosis':dosis ,'unidadDosis':unidadDosis ,'cantidad':cantidad , 'viaAdministracion':viaAdministracion, 'despachado':despachado}})
+                {'id': id, 'estadoNombre':estadoNombre, 'origenNombre': origenNombre ,'movNombre':movNombre,'suministro':suministro,'dosis':dosis ,'unidadDosis':unidadDosis ,'cantidad':cantidad , 'viaAdministracion':viaAdministracion, 'despachado':despachado,'mipresX':mipres, 'numeroAutorizacion': numeroAutorizacion,'autorizacionId':autorizacionId}})
 
     miConexionx.close()
-    print(farmaciaDetalle)
+    print(farmaciaDetallez)
 
     envioDatos['datosPaciente'] = datosPaciente
-    envioDatos['farmaciaDetalle'] = farmaciaDetalle
+    envioDatos['farmaciaDetalle'] = farmaciaDetallez
 
-    print("envioDatos = " , envioDatos)
+    print("envioDatos De dos tablas = " , envioDatos)
 
-    serialized1 = json.dumps(farmaciaDetalle, default=str)
+    serialized1 = json.dumps(farmaciaDetallez, default=str)
 
     return HttpResponse(serialized1, content_type='application/json')
 
@@ -321,7 +321,11 @@ def AdicionarDespachosDispensa(request):
     print("sede:", sede)
     print("username:", username)
     print("username_id:", username_id)
-    print("farmaciaDetalleId:", farmaciaDetalleId)
+
+    mipres = request.POST['mipres']
+    print("mipres:", mipres)
+    autorizacionId = request.POST['autorizacionId']
+    print("autorizacionId:", autorizacionId)
 
     parcialDespachado = FarmaciaEstados.objects.get(nombre='PARCIALMENTE DESPACHADO')
 
@@ -600,12 +604,6 @@ def AdicionarDespachosDispensa(request):
                 cantidadMedicamento = key["cantidadMedicamento"].strip()
                 print("cantidadMedicamento=", cantidadMedicamento)
 
-                farmaciaDetalleId = key["farmaciaDetalleId"].strip()
-                print("farmaciaDetalleId=", farmaciaDetalleId)
-
-                mipres = key["mipres"]
-                print ("mipres = ", mipres)
-
 
                 #diasTratamiento = key["diasTratamiento"]
                 #print("diasTratamiento=", diasTratamiento)
@@ -738,7 +736,7 @@ def AdicionarDespachosDispensa(request):
                 # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
                 #
 
-                comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia_id,"fechaCrea", "fechaRegistro", "estadoRegistro", "cums_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro", "historiaMedicamento_id",anulado, mipres) VALUES (' + "'" + str(consecLiquidacion) + "','" + str(fechaRegistro) + "','" + str(cantidadMedicamento) + "','" + str(tarifaValor) + "','" + str(TotalTarifa) + "',null,'" + str(fechaRegistro) + "','" + str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(medicamentos) + "','" + str(username_id) + "'," + liquidacionId + ",'SISTEMA'," + str(historiaMedicamentos.id)  + ",'N','" + str(mipres) + "')"
+                comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia_id,"fechaCrea", "fechaRegistro", "estadoRegistro", "cums_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro", "historiaMedicamento_id",anulado, mipres, "autorizacionDetalle_id") VALUES (' + "'" + str(consecLiquidacion) + "','" + str(fechaRegistro) + "','" + str(cantidadMedicamento) + "','" + str(tarifaValor) + "','" + str(TotalTarifa) + "',null,'" + str(fechaRegistro) + "','" + str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(medicamentos) + "','" + str(username_id) + "'," + liquidacionId + ",'SISTEMA'," + str(historiaMedicamentos.id)  + ",'N','" + str(mipres) + "','"+  str(autorizacionId) + "')"
                 print("comando ", comando)
 
                 cur3.execute(comando)
@@ -1260,7 +1258,7 @@ def Load_dataFarmaciaDetalleOrdenados(request, data):
     # Fin Combo
 
 
-    farmaciaDetalle = []
+    farmaciaDetalleOrd = []
 
     miConexionx = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432", user="postgres",
                                    password="123456")
@@ -1272,18 +1270,18 @@ def Load_dataFarmaciaDetalleOrdenados(request, data):
     curx.execute(detalle)
 
     for id,estadoNombre, origenNombre,movNombre,suministro, dosis, unidadDosis, via, cantidad , viaAdministracion , despachado in curx.fetchall():
-        farmaciaDetalle.append(
+        farmaciaDetalleOrd.append(
             {"model": "famacia.farmaciaDetalle", "pk": id, "fields":
                 {'id': id, 'estadoNombre':estadoNombre, 'origenNombre': origenNombre ,'movNombre':movNombre,'suministro':suministro,'dosis':dosis ,'unidadDosis':unidadDosis ,'cantidad':cantidad , 'viaAdministracion':viaAdministracion, 'despachado':despachado}})
 
     miConexionx.close()
-    print(farmaciaDetalle)
+    print(farmaciaDetalleOrd)
 
     envioDatos['datosPaciente'] = datosPaciente
-    envioDatos['farmaciaDetalle'] = farmaciaDetalle
+    envioDatos['farmaciaDetalle'] = farmaciaDetalleOrd
 
-    print("envioDatos = " , envioDatos)
+    print("envioDatos de Detalle Ordenados = " , envioDatos)
 
-    serialized1 = json.dumps(farmaciaDetalle, default=str)
+    serialized1 = json.dumps(farmaciaDetalleOrd, default=str)
 
     return HttpResponse(serialized1, content_type='application/json')

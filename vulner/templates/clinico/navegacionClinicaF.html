@@ -838,12 +838,12 @@
                                                     </div>
                                                     <div class="col-sm-3">
                                                         Observaciones:
-                                                        <input type="text" id="observa" name="observa" value="">
+                                                        <input type="text" id="observa" name="observa" >
                                                     </div>
 
 					  <div class="col-sm-1">
                                                         Mipres:
-                                                        <input type="text" id="mipres" name="mipres" value="">
+                                                        <input type="text" id="mipresLab" name="mipresLab">
                                                     </div>
 
                                                     <div class="col-sm-2">
@@ -971,7 +971,7 @@
                                         <div class="card-header" style="height:50px;">
                                             <center>
                                                 <div class="row">
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-1">
 
                                                         <select class="select-css"  id="rad"
                                                                 name="rad">
@@ -994,6 +994,12 @@
 							Observaciones:
                                                         <input type="text" id="observa3" name="observa3" value="">
                                                     </div>
+
+						  <div class="col-sm-1">
+                                                        Mipres:
+                                                        <input type="text" id="mipresRad" name="mipresRad">
+                                                    </div>
+
 
 					  <div class="col-sm-2">
                                                         Numero Orden:
@@ -1021,6 +1027,7 @@
                                                             <th style="width:5%;">Nombres</th>
                                                             <th style="width:5%;">Cantidad</th>
                                                             <th style="width:5%;">Observaciones</th>
+                                                            <th style="width:5%;">Mipres</th>
                                                             <th style="width:3%;">Borrar</th>
                                                         </tr>
                                                         </thead>
@@ -1031,6 +1038,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
+							    <td></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -1142,6 +1150,11 @@
                                                         <input type="text" id="observa4" name="observa4" value="">
                                                     </div>
 
+						  <div class="col-sm-1">
+                                                        Mipres:
+                                                        <input type="text" id="mipresTer" name="mipresTer">
+                                                    </div>
+
 					  <div class="col-sm-2">
                                                         Numero Orden:
                                                         <input type="text" id="ordenMedicaTer" name="ordenMedicaTer" value="">
@@ -1159,19 +1172,20 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <table id=tablaTerapias
-                                                           class="display nowrap table table table-bordered  tablaTerapias table-hover table-sm dtr-inline">
+                                                    <table id=tablaTerapias class="display nowrap table table table-bordered  tablaTerapias table-hover table-sm dtr-inline">
                                                         <thead>
                                                         <tr>
                                                             <th style="width:5%;">id</th>
                                                             <th style="width:5%;">Nombres</th>
                                                             <th style="width:5%;">Cantidad</th>
                                                             <th style="width:5%;">Observaciones</th>
+                                                            <th style="width:5%;">Mipres</th>
                                                             <th style="width:3%;">Borrar</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="vertical-align:bottom">
                                                         <tr style="height:10%">
+                                                            <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -1264,7 +1278,7 @@
                                             <center>
                                                 <div class="row" style="height: 30px;">
                                                     <div class="col-sm-1">
-                    							    Medicamento
+                    							    Formula
                                                         <select class="select-css"  id="medicamentos"
                                                                 name="medicamentos">
                                                             {% for medicamentos in Medicamentos %}
@@ -1280,7 +1294,7 @@
                                                     </div>
 
                                                     <div class="col-sm-1">
- 							                    Unidad Medida
+ 							                    U_Medida
                                                         <select class="select-css" id="uMedidaDosis"
                                                                 name="uMedidaDosis" required>
                                                             {% for uMedidaDosis in UMedidaDosis %}
@@ -1291,7 +1305,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-2">
-							                    Forma Farma:
+							                    Farmaceut:
                                                         <select class="select-css" id="formaFarma"
                                                                 name="formaFarma" required>
                                                             {% for formaFarma in FormaFarma %}
@@ -1314,7 +1328,7 @@
                                                     </div>
 
 						                <div class="col-sm-1">
-							                        Vias Adm
+							                        Vias
                                                         <select class="select-css" id="vias"
                                                                 name="vias" required>
                                                             {% for viasAdministracion in ViasAdministracion %}
@@ -1331,18 +1345,18 @@
                                                         <input type="text" id="cantidadMedicamento" name="cantidadMedicamento" value="" size="1" required>
                                                     </div>
 						                            <div class="col-sm-1">
-							                            DiasTratamiento:
+							                            Dias:
                                                         <input type="text" id="diasTratamiento" name="diasTratamiento" value="" size="1" required>
                                                     </div>
 
 						  <div class="col-sm-1">
+                                                        Mipres:
+                                                        <input type="text" id="mipresMed" name="mipresMed" value="" size="10">
+                                                    </div>
+					
+						  <div class="col-sm-1">
                                                         Numero Orden:
                                                         <input type="text" id="ordenMedicaMed" name="ordenMedicaMed" value="">
-                                                    </div>
-
-						  <div class="col-sm-1">
-                                                        Mipres:
-                                                        <input type="text" id="mipres" name="mipres" value="">
                                                     </div>
 
 
@@ -1373,7 +1387,8 @@
 							    <th style="width:5%;">IdVias</th>
                                                             <th style="width:5%;">ViasAdmon</th>
                                                             <th style="width:5%;">Cant</th>
-                                                            <th style="width:5%;">DiasTratamiento</th>
+                                                            <th style="width:5%;">Dias</th>
+                                                            <th style="width:5%;">Mipres</th>
                                                             <th style="width:3%;">Borrar</th>
                                                         </tr>
                                                         </thead>
@@ -1393,6 +1408,7 @@
                                                               <td></td>
 								<td></td>
                                                               <td></td>
+								<td></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -1659,8 +1675,7 @@
 
                     <table class="table"
                            style="background-color:LightGray; BORDERCOLOR=RED ; border: 8px solid black;   width:99%;">
-                        <form class="form-inline" action="/crearNoQxDef/" method="POST"
-                              id="FormaNoQx">
+                        <form class="form-inline" action="/crearNoQxDef/" method="POST"  id="FormaNoQx1">
 
                             <!-- INICIO TABLE DE  EL DATATABLE  -->
                             <div class="row">
@@ -1670,7 +1685,7 @@
                                             <center>
                                                 <div class="row">
 
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-2">
 
                                                         <select class="select-css"  id="noQx"
                                                                 name="noQx">
@@ -1688,9 +1703,14 @@
 
                                                     </div>
 
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
 							Observaciones:
                                                         <input type="text" id="observa5" name="observa5" value="">
+                                                    </div>
+
+						  <div class="col-sm-1">
+                                                        Mipres:
+                                                        <input type="text" id="mipresNoQx" name="mipresNoQx">
                                                     </div>
 
 
@@ -1713,11 +1733,13 @@
                                                             <th style="width:5%;">Nombres</th>
                                                             <th style="width:5%;">Cantidad</th>
                                                             <th style="width:5%;">Observaciones</th>
+                                                            <th style="width:5%;">Mipres</th>
                                                             <th style="width:3%;">Borrar</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="vertical-align:bottom">
                                                         <tr style="height:10%">
+                                                            <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>

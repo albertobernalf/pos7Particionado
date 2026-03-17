@@ -44,6 +44,7 @@ from django.db import transaction, IntegrityError
 from django.utils import timezone
 from contratacion.models import  ConveniosLiquidacionTarifasHonorarios
 from tarifarios.models import TarifariosDescripcion , TiposHonorarios
+from cirugia import viewsReportes
 
 
 # Create your views here.

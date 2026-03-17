@@ -354,10 +354,10 @@ def ActualizarAutorizacionDetalle(request):
                 enfermeriaId = curt.fetchone()[0]
 
             # Aqui Guardar FARMACIA DETALLE
-            comando = 'INSERT INTO farmacia_farmaciadetalle(farmacia_id, "historiaMedicamentos_id",suministro_id,"dosisCantidad", "dosisUnidad_id","viaAdministracion_id","cantidadOrdenada","fechaRegistro","usuarioRegistro_id", "estadoReg", "consecutivoMedicamento", mipres)  SELECT ' + "'" + str(
+            comando = 'INSERT INTO farmacia_farmaciadetalle(farmacia_id, "historiaMedicamentos_id",suministro_id,"dosisCantidad", "dosisUnidad_id","viaAdministracion_id","cantidadOrdenada","fechaRegistro","usuarioRegistro_id", "estadoReg", "consecutivoMedicamento", mipres, "autorizacionesDetalle_id",despachado)  SELECT ' + "'" + str(
                 farmaciaId) + "', id," + ' suministro_id,"dosisCantidad" , "dosisUnidad_id" , "viaAdministracion_id" ,"cantidadSolicitada",' + "'"  + str(
-                fechaRegistro) + "'," + "'"  + str(usuarioRegistro_id) + "',"  + "'A'" + ', "consecutivoMedicamento" , mipres FROM clinico_HistoriaMedicamentos WHERE historia_id = ' + "'" + str(
-                datosAut.historia_id) + "' AND " + ' id = ' + "'" + str(datosAut1.historiaMedicamentos_id) + "' RETURNING id"
+                fechaRegistro) + "'," + "'"  + str(usuarioRegistro_id) + "',"  + "'A'" + ', "consecutivoMedicamento" , mipres, ' + "'" + str(autorizacionDetalleId) + "'" + '  FROM clinico_HistoriaMedicamentos WHERE historia_id = ' + "'" + str(
+                datosAut.historia_id) + "' AND " + ' id = ' + "'" + str(datosAut1.historiaMedicamentos_id) + "','N' RETURNING id"
             print("comando = ", comando)
 
             resultado = curt.execute(comando)
@@ -543,7 +543,7 @@ def LeerDetalleAutorizacion(request):
         print("entre suministros")
 
         #detalle = 'select ' + "'" + str('SUMINISTROS') + "' tipoTipoExamen," + ' det.id, "cantidadSolicitada", "cantidadAutorizada", det."fechaRegistro", det."estadoReg", autorizaciones_id, det."usuarioRegistro_id",  tipsum.nombre tipNombre, exa.nombre exaNombre,  cums_id, "valorAutorizado", "valorSolicitado", "tiposExamen_id", det."tipoSuministro_id", det."estadoAutorizacion_id", det."numeroAutorizacion" , est.nombre estadoNombre, aut.convenio_id convenioId, det.mipres FROM autorizaciones_autorizacionesdetalle det, autorizaciones_estadosautorizacion est, facturacion_tipossuministro tipsum, facturacion_suministros exa                                       WHERE aut.id = det."autorizaciones_id" and det.id =' + "'" + str(autorizacionDetalleId) + "'" + 'AND tipsum.id = det."tipoSuministro_id"  AND exa.id = det.cums_id AND  est.id = det."estadoAutorizacion_id"'
-        detalle =  'select ' + "'" + str('SUMINISTROS') + "' tipoTipoExamen," + ' det.id, "cantidadSolicitada", "cantidadAutorizada", det."fechaRegistro", det."estadoReg", autorizaciones_id, det."usuarioRegistro_id", tipsum.nombre tipNombre  , exa.nombre exaNombre,  cums_id, "valorAutorizado", "valorSolicitado", "tiposExamen_id", det."tipoSuministro_id", det."estadoAutorizacion_id", det."numeroAutorizacion" , est.nombre estadoNombre , aut.convenio_id convenioId FROM autorizaciones_autorizaciones aut, autorizaciones_autorizacionesdetalle det, autorizaciones_estadosautorizacion est, facturacion_tipossuministro tipsum, facturacion_suministros exa  WHERE aut.id = det."autorizaciones_id" AND det.id =' + "'" + str(autorizacionDetalleId) + "'" + ' AND tipsum.id = det."tipoSuministro_id" AND exa.id = det.cums_id AND  est.id = det."estadoAutorizacion_id"'
+        detalle =  'select ' + "'" + str('SUMINISTROS') + "' tipoTipoExamen," + ' det.id, "cantidadSolicitada", "cantidadAutorizada", det."fechaRegistro", det."estadoReg", autorizaciones_id, det."usuarioRegistro_id", tipsum.nombre tipNombre  , exa.nombre exaNombre,  cums_id, "valorAutorizado", "valorSolicitado", "tiposExamen_id", det."tipoSuministro_id", det."estadoAutorizacion_id", det."numeroAutorizacion" , est.nombre estadoNombre , aut.convenio_id convenioId , det.mipres FROM autorizaciones_autorizaciones aut, autorizaciones_autorizacionesdetalle det, autorizaciones_estadosautorizacion est, facturacion_tipossuministro tipsum, facturacion_suministros exa  WHERE aut.id = det."autorizaciones_id" AND det.id =' + "'" + str(autorizacionDetalleId) + "'" + ' AND tipsum.id = det."tipoSuministro_id" AND exa.id = det.cums_id AND  est.id = det."estadoAutorizacion_id"'
 
     print(detalle)
 

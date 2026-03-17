@@ -264,6 +264,16 @@ function arrancaCirugia(valorTabla,valorData)
 
 	},
 
+{
+	  "render": function ( data, type, row ) {
+                        var btn = '';
+
+	    btn = btn + " <input type='radio' name='miConsentimientoInformado2' class='miConsentimientoInformado form-check-input ' data-pk='"  + row.pk + "'>" + "</input>";
+
+                       return btn;
+                    },
+
+	},
 
 
                 { data: "fields.id"},
@@ -3695,3 +3705,37 @@ $('#tablaSalasCirugia tbody').on('click', '.miSalaCirugia', function() {
 	     	arrancaCirugia(18,data2);
 	    	dataTableDisponibilidadCirugiaSalasInitialized = true;    
   });
+
+        $('body').on('click', '.miConsentimientoInformado', function () {
+
+	          var post_id = $(this).data('pk');
+		var row = $(this).closest('tr'); // Encuentra la fila
+
+		 alert("ImprimirConsentimientoInformado entre pk = " + post_id);
+
+	var programacionId = post_id;
+
+	alert("voy ajax imprimir " + programacionId);
+
+$.ajax({
+ 
+   data : {programacionId:programacionId},
+   url: '/imprimirConsentimientoInformado/',
+    method: 'POST',
+    xhrFields: {
+        responseType: 'blob' // Importante: interpreta la respuesta como binario
+    },
+    success: function (data) {
+	alert("llegue");
+
+
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var link = window.URL.createObjectURL(blob);
+        window.open(link, '_blank'); // Abre el PDF en nueva pestaña [11]
+    },
+    error: function (error) {
+      document.getElementById("mensajesError").value =  data.responseText
+    }
+});
+
+       });

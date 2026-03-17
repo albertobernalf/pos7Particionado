@@ -59,6 +59,7 @@ class FarmaciaDetalle(PostgresPartitionedModel):
     #diasTratamiento =  models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, editable=True)
     autorizacionDetalle = models.ForeignKey('autorizaciones.AutorizacionesDetalle', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='AutDet104')
     mipres = models.CharField(max_length=50, null=True, blank=True)
+    autorizacionDetalle = models.ForeignKey('autorizaciones.AutorizacionesDetalle', blank=True,null= True, editable=True, on_delete=models.PROTECT, related_name='AutFarmDet501')
     fechaRegistro = models.DateTimeField(editable=True, null=True, blank=True)
     usuarioRegistro = models.ForeignKey('planta.Planta', blank=True, null=True, editable=True, on_delete=models.PROTECT   , related_name='Planta3451')
     estadoReg = models.CharField(max_length=1,choices=ESTADOREG_CHOICES, default='A', editable=False,  blank=True, null=True,)

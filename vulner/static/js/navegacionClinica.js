@@ -435,9 +435,12 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
            var select = document.getElementById("rad"); /*Obtener el SELECT */
       	   var rad = select.options[select.selectedIndex].value; /* Obtener el valor */
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
+	   var mipres = document.getElementById("mipresRad").value;
+
+        alert("valor de MipresRad = " + mipres);
 
 	        table1.row.add([
-                    rad, text,  cantidad, observa, '<i class="fa fa-trash"></i>'
+                    rad, text,  cantidad, observa, mipres , '<i class="fa fa-trash"></i>'
                 ]).draw(false);
         });
 
@@ -468,9 +471,11 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
            var select = document.getElementById("ter"); /*Obtener el SELECT */
       	   var ter = select.options[select.selectedIndex].value; /* Obtener el valor */
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
+	   var mipres = document.getElementById("mipresTer").value;
+    alert("valor de MipresTer = " + mipres);
 
 	        table3.row.add([
-                    ter, text,  cantidad, observa, '<i class="fa fa-trash"></i>'
+                    ter, text,  cantidad, observa, mipres,  '<i class="fa fa-trash"></i>'
                 ]).draw(false);
         });
 
@@ -493,15 +498,16 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
    	   var table4 = $('#tablaNoQx').DataTable();
    	   }
 
+
 	   var cantidad = document.getElementById("cantidad5").value;
        var observa = document.getElementById("observa5").value;
            var select = document.getElementById("noQx"); /*Obtener el SELECT */
       	   var noQx = select.options[select.selectedIndex].value; /* Obtener el valor */
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
+	   var mipres = document.getElementById("mipresNoQx").value;
+	alert ("Entre Adicionar NoQx" + mipres);
 
-	        table4.row.add([
-                    noQx, text,  cantidad, observa, '<i class="fa fa-trash"></i>'
-                ]).draw(false);
+	        table4.row.add([  noQx, text,  cantidad, observa, mipres, '<i class="fa fa-trash"></i>' ]).draw(false);
         });
 
 
@@ -681,8 +687,13 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
 	
 	   var cantidadMedicamento =  document.getElementById("cantidadMedicamento").value;
 	   var diasTratamiento =  document.getElementById("diasTratamiento").value;
+		alert(" voy a leer el mireps ");
+	   var mipres =  document.getElementById("mipresMed").value;
+		alert(" el mipres voy a adicionar " + mipres);
 
-	    table10.row.add([ medicamentos, textMedicamentos, dosis,uMedidaDosis, textUMedidaDosis, formaFarma,  textFormaFarma, frecuencia, textFrecuencia,viasAdministracion, textViasAdministracion, cantidadMedicamento,  diasTratamiento    ,  '<i class="fa fa-trash"></i>']).draw(false);
+	    table10.row.add([ medicamentos, textMedicamentos, dosis,uMedidaDosis, textUMedidaDosis, formaFarma,  textFormaFarma, frecuencia, textFrecuencia,viasAdministracion, textViasAdministracion, cantidadMedicamento,  diasTratamiento  , mipres ,  '<i class="fa fa-trash"></i>']).draw(false);
+		alert("ya adicione");
+
 
         });
 
@@ -713,7 +724,7 @@ $('#tablaFacturacions tbody').on('click', 'tr', function () {
      	   var observa = document.getElementById("observa").value;
            var select = document.getElementById("lab"); /*Obtener el SELECT */
       	   var lab = select.options[select.selectedIndex].value; /* Obtener el valor */
-	   var mipres = document.getElementById("mipres").value;
+	   var mipres = document.getElementById("mipresLab").value;
       	   text = select.options[select.selectedIndex].innerText; //El texto de la opción seleccionada
 	        tableL.row.add([lab, text,  cantidad, observa, mipres ,'<i class="fa fa-trash"></i>']).draw(false);
         });
@@ -916,7 +927,7 @@ function tableActionsRadiologia() {
 			   btn = btn + " <button class='btn btn-danger deletePostRadiologia'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
-                    "targets": 5
+                    "targets": 6
                }
             ],
         lengthMenu: [4],
@@ -926,6 +937,7 @@ function tableActionsRadiologia() {
         { visible: true }, //col 2
         { visible: true }, //col 3
         { visible: true }, //col 4
+        { visible: true }, //col 5
 
             ],
     });
@@ -953,10 +965,10 @@ function tableActionsTerapias() {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-			  btn = btn + " <button class='btn btn-danger deletePostLaboratorio1' id='borraTer'>" + '<i class="fa fa-trash"></i>' + "</button>";
+			  btn = btn + " <button class='btn btn-danger deleteTerapias' id='borraTer'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
-                    "targets": 4
+                    "targets": 6
                }
             ],
         lengthMenu: [5],
@@ -966,6 +978,7 @@ function tableActionsTerapias() {
         { visible: true }, //col 2
         { visible: true }, //col 3
         { visible: true }, //col 4
+        { visible: true }, //col 5
             ],
     });
 }
@@ -992,10 +1005,10 @@ function tableActionsNoQx() {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-			  btn = btn + " <button class='btn btn-danger deletePostLaboratorio1' id='borraNoQx'>" + '<i class="fa fa-trash"></i>' + "</button>";
+			  btn = btn + " <button class='btn btn-danger deletePostNoQx' id='borraNoQx'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
-                    "targets": 4
+                    "targets": 5
                }
             ],
         lengthMenu: [5],
@@ -1005,6 +1018,7 @@ function tableActionsNoQx() {
         { visible: true }, //col 2
         { visible: true }, //col 3
         { visible: true }, //col 4
+        { visible: true }, //col 5
             ],
     });
 }
@@ -1199,10 +1213,10 @@ function tableActionsFormulacion() {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-			  btn = btn + " <button class='btn btn-danger deleteRevisionSistemas' id='borraDiag'>" + '<i class="fa fa-trash"></i>' + "</button>";
+			  btn = btn + " <button class='btn btn-danger deleteFormulacion' id='borraDiag'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
-                    "targets": 13
+                    "targets": 14
                }
             ],
         lengthMenu: [5],
@@ -1221,8 +1235,8 @@ function tableActionsFormulacion() {
     { visible: true }, //col 3
 	{ visible: true }, //col 3
     { visible: true }, //col 3
-
-            ],
+    { visible: true }, //col 3
+        ],
     });
 }
 
@@ -1393,6 +1407,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
         radiologia=[]
         cadenas = {}
 
+    alert("esta e la tbla de radiologia " + JSON.stringify(datos_tabla1));
 
 	for(var i= 0; i < datos_tabla1.length; i++) {
 
@@ -1400,7 +1415,8 @@ formHistoriaClinica.addEventListener('submit', e=>{
         	"tiposExamen_Id"    : "3",
 	        "cups"  : datos_tabla1[i][0],
 	        "cantidad"    : datos_tabla1[i][2] ,
-		"observa"    : datos_tabla1[i][3]
+		"observa"    : datos_tabla1[i][3],
+		"mipres"    : datos_tabla1[i][4]
 	      });
 	   };
 
@@ -1424,12 +1440,15 @@ formHistoriaClinica.addEventListener('submit', e=>{
         	"tiposExamen_Id"    : "2",
 	        "cups"  : datos_tabla3[i][0],
 	        "cantidad"    : datos_tabla3[i][2] ,
-		"observa"    : datos_tabla3[i][3]
+		"observa"    : datos_tabla3[i][3],
+		"mipres"    : datos_tabla3[i][4]
 	      });
 	   };
 
 	    terapias  = JSON.stringify(terapias);
 
+
+        alert("Esto voy a enviar de la matriz terapias " +  JSON.stringify(terapias))
 
 
         // FIN TERAPIAS
@@ -1448,7 +1467,8 @@ formHistoriaClinica.addEventListener('submit', e=>{
         	"tiposExamen_Id"    : "4",
 	        "cups"  : datos_tabla4[i][0],
 	        "cantidad"    : datos_tabla4[i][2] ,
-		"observa"    : datos_tabla4[i][3]
+		"observa"    : datos_tabla4[i][3],
+		"mipres"    : datos_tabla4[i][4]
 	      });
 	   };
 
@@ -1660,6 +1680,8 @@ formHistoriaClinica.addEventListener('submit', e=>{
 	        "viasAdministracion"    : datos_tabla10[i][10] ,
 	        "cantidadMedicamento"    : datos_tabla10[i][11] ,
 	        "diasTratamiento"    : datos_tabla10[i][12] ,
+	        "mipres"    : datos_tabla10[i][13] 
+
 	      });
 	   };
 
@@ -1753,9 +1775,8 @@ formHistoriaClinica.addEventListener('submit', e=>{
          // alert("tiposSalidas =" + tiposSalidas);
 
 	var dxComplicacion =  document.getElementById("dxComplicacion").value;
-	var mipres =  document.getElementById("mipres").value;
+	// var mipres =  document.getElementById("mipres").value;
 
-	
 
 
 	var ordenMedicaLab =  document.getElementById("ordenMedicaLab").value;
@@ -1872,7 +1893,7 @@ formHistoriaClinica.addEventListener('submit', e=>{
                                 'salidaClinica':salidaClinica, 
     				'tiposSalidas':tiposSalidas,
 	    			'dxComplicacion':dxComplicacion,
-		    		'mipres':mipres	,
+		    //		'mipres':mipres	,
                                 'sede':sede,
                                 'ordenMedicaLab':ordenMedicaLab,
                                 'ordenMedicaRad':ordenMedicaRad,

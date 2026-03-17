@@ -321,7 +321,9 @@ window.addEventListener('load', async () => {
                 type: "POST",
                 dataType: 'json',
                 success: function (info) {
-				
+
+		alert("regrese " + JSON.stringify(info));
+		
 				
 
 				$('#tipoTipoExamen').val(info[0].fields.tipoTipoExamen);

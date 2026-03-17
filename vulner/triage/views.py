@@ -2900,6 +2900,10 @@ def guardarAdmisionTriage(request):
         convenio = request.POST["conveniosT"]
         print(" convenio = ", convenio)
 
+
+        autHospitalizacion = request.POST["autHospitalizacion"]
+        print(" autHospitalizacion = ", autHospitalizacion)
+
         servicioAdmTriage = request.POST["servicioAdmTriage"]
         print(" servicioAdmTriage = ", servicioAdmTriage)
 
@@ -3089,7 +3093,7 @@ def guardarAdmisionTriage(request):
                                            password="123456")
                 cur3 = miConexion3.cursor()
 
-                comando='INSERT INTO admisiones_ingresos ("sedesClinica_id","tipoDoc_id", documento_id, consec,"fechaIngreso",empresa_id,factura,numcita,  "serviciosIng_id","dependenciasIngreso_id", "dxIngreso_id", "medicoIngreso_id","especialidadesMedicosIngreso_id",  "serviciosActual_id", "dependenciasActual_id", "dxActual_id", "medicoActual_id", "especialidadesMedicosActual_id", "ViasIngreso_id",  "causasExterna_id", regimen_id,"tiposCotizante_id", "ipsRemite_id", "numManilla", remitido, "ripsServiciosIng_id", "ripsServiciosActual_id", "ripsmodalidadGrupoServicioTecSal_id", "ripsViaIngresoServicioSalud_id", "ripsGrupoServicios_id","ripsCondicionDestinoUsuarioEgreso_id", "ripsCausaMotivoAtencion_id", "ripsRecienNacido","ripsPesoRecienNacido", "ripsNumConsultasCPrenatal", "ripsEdadGestacional", "ripsDestinoUsuarioEgresoRecienNacido_id", "fechaRegistro", "usuarioRegistro_id","estadoReg", "serviciosAdministrativos_id","salidaClinica","salidaDefinitiva",muerte, incapacidad) VALUES (' + "'" + str(sede) + "','"  + str(idTipoDocFinal) + "','"  + str(documento_llave.id) + "','"   + str(consecAdmision) + "','"   + str(fechaIngreso) + "','"  + str(empresa) + "','"  + str(factura) + "','"   + str(numcita) + "','"   + str(servicioSedeIngreso.id) + "','" + str(dependenciasIngreso) + "','"  + str(dxIngreso) + "','"  + str(medicoIngreso) + "','"  + str(especialidadesMedicos) + "','"  + str(servicioSedeIngreso.id) + "','" + str(dependenciasIngreso) + "',"  + str(dxIngreso) + ",'"  + str(medicoIngreso) + "','" + str(especialidadesMedicos) + "','"  + str(viasIngreso) + "','"  + str(causasExterna) + "','"  + str(regimenes) + "','"  + str(tiposCotizante) + "','"  + str(ipsRemite) + "','"   + str(numManilla) + "','" + str(remitido) + "','" + str(ripsServiciosIng) + "','"  + str(ripsServiciosIng) + "','"   + str(ripsmodalidadGrupoServicioTecSal) + "','"   + str(ripsViaIngresoServicioSalud) + "','"   + str(ripsGrupoServicios) + "','"  + str(ripsCondicionDestinoUsuarioEgreso) + "','"  + str(ripsCausaMotivoAtencion) + "','"  + str(ripsRecienNacido) + "','"  + str(ripsPesoRecienNacido) + "','"  + str(ripsNumConsultasCPrenatal) + "','"  + str(ripsEdadGestacional) + "','"  + str(ripsDestinoUsu1.id) + "','"  + str(fechaRegistro) + "','"  + str(usernameId.id) + "','"  + str(estadoReg) + "','"   + str(servicioAdmTriage) + "','N','N','N','N') RETURNING id"
+                comando='INSERT INTO admisiones_ingresos ("sedesClinica_id","tipoDoc_id", documento_id, consec,"fechaIngreso",empresa_id,factura,numcita,  "serviciosIng_id","dependenciasIngreso_id", "dxIngreso_id", "medicoIngreso_id","especialidadesMedicosIngreso_id",  "serviciosActual_id", "dependenciasActual_id", "dxActual_id", "medicoActual_id", "especialidadesMedicosActual_id", "ViasIngreso_id",  "causasExterna_id", regimen_id,"tiposCotizante_id", "ipsRemite_id", "numManilla", remitido, "ripsServiciosIng_id", "ripsServiciosActual_id", "ripsmodalidadGrupoServicioTecSal_id", "ripsViaIngresoServicioSalud_id", "ripsGrupoServicios_id","ripsCondicionDestinoUsuarioEgreso_id", "ripsCausaMotivoAtencion_id", "ripsRecienNacido","ripsPesoRecienNacido", "ripsNumConsultasCPrenatal", "ripsEdadGestacional", "ripsDestinoUsuarioEgresoRecienNacido_id", "fechaRegistro", "usuarioRegistro_id","estadoReg", "serviciosAdministrativos_id","salidaClinica","salidaDefinitiva",muerte, incapacidad, "autorizacionesHospitalDetalle_id") VALUES (' + "'" + str(sede) + "','"  + str(idTipoDocFinal) + "','"  + str(documento_llave.id) + "','"   + str(consecAdmision) + "','"   + str(fechaIngreso) + "','"  + str(empresa) + "','"  + str(factura) + "','"   + str(numcita) + "','"   + str(servicioSedeIngreso.id) + "','" + str(dependenciasIngreso) + "','"  + str(dxIngreso) + "','"  + str(medicoIngreso) + "','"  + str(especialidadesMedicos) + "','"  + str(servicioSedeIngreso.id) + "','" + str(dependenciasIngreso) + "',"  + str(dxIngreso) + ",'"  + str(medicoIngreso) + "','" + str(especialidadesMedicos) + "','"  + str(viasIngreso) + "','"  + str(causasExterna) + "','"  + str(regimenes) + "','"  + str(tiposCotizante) + "','"  + str(ipsRemite) + "','"   + str(numManilla) + "','" + str(remitido) + "','" + str(ripsServiciosIng) + "','"  + str(ripsServiciosIng) + "','"   + str(ripsmodalidadGrupoServicioTecSal) + "','"   + str(ripsViaIngresoServicioSalud) + "','"   + str(ripsGrupoServicios) + "','"  + str(ripsCondicionDestinoUsuarioEgreso) + "','"  + str(ripsCausaMotivoAtencion) + "','"  + str(ripsRecienNacido) + "','"  + str(ripsPesoRecienNacido) + "','"  + str(ripsNumConsultasCPrenatal) + "','"  + str(ripsEdadGestacional) + "','"  + str(ripsDestinoUsu1.id) + "','"  + str(fechaRegistro) + "','"  + str(usernameId.id) + "','"  + str(estadoReg) + "','"   + str(servicioAdmTriage) + "','N','N','N','N','" + str(autHospitalizacion) + "') RETURNING id;"
 
                 print("Voy a guardar la INFO-ADMISION-TRIAGE")
                 print(comando)
@@ -3180,10 +3184,10 @@ def guardarAdmisionTriage(request):
                 cur3.execute(comando)
 
                 ## aqui guarda el convenio que llega desde la pantalla de triage convenio
-
-                comando='UPDATE facturacion_ConveniosPacienteIngresos SET "consecAdmision" =' + "'" + str(consecAdmision) + "',convenio_id="  + "'" + str(convenio) + "' WHERE" + '"tipoDoc_id" = ' + "'" + str(idTipoDocFinal) + "' AND documento_id= '" + str(documento_llave.id) + "'" + ' AND "consecAdmision"=0'
-                print(comando)
-                cur3.execute(comando)
+                ## se cancela esto posr seguridad
+                #comando='UPDATE facturacion_ConveniosPacienteIngresos SET "consecAdmision" =' + "'" + str(consecAdmision) + "',convenio_id="  + "'" + str(convenio) + "' WHERE" + '"tipoDoc_id" = ' + "'" + str(idTipoDocFinal) + "' AND documento_id= '" + str(documento_llave.id) + "'" + ' AND "consecAdmision"=0'
+                #print(comando)
+                #cur3.execute(comando)
 
                 #convenioParticular = Convenios.objects.get(particular='S')
 

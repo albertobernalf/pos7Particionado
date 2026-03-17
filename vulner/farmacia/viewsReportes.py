@@ -44,6 +44,7 @@ class PDFDespacho(FPDF):
         self.consec = consec
         self.farmaciaId = farmaciaId
         self.despachoId = despachoId
+        self.tipoAdmision = tipoAdmision
 
 
     def header(self):

@@ -532,14 +532,18 @@ function RefrescarPantalla() {
 
 		<div align="left" height="2px" width="150px">
 
-			Orden :  <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="ordenFarmacia"></span>
-			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="nombreTipoDocN"></span>
-			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="documentoN"></span>
-			<span  style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="paciente"></span>
-			Ing#: <span id="consecutivoAdmision"></span>
-			Servicio: <span id="servicio"></span>
-			Hab: <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="habitacion"></span>
-			<input type="text" id="farmaciaDetalle" name="farmaciaDetalle" size="3" value="" readonly>
+			Orden :  <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="ordenFarmaciaDE"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="nombreTipoDocDE"></span>
+			<span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="documentoDE"></span>
+			<span  style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;" id="pacienteDE"></span>
+			Ing#: <span id="consecutivoAdmisionDE"></span>
+			Servicio: <span id="servicioDE"></span>
+			Hab: <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="habitacionDE"></span>
+			Mipres : <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="mipresDE"></span>
+			Autorizacion : <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="numeroAutorizacionDE"></span>
+			IdAut : <span style="padding-left:10px; padding-right:3px; padding-top: 3px; display:inline-block;"  id="idAutDE"></span>
+
+			<input type="text" id="farmaciaDetalleDE" name="farmaciaDetalleDE" size="3" value="" readonly>
 
  							   Entrega:               
                                                         <select  class="select-css" id="servicioAdmonEntregaF"
@@ -598,6 +602,9 @@ function RefrescarPantalla() {
 						 <th>Suministro</th>                                        				
 						 <th>Via</th>                                        				
 					 <th>cantidad</th>                                                 
+					 <th>Mipres</th>                                                 
+					 <th>Autorizacion</th>                                                 
+					 <th>AutId</th>    
 					 <th>Despachado</th>  
 					</bold>                                  
 
@@ -735,8 +742,7 @@ function RefrescarPantalla() {
                                                         <tbody style="vertical-align:bottom">
                                                         <tr style="height:10%">
                                                             <td></td>
-                                           
-                                                            <td></td>
+                                                              <td></td>
                                                             <td></td>
                                                              <td></td>
                                                               <td></td>

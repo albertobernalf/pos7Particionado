@@ -82,11 +82,9 @@ $('#tablaFormulacion tbody').on('click', 'tr', function () {
       	   textViasAdministracion = select3.options[select3.selectedIndex].innerText; //El texto de la opción seleccionada
 	
 	        var cantidadMedicamento =  document.getElementById("cantidadMedicamento").value;
-            var farmaciaDetalleId = document.getElementById("farmaciaDetalle").value;
+        
 
-	var mipres =  document.getElementById("mipres").value;
-
-	    table10.row.add([  medicamentos, textMedicamentos, dosis,  textUMedidaDosis, textViasAdministracion, cantidadMedicamento   , farmaciaDetalleId, mipres  '<i class="fa fa-trash"></i>']).draw(false);
+	    table10.row.add([  medicamentos, textMedicamentos, dosis,  textUMedidaDosis, textViasAdministracion, cantidadMedicamento   , farmaciaDetalleId,   '<i class="fa fa-trash"></i>']).draw(false);
 
         });
 
@@ -354,7 +352,7 @@ function arrancaFarmacia(valorTabla,valorData)
 		{ className: 'centered', targets: [0, 1, 2, 3, 4, 5] },
 	    { width: '10%', targets: [2,3] },
 		{  
-                    "targets": 6
+                    "targets": 9
                }
             ],
 	 pageLength: 20,
@@ -401,6 +399,9 @@ function arrancaFarmacia(valorTabla,valorData)
                 { data: "fields.suministro"},
                 { data: "fields.viaAdministracion"},
                 { data: "fields.cantidad"},
+                { data: "fields.‬mipresX"},
+                { data: "fields.numeroAutorizacion"},
+                { data: "fields.autorizacionId"},
 
                 	{
 	  "render": function ( data, type, row ) {
@@ -1104,6 +1105,7 @@ $('#tablaPanelFarmacia tbody').on('click', '.miSelFarmacia', function() {
         data['username_id'] = username_id;
 	data['farmaciaId'] = farmaciaId;
 	data['farmaciaDetalleId'] = farmaciaDetalleId;
+	
 
  	    data = JSON.stringify(data);
 
@@ -1115,15 +1117,15 @@ $('#tablaPanelFarmacia tbody').on('click', '.miSelFarmacia', function() {
                 success: function (info) {
 
 
-        document.getElementById("ordenFarmacia").innerHTML =  farmaciaId;
-		document.getElementById("nombreTipoDocN").innerHTML = info[0].fields.nombreTipoDoc;
-		document.getElementById("documentoN").innerHTML = info[0].fields.documento;
-		document.getElementById("paciente").innerHTML = info[0].fields.paciente;
-		document.getElementById("consecutivoAdmision").innerHTML = info[0].fields.consecutivoAdmision;
-		document.getElementById("servicio").innerHTML = info[0].fields.servicio;
-		document.getElementById("habitacion").innerHTML = info[0].fields.cama;
+       		 document.getElementById("ordenFarmaciaDE").innerHTML =  farmaciaId;
+		document.getElementById("nombreTipoDocDE").innerHTML = info[0].fields.nombreTipoDoc;
+		document.getElementById("documentoDE").innerHTML = info[0].fields.documento;
+		document.getElementById("pacienteDE").innerHTML = info[0].fields.paciente;
+		document.getElementById("consecutivoAdmisionDE").innerHTML = info[0].fields.consecutivoAdmision;
+		document.getElementById("servicioDE").innerHTML = info[0].fields.servicio;
+		document.getElementById("habitacionDE").innerHTML = info[0].fields.cama;
 
-        document.getElementById("ordenFarmaciaX").innerHTML =  farmaciaId;
+      		document.getElementById("ordenFarmaciaX").innerHTML =  farmaciaId;
 		document.getElementById("nombreTipoDocNX").innerHTML = info[0].fields.nombreTipoDoc;
 		document.getElementById("documentoNX").innerHTML = info[0].fields.documento;
 		document.getElementById("pacienteX").innerHTML = info[0].fields.paciente;
@@ -1139,16 +1141,19 @@ $('#tablaPanelFarmacia tbody').on('click', '.miSelFarmacia', function() {
 		document.getElementById("servicioDev").innerHTML = info[0].fields.servicio;
 		document.getElementById("habitacionDev").innerHTML = info[0].fields.cama;
 
-
-
                 },
      	        error: function(data){
 		       		document.getElementById("mensajesError").innerHTML =  data.responseText
 			        },
             });
 
+
+		alert("farmaciaId de INTERES para farmaciaDetalle = " + farmaciaId);
+
 	     arrancaFarmacia(3,data);
 	     dataTableFarmaciaDetalleInitialized = true;
+		
+		alert( " ya traje la info de farmacia detalle");
 
 	     arrancaFarmacia(5,data);
 	     dataTableDespachosFarmaciaInitialized = true;
@@ -1256,10 +1261,31 @@ $('#tablaFarmaciaDetalle tbody').on('click', '.miFarmaciaDetalle', function() {
 
 		//  alert("ENTRE tablaFarmaciaDetalle");
 
-	     var post_id = $(this).data('pk');
-	farmaciaDetalleId =   post_id;
+	  	var post_id = $(this).data('pk');
+		farmaciaDetalleId =   post_id;
+		alert("farmaciaDetalleId = " +  farmaciaDetalleId);
 
-	document.getElementById("farmaciaDetalle").value = farmaciaDetalleId;
+
+var row = $(this).closest('tr'); // Encuentra la fila
+	var table = $('#tablaFarmaciaDetalle').DataTable();  // Inicializa el DataTable jquery//
+	
+ 	var rowindex = table.row(row).data(); // Obtiene los datos de la fila
+       console.log("rowindex= " , rowindex);
+
+	    	 dato1 = Object.values(rowindex);
+		console.log(" fila seleccionad d evuelta dato1 = ",  dato1);
+	        dato3 = dato1[2];
+		console.log(" mipres = ",  dato3.mipresX);
+		console.log(" mipres = ",  dato3.numeroAutorizacion);
+	 document.getElementById("mipresDE").innerHTML = dato3.mipresX;
+	 document.getElementById("numeroAutorizacionDE").innerHTML = dato3.numeroAutorizacion;
+	 document.getElementById("idAutDE").innerHTML = dato3.autorizacionId;
+
+alert("dato3.mipresX = " +  dato3.mipresX);
+alert("dato3.numeroAutorizacion = " +  dato3.numeroAutorizacion);
+
+
+	document.getElementById("farmaciaDetalleDE").value = farmaciaDetalleId;
 	farmaciaId = document.getElementById("farmaciaId").value ;
 
     	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
@@ -1341,7 +1367,7 @@ $('#tablaFarmaciaDetalle tbody').on('click', '.despachado', function() {
 	  	dataTableFarmaciaDetalleInitialized = true;
 
     document.getElementById("farmaciaDetalle").value = 0;
-        	data['farmaciaDetalleId'] = document.getElementById("farmaciaDetalle").value;
+        	data['farmaciaDetalleId'] = document.getElementById("farmaciaDetalleDE").value;
  	    data = JSON.stringify(data);
 
 	    arrancaFarmacia(4,data);
@@ -1498,7 +1524,7 @@ function tableActionsFormulacion() {
                 {
                     "render": function ( data, type, row ) {
                         var btn = '';
-			  btn = btn + " <button class='btn btn-danger deleteRevisionSistemas' id='borraDiag'>" + '<i class="fa fa-trash"></i>' + "</button>";
+			  btn = btn + " <button class='btn btn-danger deleteFormulacion' id='borraDiag'>" + '<i class="fa fa-trash"></i>' + "</button>";
                         return btn;
                     },
                     "targets": 14
@@ -1530,17 +1556,26 @@ function AdicionarDespachosDispensa()
 
 	// Formulacion
 	//  alert("Entre a GRABAR despacho");
+	// busco mipres y Numero de autorizacion paa que viaje y lo pueda Guardar en liquidaciondetalle
+
+	
+	var mipres =  document.getElementById("mipresDE").innerHTML;
+	var numeroAutorizacion = document.getElementById("numeroAutorizacionDE").innerHTML;
+	var autorizacionId = document.getElementById("idAutDE").innerHTML;
+
 
      	var username = document.getElementById("username").value;
         var sede = document.getElementById("sede").value;
         var username_id = document.getElementById("username_id").value;
-        var farmaciaDetalleId = document.getElementById("farmaciaDetalle").value;
+        var farmaciaDetalleId = document.getElementById("farmaciaDetalleDE").value;
         var servicioAdmonEntrega = document.getElementById("servicioAdmonEntregaF").value;
         var servicioAdmonRecibe = document.getElementById("servicioAdmonRecibeF").value;
         var plantaEntrega = document.getElementById("plantaEntregaF").value;
         var plantaRecibe = document.getElementById("plantaRecibeF").value;
         var farmaciaId = document.getElementById("farmaciaId").value;
 	//  alert("plantaRecibe = " + plantaRecibe );
+
+	alert("farmaciaDetalleId = " + farmaciaDetalleId);
 
 
     const table10 = $('#tablaFormulacion').DataTable();
@@ -1559,7 +1594,6 @@ function AdicionarDespachosDispensa()
 	        "viasAdministracion"    : datos_tabla10[i][4] ,
 	        "cantidadMedicamento"    : datos_tabla10[i][5] ,
 	       "farmaciaDetalleId"    : datos_tabla10[i][6] ,
-	       "mipres"    : datos_tabla10[i][7] ,
 
 	      });
 	   };
@@ -1576,7 +1610,7 @@ function AdicionarDespachosDispensa()
  	               url: '/adicionarDespachosDispensa/',
   	               data: { 'username':username, 'sede':sede, 'username_id':username_id,'formulacion':formulacion,
                             'farmaciaDetalleId':farmaciaDetalleId,'servicioAdmonEntrega':servicioAdmonEntrega, 'servicioAdmonRecibe':servicioAdmonRecibe,
-                             	   'plantaEntrega':plantaEntrega, 'plantaRecibe':plantaRecibe, 'farmaciaId':farmaciaId},
+                             	   'plantaEntrega':plantaEntrega, 'plantaRecibe':plantaRecibe, 'farmaciaId':farmaciaId,'mipres':mipres, 'autorizacionId':numeroAutorizacion,'autorizacionId':autorizacionId},
  	      		success: function (data) {
 
      			    $("#mensajes").html(data.message);
@@ -1589,7 +1623,7 @@ function AdicionarDespachosDispensa()
     	var sede = document.getElementById("sede").value;
         var username_id = document.getElementById("username_id").value;
         var farmaciaId = document.getElementById("farmaciaId").value;
-        var farmaciaDetalleId = document.getElementById("farmaciaDetalle").value;
+        var farmaciaDetalleId = document.getElementById("farmaciaDetalleDE").value;
          var data =  {}   ;
         data['username'] = username;
         data['sedeSeleccionada'] = sedeSeleccionada;

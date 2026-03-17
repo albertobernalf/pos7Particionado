@@ -25,6 +25,7 @@ from planta.models import Planta
 from facturacion.models import ConveniosPacienteIngresos, Liquidacion, LiquidacionDetalle
 from rips.models import  RipsDestinoEgreso
 from cartera.models import FormasPagos, PagosFacturas, Pagos, TiposPagos, Caja
+from autorizaciones.models import EstadosAutorizacion, Autorizaciones, AutorizacionesDetalle
 import datetime
 from django.utils import timezone
 from clinico.models import Servicios,EspecialidadesMedicos, Medicos
@@ -5605,6 +5606,13 @@ def crearAdmisionDef(request):
 
         print("usuarioRegistro =", usuarioRegistro)
 
+        if 'checkAutorizacionHospitalizacion' in request.POST:
+
+           checkAutorizacionHospitalizacion = 'S'
+
+        else:
+
+           checkAutorizacionHospitalizacion = 'N'
 
         fechaRegistro = fechaIngreso
 
@@ -5762,6 +5770,48 @@ def crearAdmisionDef(request):
                 grabo88.id
                 print("yA grabe pacientes ingresos", grabo88.id)
                 print("Grabe HISTORICO DEPENDENCIAS")
+
+
+                # Aqui rutina de radiar autorizacion de hospitalizacion y/o ambulatorios
+                #
+                estadosAutorizacion = EstadosAutorizacion.objects.get(nombre='PENDIENTE')
+
+                if (checkAutorizacionHospitalizacion=='S'):
+
+                    grabo99 = Autorizaciones(fechaSolicitud=fechaRegistro,
+                              fechaModifica=fechaRegistro,
+                              estadoReg = estadoReg,
+                              convenio_id=convenio,
+                              empresa_id = empresa ,
+                              estadoAutorizacion_id= estadosAutorizacion.id,
+                              plantaOrdena_id=usernameId.id,
+                              sedesClinica_id=Sede,
+                              serviciosAdministrativos_id = serviciosAdministrativos,
+                              fechaRegistro = fechaRegistro,
+                              usuarioRegistro_id = usernameId.id,
+                              ingreso_id= grabo.id,
+                           )
+                    grabo99.save()
+                    grabo99.id
+                    print("yA grabe Autorizaciones", grabo99.id)
+
+
+                    grabo77 = AutorizacionesDetalle(
+                              cantidadSolicitada=1,
+                              fechaRegistro = fechaRegistro,
+                              estadoReg = estadoReg,
+                              autorizaciones_id = grabo99.id,
+                              usuarioRegistro_id = usernameId.id
+                           )
+                    grabo77.save()
+                    grabo77.id
+                    print("yA grabe Autorizaciones detalle", grabo77.id)
+
+                    grabo101 = Ingresos.objects.filter(id=grabo.id).update(autorizacionesHospitalDetalle_id=grabo77.id)
+
+                else:
+                    pass
+
 
         except Exception as e:
             # Aquí ya se hizo rollback automáticamente
