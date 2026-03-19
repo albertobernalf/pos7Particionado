@@ -582,7 +582,7 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
 
                                 {% endif %}
 
-                                <div class="row row-cols-10 ">
+                                <div class="row row-cols-6" style="height: 80px; background-color: #e9ecef;">
 
 				      <div class="col">
                                         <label for="empresaC" class="col-sm-1 col-form-label col-form-label-sm">Empresa:</label>
@@ -619,11 +619,6 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                                 </div>
 
 				<!-- FIN aqui va la autorizacion hospitalario y/o Ambulatoria -->
-
-
-		
-
-
 
 
                                     <div class="col">
@@ -668,6 +663,9 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                         </div>
 
                                     </div>
+				 </div>
+                                <div class="row row-cols-6" style="height: 80px; background-color: #e9ecef;">
+
 
 				  <div class="col">
                                         <label for="serviciosAdministrativos" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
@@ -757,8 +755,9 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                     </div>
 
                                 </div>
+			     </div>
 
-                                <div class="row row-cols-10 mt-1">
+	                          <div class="row row-cols-6" style="height: 80px; background-color: #e9ecef;">
 
                                     <div class="col">
 
@@ -838,6 +837,11 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
 
                                     </div>
 
+					</div>
+
+	                          <div class="row row-cols-6" style="height: 80px; background-color: #e9ecef;">
+
+
                                     <div class="col">
                                         <label for="numManilla" class="col-sm-2 col-form-label col-form-label-sm">NumeroManilla:&nbsp;&nbsp;</label>
                                         <div class="col">
@@ -875,14 +879,12 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                     </div>
 
 
-                                </div> <!-- ops cierra un rows-cols -->
-
-
-                                <div class="row row-cols-11 mt-1">
+                               
+                              
                                     <div class="col">
                                           <label for="ripsNumConsultasCPrenatal" class="col-sm-2 col-form-label col-form-label-sm">NumeroConsultaPrenatal:&nbsp;&nbsp;</label>
                                         <div class="col">
-                                            <input type="text" class="form-control form-control-sm" id="ripsNumConsultasCPrenatal" tabindex= "0"
+                                            <input type="text"  id="ripsNumConsultasCPrenatal" tabindex= "0"
                                                    name="ripsNumConsultasCPrenatal" value="">
                                         </div>
                                     </div>
@@ -890,10 +892,15 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                         <div class="col">
                                                 <label for="ripsPesoRecienNacido" class="col-sm-2 col-form-label col-form-label-sm">RN peso:&nbsp;&nbsp;</label>
                                         <div class="col">
-                                            <input type="text" class="form-control form-control-sm" id="ripsPesoRecienNacido" tabindex= "0"
+                                            <input type="text"  id="ripsPesoRecienNacido" tabindex= "0"
                                                    name="ripsPesoRecienNacido" value="">
                                         </div>
                                     </div>
+					</div>
+
+
+	                          <div class="row row-cols-9" style="height: 80px; background-color: #e9ecef;">
+
 
                                         <div class="col">
                                              <label for="ripsRecienNacido" class="col-sm-2 col-form-label col-form-label-sm">Recien Nacido:&nbsp;&nbsp;</label>
@@ -957,8 +964,8 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                     </div>
 
                                         <div class="col">
-                                                       <label for="ripsmodalidadGrupoServicioTecSal" class="col-sm-1 col-form-label col-form-label-sm">ModalidadGrupoServ:
-                                            &nbsp;&nbsp;&nbsp;</label>
+                                                       <label for="ripsmodalidadGrupoServicioTecSal" >ModalidadGrupoServ:
+                                            </label>
                                         <div class="col">
                                             <select class="form-select  h-40 w-20" aria-label="" id="ripsmodalidadGrupoServicioTecSal" tabindex= "0"  name="ripsmodalidadGrupoServicioTecSal"
                                                     required>
@@ -969,9 +976,11 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                         </div>
                                     </div>
 
+
+	                       
 					<div class="col">
-                                                       <label for="ripsFinalidadConsulta" class="col-sm-1 col-form-label col-form-label-sm">FinalidadConsulta:
-                                            &nbsp;&nbsp;&nbsp;</label>
+                                                       <label for="ripsFinalidadConsulta" ">FinalidadConsulta:
+                                           </label>
                                         <div class="col">
                                             <select class="form-select  h-40 w-20" aria-label="" id="ripsFinalidadConsulta" tabindex= "0" name="ripsFinalidadConsulta"
                                                     required>
@@ -984,8 +993,8 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                      
 
                                     <div class="col">
-                                                         <label for="ripsServiciosIng" class="col-sm-1 col-form-label col-form-label-sm">ServicioIngreso:
-                                            &nbsp;&nbsp;&nbsp;</label>
+                                                         <label for="ripsServiciosIng" >ServicioIngreso:
+                                           </label>
                                         <div class="col">
                                             <select class="form-select  h-40 w-20" aria-label="" id="ripsServiciosIng" tabindex= "0" name="ripsServiciosIng"
                                                     required>
@@ -995,16 +1004,20 @@ Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </sp
                                             </select>
                                         </div>
                                     </div>
+			   </div>
+<div class="row row-cols-1" style="height: 80px; background-color: #e9ecef;">
+	</div>
+
+	                          <div class="row row-cols-1" style="height: 80px; background-color: #e9ecef;">
 
                                         <div class="col">
 				  <label for="guardarAdmision" class="col-sm-1 col-form-label col-form-label-sm"></label>
 					<div class="col">
                                             <input type="submit" id="guardarAdmision" name="guardarAdmision" value="Guardar Admision"></input>
-                                                                     </div>
+                                               </div>
                                     </div>
 
-                                        <div class="col">
-                                    </div>
+                                     
 			</div>
 
                             </form>

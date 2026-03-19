@@ -103,18 +103,15 @@ def load_dataAutorizaciones(request, data):
     curx = miConexionx.cursor()
 
 
-    #detalle = 'select aut.id id ,aut."sedesClinica_id" ,sed.nombre sede,usu.nombre paciente,historia_id folio,"fechaSolicitud",aut.justificacion,"numeroAutorizacion","fechaAutorizacion", pla.nombre medico, aut.observaciones, estado.nombre estadoAutorizacion, "numeroSolicitud", "fechaVigencia", empresa_id, emp.nombre empresaNombre, "plantaOrdena_id", aut."usuarioRegistro_id" FROM autorizaciones_autorizaciones aut, sitios_sedesClinica sed, facturacion_empresas emp, clinico_historia historia, usuarios_usuarios usu, planta_planta pla , autorizaciones_estadosAutorizacion estado  where historia.id = aut.historia_id and sed.id = aut."sedesClinica_id" and emp.id = aut.empresa_id and usu."tipoDoc_id" = historia."tipoDoc_id" and usu.id = historia.documento_id and pla.id = aut."plantaOrdena_id" and estado.id = aut."estadoAutorizacion_id"          '
-    detalle = 'select aut.id id ,aut."sedesClinica_id" ,sed.nombre sede,usu.nombre paciente,historia_id folio,"fechaSolicitud",aut.justificacion, "numeroAutorizacion","fechaAutorizacion", pla.nombre medico, aut.observaciones, estado.nombre estadoAutorizacion, "numeroSolicitud", "fechaVigencia", empresa_id, emp.nombre empresaNombre, "plantaOrdena_id", aut."usuarioRegistro_id" FROM autorizaciones_autorizaciones aut INNER JOIN sitios_sedesClinica sed on (sed.id = aut."sedesClinica_id") LEFT JOIN  facturacion_empresas emp ON (emp.id = aut.empresa_id) INNER JOIN  clinico_historia historia ON (historia.id = aut.historia_id ) INNER JOIN usuarios_usuarios usu ON (usu."tipoDoc_id" = historia."tipoDoc_id" and usu.id = historia.documento_id) INNER JOIN planta_planta pla ON (pla.id = aut."plantaOrdena_id") INNER JOIN  autorizaciones_estadosAutorizacion estado ON (estado.id = aut."estadoAutorizacion_id" ) INNER JOIN sitios_dependencias dep on (dep."tipoDoc_id" = historia."tipoDoc_id" AND dep.documento_id = historia.documento_id and dep.consec=historia."consecAdmision") where aut."sedesClinica_id" = ' + "'"  + str(sede) + "' AND " + ' aut."estadoAutorizacion_id" != ' + "'" + str(estadoAutorizado.id) + "'"
-
+    detalle = 'select aut.id id ,usu.nombre paciente,historia_id folio,"fechaSolicitud", pla.nombre medico, aut.observaciones, estado.nombre estadoAutorizacion,  "fechaVigencia", aut.empresa_id, emp.nombre empresaNombre, pla.nombre plantaOrdena_id, usu.nombre usuarioRegistro_id FROM autorizaciones_autorizaciones aut INNER JOIN sitios_sedesClinica sed on (sed.id = aut."sedesClinica_id") LEFT JOIN  facturacion_empresas emp ON (emp.id = aut.empresa_id) LEFT JOIN  clinico_historia historia ON (historia.id = aut.historia_id ) LEFT JOIN usuarios_usuarios usu ON (usu."tipoDoc_id" = historia."tipoDoc_id" and usu.id = historia.documento_id) LEFT JOIN planta_planta pla ON (pla.id = aut."plantaOrdena_id") LEFT JOIN  autorizaciones_estadosAutorizacion estado ON (estado.id = aut."estadoAutorizacion_id" ) where aut."sedesClinica_id" = ' + "'"  + str(sede) + "' AND " + ' aut."estadoAutorizacion_id" != ' + "'" + str(estadoAutorizado.id) + "' and  aut.historia_id>= 0 UNION " +   'select aut.id id ,usu.nombre paciente,0 folio,"fechaSolicitud", pla.nombre medico, aut.observaciones, estado.nombre estadoAutorizacion,  "fechaVigencia", aut.empresa_id, emp.nombre empresaNombre, pla.nombre plantaOrdena_id, usu.nombre usuarioRegistro_id FROM autorizaciones_autorizaciones aut INNER JOIN sitios_sedesClinica sed on (sed.id = aut."sedesClinica_id") LEFT JOIN  facturacion_empresas emp ON (emp.id = aut.empresa_id) LEFT JOIN  admisiones_ingresos ing ON (ing.id = aut.ingreso_id) LEFT JOIN usuarios_usuarios usu ON (usu."tipoDoc_id" = ing."tipoDoc_id" and usu.id =ing.documento_id) LEFT JOIN planta_planta pla ON (pla.id = aut."plantaOrdena_id") LEFT JOIN  autorizaciones_estadosAutorizacion estado ON (estado.id = aut."estadoAutorizacion_id" ) where aut."sedesClinica_id" = ' + "'"  + str(sede) + "' AND " + ' aut."estadoAutorizacion_id" != ' + "'" + str(estadoAutorizado.id) + "'" + ' and  aut.historia_id is null '
     print(detalle)
 
     curx.execute(detalle)
 
-    for id ,sedesClinica_id,sede,paciente,folio,fechaSolicitud,justificacion,numeroAutorizacion,fechaAutorizacion, medico,observaciones,estadoAutorizacion,numeroSolicitud,fechaVigencia,empresa_id, empresaNombre,plantaOrdena_id,usuarioRegistro_id in curx.fetchall():
+    for id ,paciente,folio,fechaSolicitud, medico,observaciones,estadoAutorizacion,fechaVigencia,empresa_id, empresaNombre,plantaOrdena_id,usuarioRegistro_id in curx.fetchall():
         autorizaciones.append(
             {"model": "autorizaciones_autorizaciones", "pk": id, "fields":
-                {'id': id, 'sedesClinica_id': sedesClinica_id, 'sede': sede,'paciente': paciente,'folio': folio,'fechaSolicitud': fechaSolicitud,'justificacion':justificacion,   'numeroAutorizacion':numeroAutorizacion,'fechaAutorizacion':fechaAutorizacion,
-                   'numeroAutorizacion': numeroAutorizacion, 'fechaAutorizacion':fechaAutorizacion,  'medico': medico, 'observaciones': observaciones,'estadoAutorizacion':estadoAutorizacion, 'numeroSolicitud':numeroSolicitud,
+                {'id': id, 'paciente': paciente,'folio': folio,'fechaSolicitud': fechaSolicitud,  'medico': medico, 'observaciones': observaciones,'estadoAutorizacion':estadoAutorizacion,
                  'fechaVigencia': fechaVigencia, 'empresa_id':empresa_id, 'empresaNombre':empresaNombre, 'plantaOrdena_id':plantaOrdena_id,'usuarioRegistro_id':usuarioRegistro_id}})
     miConexionx.close()
     print("autorizaciones "  , autorizaciones)
@@ -184,17 +181,18 @@ def load_dataAutorizacionesDetalle(request, data):
     curx = miConexionx.cursor()
 
 
-    detalle = 'select ' + "'" + str('CUPS') + "'" + ' tipoTipoExamen, autdet.id id ,tipoexa.nombre tipoExamen,autdet.examenes_id examenId, exa.nombre examen,autdet."cantidadSolicitada", autdet."cantidadAutorizada",autdet."valorSolicitado", autdet."valorAutorizado", estado.nombre autorizado , autdet.mipres mipres ,autdet."usuarioRegistro_id" from autorizaciones_autorizacionesdetalle autdet, clinico_tiposexamen tipoexa, clinico_examenes exa , autorizaciones_estadosAutorizacion estado where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tiposExamen_id" = tipoexa.id and autdet.examenes_id = exa.id and autdet.examenes_id is not null and estado.id=autdet."estadoAutorizacion_id" union select ' + "'" + str('SUMINISTRO') + "'" + ' tipoTipoExamen, autdet.id id, tiposum.nombre tiposum, autdet.cums_id examenId, sum.nombre suministro, autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,  autdet.mipres mipres ,autdet."usuarioRegistro_id"  from autorizaciones_autorizacionesdetalle autdet, facturacion_tipossuministro tiposum, facturacion_suministros sum , autorizaciones_estadosAutorizacion estado where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tipoSuministro_id" = tiposum.id and autdet.cums_id = sum.id and autdet.cums_id is not null and estado.id=autdet."estadoAutorizacion_id" AND autdet."estadoAutorizacion_id" != ' +"'" + str(autorizado.id) +"'"
+    #detalle = 'select ' + "'" + str('CUPS') + "'" + ' tipoTipoExamen, autdet.id id ,tipoexa.nombre tipoExamen,autdet.examenes_id examenId, exa.nombre examen,autdet."cantidadSolicitada", autdet."cantidadAutorizada",autdet."valorSolicitado", autdet."valorAutorizado", estado.nombre autorizado , autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet, clinico_tiposexamen tipoexa, clinico_examenes exa , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tiposExamen_id" = tipoexa.id and autdet.examenes_id = exa.id and autdet.examenes_id is not null and estado.id=autdet."estadoAutorizacion_id" and pla.id = autdet."usuarioRegistro_id" union select ' + "'" + str('SUMINISTRO') + "'" + ' tipoTipoExamen, autdet.id id, tiposum.nombre tiposum, autdet.cums_id examenId, sum.nombre suministro, autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,  autdet.mipres mipres ,pla.nombre usuarioRegistro  from autorizaciones_autorizacionesdetalle autdet, facturacion_tipossuministro tiposum, facturacion_suministros sum , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tipoSuministro_id" = tiposum.id and autdet.cums_id = sum.id and autdet.cums_id is not null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND autdet."estadoAutorizacion_id" != ' +"'" + str(autorizado.id) +"'"
+    detalle = 'select ' + "'" + str('CUPS') + "'" + ' tipoTipoExamen, autdet.id id ,tipoexa.nombre tipoExamen,autdet.examenes_id examenId, exa.nombre examen,autdet."cantidadSolicitada", autdet."cantidadAutorizada",autdet."valorSolicitado", autdet."valorAutorizado", estado.nombre autorizado , autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet, clinico_tiposexamen tipoexa, clinico_examenes exa , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tiposExamen_id" = tipoexa.id and autdet.examenes_id = exa.id and autdet.examenes_id is not null and estado.id=autdet."estadoAutorizacion_id" and pla.id = autdet."usuarioRegistro_id" union select ' + "'" + str('SUMINISTRO') + "'" + ' tipoTipoExamen, autdet.id id, tiposum.nombre tiposum, autdet.cums_id examenId, sum.nombre suministro, autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,  autdet.mipres mipres ,pla.nombre usuarioRegistro  from autorizaciones_autorizacionesdetalle autdet, facturacion_tipossuministro tiposum, facturacion_suministros sum , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tipoSuministro_id" = tiposum.id and autdet.cums_id = sum.id and autdet.cums_id is not null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND autdet."estadoAutorizacion_id" != ' + "'" + str(autorizado.id) + "' union select 'AUTORIZACION' tipoTipoExamen, autdet.id id, ' ' tiposum, 0 examenId, ' '  suministro, " + ' autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,	autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet,	autorizaciones_estadosAutorizacion estado , planta_planta pla 	where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and 	autdet.cums_id is null and  autdet.cums_id is  null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND 	autdet."estadoAutorizacion_id" != ' + "'" + str(autorizado.id) + "'"
 
     print(detalle)
 
     curx.execute(detalle)
 
-    for tipoTipoExamen, id , tipoExamen, examenId, examen,cantidadSolicitada, cantidadAutorizada, valorSolicitado,valorAutorizado,autorizado , mipres ,usuarioRegistro_id in curx.fetchall():
+    for tipoTipoExamen, id , tipoExamen, examenId, examen,cantidadSolicitada, cantidadAutorizada, valorSolicitado,valorAutorizado,autorizado , mipres ,usuarioRegistro in curx.fetchall():
         autorizacionesDetalle.append(
             {"model": "autorizaciones_autorizacionesDetalle", "pk": id, "fields":
                 {'tipoTipoExamen': tipoTipoExamen, 'id': id, 'tipoExamen': tipoExamen, 'examenId':examenId,'examen': examen,'cantidadSolicitada': cantidadSolicitada,'cantidadAutorizada': cantidadAutorizada,'valorSolicitado': valorSolicitado,'valorAutorizado':valorAutorizado,
-                 'autorizado':autorizado,'mipres':mipres, 'usuarioRegistro_id':usuarioRegistro_id}})
+                 'autorizado':autorizado,'mipres':mipres, 'usuarioRegistro':usuarioRegistro}})
     miConexionx.close()
     print("autorizacionesDetalle "  , autorizacionesDetalle)
 
@@ -354,10 +352,10 @@ def ActualizarAutorizacionDetalle(request):
                 enfermeriaId = curt.fetchone()[0]
 
             # Aqui Guardar FARMACIA DETALLE
-            comando = 'INSERT INTO farmacia_farmaciadetalle(farmacia_id, "historiaMedicamentos_id",suministro_id,"dosisCantidad", "dosisUnidad_id","viaAdministracion_id","cantidadOrdenada","fechaRegistro","usuarioRegistro_id", "estadoReg", "consecutivoMedicamento", mipres, "autorizacionesDetalle_id",despachado)  SELECT ' + "'" + str(
-                farmaciaId) + "', id," + ' suministro_id,"dosisCantidad" , "dosisUnidad_id" , "viaAdministracion_id" ,"cantidadSolicitada",' + "'"  + str(
-                fechaRegistro) + "'," + "'"  + str(usuarioRegistro_id) + "',"  + "'A'" + ', "consecutivoMedicamento" , mipres, ' + "'" + str(autorizacionDetalleId) + "'" + '  FROM clinico_HistoriaMedicamentos WHERE historia_id = ' + "'" + str(
-                datosAut.historia_id) + "' AND " + ' id = ' + "'" + str(datosAut1.historiaMedicamentos_id) + "','N' RETURNING id"
+            comando = 'INSERT INTO farmacia_farmaciadetalle(farmacia_id, "historiaMedicamentos_id",suministro_id,"dosisCantidad", "dosisUnidad_id","viaAdministracion_id","cantidadOrdenada","fechaRegistro","usuarioRegistro_id", "estadoReg", "consecutivoMedicamento", mipres, "autorizacionDetalle_id",despachado)  SELECT ' + "'" + str(
+                farmaciaId) + "', id," + ' suministro_id,"dosisCantidad" , "dosisUnidad_id" , "viaAdministracion_id" ,"cantidadOrdenada",' + "'"  + str(
+                fechaRegistro) + "'," + "'"  + str(usuarioRegistro_id) + "',"  + "'A'" + ', "consecutivoMedicamento" , mipres, ' + "'" + str(autorizacionDetalleId) + "','N'" + '  FROM clinico_HistoriaMedicamentos WHERE historia_id = ' + "'" + str(
+                datosAut.historia_id) + "' AND " + ' id = ' + "'" + str(datosAut1.historiaMedicamentos_id) + "' RETURNING id;"
             print("comando = ", comando)
 
             resultado = curt.execute(comando)
@@ -457,6 +455,7 @@ def ActualizarAutorizacionDetalle(request):
 
         miConexiont.commit()
         miConexiont.close()
+        print("ya grabe")
 
 
     except psycopg2.DatabaseError as error:
@@ -500,11 +499,14 @@ def ActualizarAutorizacionDetalle(request):
     ## si no existe hay que crear cabezote
     ## Aqui actualiza el numero de autorizacion para medicamentos
 
+    print ("ya actualice la autorizacion")
     if (tipoTipoExamen != 'CUPS'):
+        print("voy a actualizar datosHc.id =" , datosHc.id)
+        print("datosAut1.historiaMedicamentos_id =", datosAut1.historiaMedicamentos_id)
+        print("datosAut1.id =", datosAut1.id)
 
-        HistoriaMedicamentos.objects.filter(historia_id=datosHc.id).update(autorizacion_id=datosAut.id)
-
-
+        HistoriaMedicamentos.objects.filter(id = datosAut1.historiaMedicamentos_id).update(autorizacionDetalle_id=datosAut1.id)
+        print("listo")
     ## Fin Actualiza autorizacion para medicamentos
 
     return JsonResponse({'success': True, 'Mensajes': 'Detalle de Autorizacion actualizado satisfactoriamente!'})
@@ -532,6 +534,13 @@ def LeerDetalleAutorizacion(request):
 
     print("tipotipoExamen.examenes_id =" ,tipotipoExamen.examenes_id )
     print("tipotipoExamen.cums_id =", tipotipoExamen.cums_id)
+
+    if (tipotipoExamen.examenes_id == 0 or tipotipoExamen.examenes_id != None or tipotipoExamen.examenes_id != ''):
+
+        print ("entre Autorizacion hospitalaria")
+
+        #detalle = 'select ' + "'" + str('AUTORIZACION') + "' tipoTipoExamen," + ' det.id, "cantidadSolicitada", "cantidadAutorizada", det."fechaRegistro", det."estadoReg", autorizaciones_id, det."usuarioRegistro_id", ' ' tipNombre, ' ' exaNombre, ' ' examenes_id, "valorAutorizado", "valorSolicitado", "tiposExamen_id", "tipoSuministro_id", det."estadoAutorizacion_id", det."numeroAutorizacion" , est.nombre estadoNombre , aut.convenio_id convenioId, det.mipres FROM autorizaciones_autorizaciones aut, autorizaciones_autorizacionesdetalle det, autorizaciones_estadosautorizacion est  WHERE aut.id = det."autorizaciones_id" AND det.id =' + "'" + str(autorizacionDetalleId) + "'" + ' AND est.id = det."estadoAutorizacion_id"'
+        detalle = 'select ' + "'" + str('AUTORIZACION') + "' tipoTipoExamen," + ' det.id, "cantidadSolicitada", "cantidadAutorizada", det."fechaRegistro", det."estadoReg", autorizaciones_id, det."usuarioRegistro_id", null tipNombre  , null  exaNombre,  0 examenes_id , "valorAutorizado", "valorSolicitado", 0 tiposExamen_id, 0 tipoSuministro_id, det."estadoAutorizacion_id", det."numeroAutorizacion" , est.nombre estadoNombre , aut.convenio_id convenioId, det.mipres FROM autorizaciones_autorizaciones aut, autorizaciones_autorizacionesdetalle det, autorizaciones_estadosautorizacion est WHERE aut.id = det."autorizaciones_id" AND det.id =' + "'" + str(autorizacionDetalleId) + "'" + ' AND est.id = det."estadoAutorizacion_id"'
 
     if (tipotipoExamen.examenes_id != '' and tipotipoExamen.examenes_id != None ):
 

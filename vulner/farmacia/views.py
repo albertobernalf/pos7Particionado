@@ -142,15 +142,15 @@ def Load_dataFarmaciaDetalle(request, data):
                                    password="123456")
     curx = miConexionx.cursor()
 
-    detalle = 'select  det.id id,estados.nombre estadoNombre ,origen.nombre origenNombre, mov.nombre movNombre, sum.nombre || cums  suministro, 	det."dosisCantidad" dosis, dosis.descripcion unidadDosis,   vias.nombre via,	det."cantidadOrdenada" cantidad,  via.nombre viaAdministracion , det.despachado despachado , det.mipres mipres , autDet."numeroAutorizacion" numeroAutorizacion , autDet.id autorizacionId FROM farmacia_farmacia far INNER JOIN farmacia_farmaciadetalle det ON (det.farmacia_id = far.id) LEFT JOIN farmacia_farmaciaestados estados  ON (estados.id = far.estado_id) INNER JOIN enfermeria_enfermeriatipoorigen origen ON (origen.id = far."tipoOrigen_id") INNER JOIN enfermeria_enfermeriatipomovimiento mov ON (mov.id = far."tipoOrigen_id") INNER JOIN facturacion_suministros sum ON (sum.id= det.suministro_id) INNER JOIN clinico_viasadministracion vias ON (vias.id= det."viaAdministracion_id") INNER JOIN clinico_unidadesdemedidadosis dosis ON (dosis.id= det."dosisUnidad_id") INNER JOIN clinico_viasadministracion via ON (via.id= det."viaAdministracion_id") LEFT JOIN autorizaciones_autorizacionesDetalle autDet ON (autDet.id = det."autorizacionDetalle_id") where far.id ='  + "'" + str(farmaciaId) + "' AND det.despachado = 'N' ORDER BY det.id"
+    detalle = 'select  det.id id,estados.nombre estadoNombre ,origen.nombre origenNombre, mov.nombre movNombre, sum.nombre || cums  suministro, 	det."dosisCantidad" dosis, dosis.descripcion unidadDosis,   vias.nombre via,	det."cantidadOrdenada" cantidad,  via.nombre viaAdministracion , det.despachado despachado , det.mipres mipresX , autDet."numeroAutorizacion" numeroAutorizacion , autDet.id autorizacionId FROM farmacia_farmacia far INNER JOIN farmacia_farmaciadetalle det ON (det.farmacia_id = far.id) LEFT JOIN farmacia_farmaciaestados estados  ON (estados.id = far.estado_id) INNER JOIN enfermeria_enfermeriatipoorigen origen ON (origen.id = far."tipoOrigen_id") INNER JOIN enfermeria_enfermeriatipomovimiento mov ON (mov.id = far."tipoOrigen_id") INNER JOIN facturacion_suministros sum ON (sum.id= det.suministro_id) INNER JOIN clinico_viasadministracion vias ON (vias.id= det."viaAdministracion_id") INNER JOIN clinico_unidadesdemedidadosis dosis ON (dosis.id= det."dosisUnidad_id") INNER JOIN clinico_viasadministracion via ON (via.id= det."viaAdministracion_id") LEFT JOIN autorizaciones_autorizacionesDetalle autDet ON (autDet.id = det."autorizacionDetalle_id") where far.id ='  + "'" + str(farmaciaId) + "' AND det.despachado = 'N' ORDER BY det.id"
     print(detalle)
 
     curx.execute(detalle)
 
-    for id,estadoNombre, origenNombre,movNombre,suministro, dosis, unidadDosis, via, cantidad , viaAdministracion , despachado, mipres, numeroAutorizacion, autorizacionId in curx.fetchall():
+    for id,estadoNombre, origenNombre,movNombre,suministro, dosis, unidadDosis, via, cantidad , viaAdministracion , despachado,  mipresX , numeroAutorizacion, autorizacionId in curx.fetchall():
         farmaciaDetallez.append(
             {"model": "famacia.farmaciaDetalle", "pk": id, "fields":
-                {'id': id, 'estadoNombre':estadoNombre, 'origenNombre': origenNombre ,'movNombre':movNombre,'suministro':suministro,'dosis':dosis ,'unidadDosis':unidadDosis ,'cantidad':cantidad , 'viaAdministracion':viaAdministracion, 'despachado':despachado,'mipresX':mipres, 'numeroAutorizacion': numeroAutorizacion,'autorizacionId':autorizacionId}})
+                {'id': id, 'estadoNombre':estadoNombre, 'origenNombre': origenNombre ,'movNombre':movNombre,'suministro':suministro,'dosis':dosis ,'unidadDosis':unidadDosis ,'cantidad':cantidad , 'viaAdministracion':viaAdministracion, 'despachado':despachado,'mipresX' : mipresX, 'numeroAutorizacion': numeroAutorizacion,'autorizacionId':autorizacionId}})
 
     miConexionx.close()
     print(farmaciaDetallez)
@@ -326,6 +326,8 @@ def AdicionarDespachosDispensa(request):
     print("mipres:", mipres)
     autorizacionId = request.POST['autorizacionId']
     print("autorizacionId:", autorizacionId)
+    if (autorizacionId ==''):
+        autorizacionId='null'
 
     parcialDespachado = FarmaciaEstados.objects.get(nombre='PARCIALMENTE DESPACHADO')
 
@@ -736,7 +738,7 @@ def AdicionarDespachosDispensa(request):
                 # Aqui Rutina FACTURACION crea en liquidaciondetalle el registro con la tarifa, con campo cups y convenio
                 #
 
-                comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia_id,"fechaCrea", "fechaRegistro", "estadoRegistro", "cums_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro", "historiaMedicamento_id",anulado, mipres, "autorizacionDetalle_id") VALUES (' + "'" + str(consecLiquidacion) + "','" + str(fechaRegistro) + "','" + str(cantidadMedicamento) + "','" + str(tarifaValor) + "','" + str(TotalTarifa) + "',null,'" + str(fechaRegistro) + "','" + str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(medicamentos) + "','" + str(username_id) + "'," + liquidacionId + ",'SISTEMA'," + str(historiaMedicamentos.id)  + ",'N','" + str(mipres) + "','"+  str(autorizacionId) + "')"
+                comando = 'INSERT INTO facturacion_liquidaciondetalle (consecutivo,fecha, cantidad, "valorUnitario", "valorTotal",cirugia_id,"fechaCrea", "fechaRegistro", "estadoRegistro", "cums_id",  "usuarioRegistro_id", liquidacion_id, "tipoRegistro", "historiaMedicamento_id",anulado, mipres, "autorizacionDetalle_id") VALUES (' + "'" + str(consecLiquidacion) + "','" + str(fechaRegistro) + "','" + str(cantidadMedicamento) + "','" + str(tarifaValor) + "','" + str(TotalTarifa) + "',null,'" + str(fechaRegistro) + "','" + str(fechaRegistro) + "','" + str(estadoReg) + "','" + str(medicamentos) + "','" + str(username_id) + "'," + liquidacionId + ",'SISTEMA'," + str(historiaMedicamentos.id)  + ",'N','" + str(mipres) + "',"+  str(autorizacionId) + ")"
                 print("comando ", comando)
 
                 cur3.execute(comando)

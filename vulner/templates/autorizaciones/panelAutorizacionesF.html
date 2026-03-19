@@ -21,20 +21,14 @@
 
         <li><a href="#Autorizaciones"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Autorizaciones </a></li>
         <li><a href="#AutorizacionesDetalle"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Autorizaciones Detalle</a></li>
-        <li><a href="#AutorizacionesCirugia"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Autorizaciones Cirugia </a></li>
+
 
 
     </ul>
 </div>
 
-<style>
-.my-row-class {
-    height: 30px;
-}
 
-</style>
 <script>
-
 function RefrescarPantalla() {
  	 
     	var sedeSeleccionada = document.getElementById("sedeSeleccionada").value;
@@ -78,8 +72,6 @@ function RefrescarPantallaDetalle() {
         arrancaAutorizaciones(2,data);
 	    dataTableAutorizacionesDetalleInitialized = true;
 }
-
-
 </script>
 
 
@@ -133,38 +125,30 @@ function RefrescarPantallaDetalle() {
 <input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
 
  		<div class="container my-2">
+
+
+
    			   <div class="row">
 
                                         <table  id= "tablaAutorizaciones" class=" display nowrap table table-striped" style="width: 100%";>
                                            <thead>
-                                            <tr >    
+                                            <tr>    
 						<bold>      
 				     		 <th>Accion</th> 
-						<th>
-				            <img src="{% static 'img/icons8-impresora-50.png' %}" alt="Imprimir" width="20" height="20">
-						</th>                              
-                                                <th>id</th>
-                                                <th>SedeId</th>
-  
+						<th> <img src="{% static 'img/icons8-impresora-50.png' %}" alt="Imprimir" width="15" height="15"> </th>                              
+                                                <th>Aut</th>
                                                 <th>Paciente</th>
                                                 <th>Folio</th>                                       
-                                                 <th>FecSolicitad</th>                                 
-                               
-                                                <th>#Aut</th>
-                                                <th>FecAut</th>
+                                                 <th>FecSolicitad</th>                      
                                                 <th>Medico</th>
                                                 <th>Observac</th>
                                                 <th>EstAut</th>
-                                                <th>Solicitud</th>
 						<th>Vigencia</th>
-						<th>EmpId</th>
+					
 						<th>Empresa</th>
 						<th>Ordena</th>
-					        <th>Registra</th> 
-	                                  
-
-						</bold>                                  
-
+					        <th>Registra</th>                                  
+					</bold>                                  
                                             </tr>
                                             </thead>
                                             <tbody style="vertical-align:bottom; horizontal-align:left">
@@ -298,25 +282,53 @@ function RefrescarPantallaDetalle() {
 <input type="button" id="btnRefrescarDetalle" name="btnRefrescarDetalle" value="Refrescar" onclick="RefrescarPantallaDetalle()">
                               
             <!-- INICIO TABLE DE  EL DATATABLE  -->
-		<div class="container my-2">
+	 <!--	<div class="container my-2"> -->
+
+   		 <div id="flex-container-detallePac"> 
+						
+					<div> 
+					 Fecha:
+						<span class="texto-span" id="fecha" name="fecha"></span>                                          	              			
+					
+					<span class="texto-span"  id="paciente" name="paciente"></span>
+				
+						 Medico:
+						
+						<span  class="texto-span" id="medico" name="medico"></span>
+
+
+						Estado Aut:
+						
+						<span class="texto-span" id="estadoAutorizacion" name="estadoAutorizacion"></span>
+							
+					
+
+						 observa:
+							<span class="texto-span" id="observaciones" name="observaciones"></span>
+						
+
+                                     </div> 
+                                    </div>
+
+
    			   <div class="row">
                                         <table  id= "tablaAutorizacionesDetalle" class="display nowrap table table-striped" style="width: 100%">
                                            <thead>
                                             <tr>    
 						<bold>   
-						<th>TipoTipoExamen</th>                               
-                                                <th>id</th>
+						<th>Action</th>
+						<th>Tipo</th>                               
+                                                <th>Aut</th>
                                                 <th>TipoExamen</th>
-                                                <th>ExamenId</th>
                                                 <th>Examen </th>
-                                                <th>Cantidad Solicitada</th>
-                                                <th>Cantidad Autorizada</th>
-                                                <th>Valor Solicitado</th>
-                                                <th>Valor Autorizado</th>
-                                                <th>Autorizado</th>
+                                                <th>Solicitada</th>
+                                                <th>Autorizada</th>
+                                                <th>Vlr Solicitado</th>
+                                                <th>Vlor Autorizado</th>
+                                                <th>Estado</th>
                                                 <th>Mipres</th>
                                                 <th>Usuario</th>
-                                                <th>Action</th>
+                                                
 						</bold>                                  
                                             </tr>
                                             </thead>
@@ -324,47 +336,55 @@ function RefrescarPantallaDetalle() {
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                         <!--       </div>  -->
 
 
 	            <!-- Espacio Modales  AutorizacionesDetalle-->
 
             <div class="modal fade" id="crearModelAutorizacionesDetalle" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+        
+	  <div class="modal-dialog modal-lg modal-dialog-scrollable"  role="document" >
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="modelHeadingAutorizacionesDetalle"></h4>
                         </div>
                         <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
-                            <form id="postFormAutorizacionesDetalle" name="postFormAutorizacionesDetalle" class="form-horizontal"
+
+		
+                            <form id="postFormAutorizacionesDetalle" name="postFormAutorizacionesDetalle" 
                                   novalidate>
+
+				<!--<div id="flex-container-detalleAutorizaciones"> -->
+						<!-- <div> -->
+                     
+			 <label  for="mipres">Mipres:</label>
+   			   <input type="text" id="mipres" name="mipres" value=""  readonly> </input>
+
+
+			
+                            <!--   </div> -->
+                             <!--   </div>  --> <!-- cierra flexbox -->
+
                                                           
 				<input type="hidden" id="Psede" name="Psede" value="{{Sede}}">                   
-				<div class="row row-cols-14" style="height=1px;">
-				<div class="col">
+
    			   <input type="text" id="autorizacionDetalleId" name="autorizacionDetalleId" value=""  readonly> </input>
-                                </div>
 
-			<div class="col">Mipres:
-   			   <input type="text" id="mipres" name="mipres" value=""  readonly> </input>
-                                </div>
 
-				<div class="col">
+
+			
+
 		          
 				<select class="select-css"  id="AserviciosAdministrativos"
                                                                 name="AserviciosAdministrativos">
                                                             {% for serviciosAdministrativos in ServiciosAdministrativos %}
                                                             <option value="{{serviciosAdministrativos.id}}">
                                                                 {{serviciosAdministrativos.nombre}}
+
                                                             </option>
                                                             {% endfor %}
                                                         </select>
-                                </div>
 
-				<div class="col">
 				<select class="select-css"  id="Aconvenios"
                                                                 name="Aconvenios" disable>
                                                             {% for convenios in Convenios %}
@@ -373,16 +393,9 @@ function RefrescarPantallaDetalle() {
                                                             </option>
                                                             {% endfor %}
                                                         </select>
-                                </div>
 
-
-
-				<div class="col">
 				TipoAutorizacion:
                                     <input type="text" id="tipoTipoExamen" name="tipoTipoExamen" readonly ></input>
-                                </div>
-	
-				<div class="col">
 		          
 				<select class="select-css"  id="estadoAutorizacion"
                                                                 name="estadoAutorizacion">
@@ -392,69 +405,36 @@ function RefrescarPantallaDetalle() {
                                                             </option>
                                                             {% endfor %}
                                                         </select>
-                                </div>
-
-				<div class="col">
                                     Autorizacion:
                                     <input type="text" id="numeroAutorizacion" name="numeroAutorizacion"  ></input>
-                                </div>
-
-
-				<div class="col">
                                     TipoExamen:
                                     <input type="text" id="tipNombre" name="tipNombre"  value="" ></input>
-                                </div>
-
-				<div class="col">
                                     ExamenId:
                                     <input type="text" id="exaNombre" name="exaNombre"  readonly></input>
-                                </div>
-
-
-				<div class="col">
                                     Examen:
                                     <input type="text" id="examenes_id" name="examenes_id"  readonly></input>
-                                </div>
-
-				<div class="col">
                                     CantidadSolicitada:
                                     <input type="text" id="cantidadSolicitada" name="cantidadSoclicitada" value=""  readonly></input>
-                                </div>
-				<div class="col">
                                     CantidadAutorizada:
                                     <input type="text" id="cantidadAutorizada" name="cantidadAutorizada" value=""  ></input>
-                                </div>
-
-				<div class="col">
                                     ValorSolicitado:
                                     <input type="text" id="valorSolicitado" name="valorSolicitado" value="0" readonly ></input>
-                                </div>
-				<div class="col">
                                     valorAutorizado:
                                     <input type="text" id="valorAutorizado" name="valorAutorizado" value="0"  ></input>
-                                </div>
-
-           
-                                <div class="col">
                                    
                                     <input type="hidden" id="fechaRegistro" name="fechaRegistro" value=""  > </input>
-                                </div>
-
-				   <div class="col">
                                    usuarioRegistro
                                     <input type="text" id="usuarioRegistro2_id" name="usuarioRegistro2_id" value="{{Username_id}}" readonly> </input>
-                                </div>
 
 
-                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+
 
 		<textarea id="mensajesErrorAutorizacionesDetalle" name="mensajesErrorAutorizacionesDetalle" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>
                                     <button type="button" class="btn btn-primary" id="saveBtnActualizarAut"   value="create" onclick="ActualizarAut()">Guardar </button>
-                                </div>
-                                </div> 
-			<!-- CIERRA ROW 8 COLUMNAS  -->
-
+ 
                             </form>
+
+
                         </div> <!-- CIERRA BODY -->
                         </div> <!-- CIERRA MODAL CONTENTE -->
                     </div> <!-- CIERRA MODAL DIALOG -->
@@ -465,16 +445,6 @@ function RefrescarPantallaDetalle() {
 	<!-- Otra Modal -->
      <!-- FIN Espacio Modales  -->
 
-</article>
-
-
-<article id="AutorizacionesCirugia">
-        	    <center><h3>Autorizaciones Cirugia</h3></center>
-		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
-		   	     Envio No: <input type="text" name="envioRipsId1" id="envioRipsId1">  
-			     Empresa: <input type="text" name="empresaId1" id="empresaId1" >  
-			     Tipo: <input type="text" name="tipoRips1" id="tipoRips1">  
-		
 </article>
 
 

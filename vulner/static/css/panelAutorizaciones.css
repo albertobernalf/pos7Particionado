@@ -247,10 +247,66 @@ input[type="date"] {
         margin: 0 auto;
         height: 100vh;
 	font-style: italic;
-	color:blue;
-	font-size: 15px !important;
+	color:black;
+	font-size: 10px !important;
 
 }
 
 
+#flex-container-detallePac{
+  display: inline-flex;
+  justify-content: left;
+}
 
+
+#flex-container-detallePac div{
+  width: 1350px;
+  height: 50px;
+/*  color: #FFF; */
+  color: black;
+  flex-wrap: wrap;
+  text-align: left;
+  line-height: 15px;
+  /* margin: 10px; */
+  font-size: 13px;
+  font-family: 'Roboto', sans-serif;
+  /* background-color: #9B59B6;*/
+  /* margin:10 */
+}
+
+#flex-container-detalleAutorizaciones{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 10px;
+  overflow: visible;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+
+#flex-container-detalleAutorizaciones div{
+  display: flex;
+  width: 800px;
+  height: 250px;
+  color: #FFF;
+  flex-wrap: wrap;
+  text-align: left;
+  line-height: 15px;
+  /* margin: 10px; */
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  /* background-color: #9B59B6;*/
+  /* margin:10 */
+  gap: 10px;
+  overflow: visible;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+#flex-container-detalleAutorizaciones div label{
+  display: block;
+  flex-shrink: 0;
+}

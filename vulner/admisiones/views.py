@@ -5789,6 +5789,7 @@ def crearAdmisionDef(request):
                               serviciosAdministrativos_id = serviciosAdministrativos,
                               fechaRegistro = fechaRegistro,
                               usuarioRegistro_id = usernameId.id,
+                              observaciones='AUTORIZACION HOSPITALARIA',			  
                               ingreso_id= grabo.id,
                            )
                     grabo99.save()
@@ -5798,6 +5799,7 @@ def crearAdmisionDef(request):
 
                     grabo77 = AutorizacionesDetalle(
                               cantidadSolicitada=1,
+                              estadoAutorizacion_id= estadosAutorizacion.id,
                               fechaRegistro = fechaRegistro,
                               estadoReg = estadoReg,
                               autorizaciones_id = grabo99.id,

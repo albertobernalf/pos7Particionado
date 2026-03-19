@@ -394,7 +394,7 @@ function arrancaFarmacia(valorTabla,valorData)
 	},
 
                 { data: "fields.id"},
-        		{ data: "fields.dosis"},
+        	{ data: "fields.dosis"},
                 { data: "fields.unidadDosis"},
                 { data: "fields.suministro"},
                 { data: "fields.viaAdministracion"},
@@ -1366,7 +1366,7 @@ $('#tablaFarmaciaDetalle tbody').on('click', '.despachado', function() {
 	     arrancaFarmacia(3,data);
 	  	dataTableFarmaciaDetalleInitialized = true;
 
-    document.getElementById("farmaciaDetalle").value = 0;
+    document.getElementById("farmaciaDetalleDE").value = 0;
         	data['farmaciaDetalleId'] = document.getElementById("farmaciaDetalleDE").value;
  	    data = JSON.stringify(data);
 
