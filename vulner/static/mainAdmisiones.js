@@ -142,7 +142,7 @@ function arrancaAdmisiones(valorTabla,valorData)
 	  "render": function ( data, type, row ) {
                         var btn = '';
 
-              btn = btn + " <input type='radio'  name='ingresoId' style='width:15px;height:15px;accent-color: purple;border-color: purple;background-color: purple;' class='miIngresoId form-check-input ' data-pk='"  + row.pk + "'>" + "</input>";
+              btn = btn + " <input type='radio' id='ingresoId'  name='ingresoId' style='width:15px;height:15px;accent-color: purple;border-color: purple;background-color: purple;' class='miIngresoId form-check-input ' data-pk='"  + row.pk + "'>" + "</input>";
 
 
                        return btn;
@@ -760,15 +760,15 @@ window.addEventListener('load', async () => {
 	 //$('#tablaDatos tbody tr:eq(0) .miIngresoId').prop('checked', true);  // Checkprimera fila el checkbox creo solo javascript
 	 // $('#tablaDatos tbody tr:eq(0) input[type="radio"]').prop('checked', true);
 
-	// 1. Selecciona el elemento
-	 const boton = document.getElementById('ingresoId');
 
 	alert("aqui disparo el evento click");
-
-
-
-	// 2. Dispara el clic automáticamente
-	 boton.click();
+	const boton = document.querySelector(".miIngresoId");
+	const evento = new MouseEvent("click", {
+	  view: window,
+	  bubbles: true,
+	  cancelable: true
+	});
+		// boton.dispatchEvent(evento);
 
 });
 

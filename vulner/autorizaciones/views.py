@@ -208,6 +208,11 @@ def ActualizarAutorizacionDetalle(request):
     autorizacionDetalleId = request.POST['autorizacionDetalleId']
     print("autorizacionDetalleId =", autorizacionDetalleId)
 
+    datosAut1 = AutorizacionesDetalle.objects.get(id = autorizacionDetalleId)
+    datosAut = Autorizaciones.objects.get(id=datosAut1.autorizaciones_id)
+
+    print ("Historia = ", datosAut.historia_id)	
+
     estadoAutorizacion = request.POST['estadoAutorizacion']
     print("estadoAutorizacion =", estadoAutorizacion)
 
@@ -265,15 +270,54 @@ def ActualizarAutorizacionDetalle(request):
 
     # RUTINA SI ESTA AUTORIZADO DEBE CREAR EN FACTURACONDETALLE, OPS CON TARIFA ?????? o el valor lo trae de la autoprizacion mejor
 
-    datosAut1 = AutorizacionesDetalle.objects.get(id = autorizacionDetalleId)
-    datosAut = Autorizaciones.objects.get(id=datosAut1.autorizaciones_id)
-
-    print ("Historia = ", datosAut.historia_id)		
+	
 
     datosHc = Historia.objects.get(id=datosAut.historia_id)
     print ("TipoDoc Paciente = ", datosHc.tipoDoc_id)
     print ("Paciente Cedula= ", datosHc.documento_id)
     print ("Paciente Ingreso= ", datosHc.consecAdmision)
+
+
+    if (datosAut1.observaciones == 'AUTORIZACION HOSPITALARIA' and estadoAutorizacionAutorizado.id== estadoAutorizacion):
+
+        print ("es una autorizacion Hospitalaria")
+        miConexiont = None
+
+        try:
+
+            miConexiont = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432", user="postgres", password="123456")
+            curt=miConexiont.cursor()
+            comando = 'UPDATE admisiones_ingresos set "autoriacionDetalle_id" = ' + "'" + str(autorizacionDetalle_id) + "'" + ' WHERE id = ' + "'" + str(datosAut1.ingreso_id) + "'"
+
+            print("comando = ", comando)
+            curt.execute(comando)
+
+            detalle = 'UPDATE autorizaciones_autorizacionesdetalle SET  "estadoAutorizacion_id" =   ' + "'" + str(estadoAutorizacion) + "'," + ' "numeroAutorizacion" = ' + "'" + str(numeroAutorizacion) + "'," + ' "fechaRegistro" = ' + "'" + str(fechaRegistro) + "'" + ' WHERE id = ' + "'" + str(autorizacionDetalleId) + "'"
+            print("detalle = ", detalle)
+            curt.execute(detalle)
+
+            miConexiont.commit()
+            miConexiont.close()
+
+            return JsonResponse({'success': True, 'Mensajes': 'Autorizacion realizada con exito'})
+
+
+        except psycopg2.DatabaseError as error:
+	            print("Entre por rollback", error)
+	            if miConexiont:
+	                print("Entro ha hacer el Rollback")
+	                miConexiont.rollback()
+
+
+        	    return JsonResponse({'success': False, 'Mensajes': message_error})
+
+        finally:
+
+            if miConexiont:
+                curt.close()
+                miConexiont.close()
+
+
 
     if (datosHc.consecAdmision!=0):
 

@@ -1278,6 +1278,7 @@ def CrearProcedimientosCirugia(request):
     cirugiaId = request.POST.get('cirugiaIdModalProcedimientos')
     print ("cirugiaId =", cirugiaId)
 
+    cirugiaId2 = Cirugias.objects.get(id=cirugiaId)
     finalidad = request.POST.get('finalidad')
     print("finalidad =", finalidad)
 
@@ -1292,6 +1293,8 @@ def CrearProcedimientosCirugia(request):
 
     fechaRegistro = timezone.now()
 
+    estadoAutorizacionId = EstadoAutorizacion.objects.get(nombre='PENDIENTE')
+    ingresoId = Ingresos.objects.get(tipoDoc_id = cirugiaId2.tipoDoc_id, documento_id = cirugiaId2.documento_id , consec = cirugiaId2.consecAdmision )
 
     miConexion3 = None
     try:
@@ -1303,6 +1306,29 @@ def CrearProcedimientosCirugia(request):
 
         print(comando)
         cur3.execute(comando)
+
+        # Aui la rutina para mirar si va o no a autorizaciones
+
+        requiereAutorizacion = Examenes.objects.get(id=cups)
+
+        if (requiereAutorizacion.requiereAutorizacion == 'S'):
+
+            # crea cabezote de autorizaciones
+
+            #comando = 'INSERT INTO autorizaciones_autorizaciones () VALUES () RETURNING id;'
+            comando = 'INSERT INTO autorizaciones_autorizaciones ("fechaSolicitud","estadoAutorizacion_id","fechaModifica", "fechaRegistro", "estadoReg",empresa_id, "plantaOrdena_id", "sedesClinica_id", "usuarioRegistro_id", historia_id , convenio_id , ingreso_id)  VALUES ( now(), ' + "'" + str(estadoAutorizacionId.id) + "'" + ', now(), now(), ' + "'" + str('A') + "'" + ', conv.empresa_id,  ' + "'" + str(plantaId.id) + "','" + str(sede) + "','" + str(username_id) + "'," + "'" + str('0') + "'" + ',' + "'" + str(cirugiaId2.convenio_id) + "',,"  + str(ingresoId.consec) + "' RETURNING id"
+            print(comando)
+            cur3.execute(comando)
+            autorizacionId = cur3.fetchone()[0]
+
+            # crea detalle de autorizacionesdetalle
+
+            tiposExamenId = TiposExamen.objects.get(nombre='PROCEDIMIENTOS QX')
+
+            #comando = 'INSERT INTO autorizaciones_autorizacionesdetalle () VALUES () RETURNING id;'
+            comando = 'INSERT INTO autorizaciones_autorizacionesdetalle ("estadoAutorizacion_id", "cantidadSolicitada", "cantidadAutorizada", "fechaRegistro", "estadoReg", autorizaciones_id, "usuarioRegistro_id", "examenes_id", cums_id, "tiposExamen_id", "valorSolicitado", mipres)  VALUES (' + "'" + str(estadoAutorizacionId.id) + "'," + "'" + str('1') + "'" + ' ,0, now(),' + "'" + str('A') + "','" + str(autorizacionId) + "','" + str(username_id) + "'," + "'" + str(cups) + "',null, " + "'" + str(tiposExamenId.id) + "'," + "',0 , null)"
+            print(comando)
+            cur3.execute(comando)
 
 
         miConexion3.commit()
