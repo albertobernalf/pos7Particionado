@@ -30,6 +30,7 @@ from django.utils import timezone
 from farmacia.models import FarmaciaEstados
 from cartera.models import Pagos
 from triage.models import Triage
+from cirugia.models import CirugiasProcedimientos, Cirugias
 
 
 def decimal_serializer(obj):
@@ -152,13 +153,8 @@ def load_dataAutorizacionesDetalle(request, data):
                                    password="123456")
     curt = miConexiont.cursor()
 
-    comando = 'SELECT ser.nombre, count(*) total FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd  WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(
-        sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + str(
-        'O') + "'" + ' AND i."salidaDefinitiva" = ' + "'" + str(
-        'N') + "'" + ' and tp.id = u."tipoDoc_id" and  i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"  group by ser.nombre UNION SELECT ser.nombre, count(*) total FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND  t."sedesClinica_id" =  ' + "'" + str(
-        sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND  t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and  t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and  dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and  t."consecAdmision" = 0 and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str(
-        'TRIAGE') + "'" + ' group by ser.nombre'
-
+    #comando = 'SELECT ser.nombre, count(*) total FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd  WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + str('O') + "'" + ' AND i."salidaDefinitiva" = ' + "'" + str('N') + "'" + ' and tp.id = u."tipoDoc_id" and  i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"  group by ser.nombre UNION SELECT ser.nombre, count(*) total FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND  t."sedesClinica_id" =  ' + "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND  t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and  t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and  dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and  t."consecAdmision" = 0 and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'" + ' group by ser.nombre'
+    comando = 'SELECT ser.nombre, count(*) total FROM admisiones_ingresos i, usuarios_usuarios u, sitios_dependencias dep , clinico_servicios ser ,usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , clinico_Diagnosticos diag , sitios_serviciosSedes sd  WHERE sd."sedesClinica_id" = i."sedesClinica_id"  and sd.servicios_id  = ser.id and i."sedesClinica_id" = dep."sedesClinica_id" AND i."sedesClinica_id" = ' + "'" + str(sede) + "'" + ' AND  deptip.id = dep."dependenciasTipo_id" and i."serviciosActual_id" = ser.id AND dep.disponibilidad = ' + "'" + str('O') + "'" + ' AND i."salidaDefinitiva" = ' + "'" + str('N') + "'" + ' and tp.id = u."tipoDoc_id" and  i."tipoDoc_id" = u."tipoDoc_id" and u.id = i."documento_id" and diag.id = i."dxActual_id" and i."fechaSalida" is null and dep."serviciosSedes_id" = sd.id and dep.id = i."dependenciasActual_id"  group by ser.nombre UNION SELECT ser.nombre, count(*) total FROM triage_triage t, usuarios_usuarios u, sitios_dependencias dep , usuarios_tiposDocumento tp , sitios_dependenciastipo deptip  , sitios_serviciosSedes sd, clinico_servicios ser WHERE sd."sedesClinica_id" = t."sedesClinica_id"  and t."sedesClinica_id" = dep."sedesClinica_id" AND  t."sedesClinica_id" =  ' + "'" + str(sede) + "'" + ' AND dep."sedesClinica_id" =  sd."sedesClinica_id" AND dep.id = t.dependencias_id AND  t."serviciosSedes_id" = sd.id  AND deptip.id = dep."dependenciasTipo_id" and  tp.id = u."tipoDoc_id" and  t."tipoDoc_id" = u."tipoDoc_id" and u.id = t."documento_id"  and ser.id = sd.servicios_id and  dep."serviciosSedes_id" = sd.id and t."serviciosSedes_id" = sd.id and dep."tipoDoc_id" = t."tipoDoc_id" and  t."consecAdmision" = 0 and dep."documento_id" = t."documento_id" and ser.nombre = ' + "'" + str('TRIAGE') + "'" + ' group by ser.nombre'
     curt.execute(comando)
     print(comando)
 
@@ -182,7 +178,9 @@ def load_dataAutorizacionesDetalle(request, data):
 
 
     #detalle = 'select ' + "'" + str('CUPS') + "'" + ' tipoTipoExamen, autdet.id id ,tipoexa.nombre tipoExamen,autdet.examenes_id examenId, exa.nombre examen,autdet."cantidadSolicitada", autdet."cantidadAutorizada",autdet."valorSolicitado", autdet."valorAutorizado", estado.nombre autorizado , autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet, clinico_tiposexamen tipoexa, clinico_examenes exa , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tiposExamen_id" = tipoexa.id and autdet.examenes_id = exa.id and autdet.examenes_id is not null and estado.id=autdet."estadoAutorizacion_id" and pla.id = autdet."usuarioRegistro_id" union select ' + "'" + str('SUMINISTRO') + "'" + ' tipoTipoExamen, autdet.id id, tiposum.nombre tiposum, autdet.cums_id examenId, sum.nombre suministro, autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,  autdet.mipres mipres ,pla.nombre usuarioRegistro  from autorizaciones_autorizacionesdetalle autdet, facturacion_tipossuministro tiposum, facturacion_suministros sum , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tipoSuministro_id" = tiposum.id and autdet.cums_id = sum.id and autdet.cums_id is not null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND autdet."estadoAutorizacion_id" != ' +"'" + str(autorizado.id) +"'"
+    #detalle = 'select ' + "'" + str('CUPS') + "'" + ' tipoTipoExamen, autdet.id id ,tipoexa.nombre tipoExamen,autdet.examenes_id examenId, exa.nombre examen,autdet."cantidadSolicitada", autdet."cantidadAutorizada",autdet."valorSolicitado", autdet."valorAutorizado", estado.nombre autorizado , autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet, clinico_tiposexamen tipoexa, clinico_examenes exa , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tiposExamen_id" = tipoexa.id and autdet.examenes_id = exa.id and autdet.examenes_id is not null and estado.id=autdet."estadoAutorizacion_id" and pla.id = autdet."usuarioRegistro_id" union select ' + "'" + str('SUMINISTRO') + "'" + ' tipoTipoExamen, autdet.id id, tiposum.nombre tiposum, autdet.cums_id examenId, sum.nombre suministro, autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,  autdet.mipres mipres ,pla.nombre usuarioRegistro  from autorizaciones_autorizacionesdetalle autdet, facturacion_tipossuministro tiposum, facturacion_suministros sum , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tipoSuministro_id" = tiposum.id and autdet.cums_id = sum.id and autdet.cums_id is not null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND autdet."estadoAutorizacion_id" != ' + "'" + str(autorizado.id) + "' union select 'AUTORIZACION' tipoTipoExamen, autdet.id id, ' ' tiposum, 0 examenId, ' '  suministro, " + ' autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,	autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet,	autorizaciones_estadosAutorizacion estado , planta_planta pla 	where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and 	autdet.cums_id is null and  autdet.cums_id is  null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND 	autdet."estadoAutorizacion_id" != ' + "'" + str(autorizado.id) + "'"
     detalle = 'select ' + "'" + str('CUPS') + "'" + ' tipoTipoExamen, autdet.id id ,tipoexa.nombre tipoExamen,autdet.examenes_id examenId, exa.nombre examen,autdet."cantidadSolicitada", autdet."cantidadAutorizada",autdet."valorSolicitado", autdet."valorAutorizado", estado.nombre autorizado , autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet, clinico_tiposexamen tipoexa, clinico_examenes exa , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tiposExamen_id" = tipoexa.id and autdet.examenes_id = exa.id and autdet.examenes_id is not null and estado.id=autdet."estadoAutorizacion_id" and pla.id = autdet."usuarioRegistro_id" union select ' + "'" + str('SUMINISTRO') + "'" + ' tipoTipoExamen, autdet.id id, tiposum.nombre tiposum, autdet.cums_id examenId, sum.nombre suministro, autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,  autdet.mipres mipres ,pla.nombre usuarioRegistro  from autorizaciones_autorizacionesdetalle autdet, facturacion_tipossuministro tiposum, facturacion_suministros sum , autorizaciones_estadosAutorizacion estado , planta_planta pla where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and autdet."tipoSuministro_id" = tiposum.id and autdet.cums_id = sum.id and autdet.cums_id is not null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND autdet."estadoAutorizacion_id" != ' + "'" + str(autorizado.id) + "' union select 'AUTORIZACION' tipoTipoExamen, autdet.id id, ' ' tiposum, 0 examenId, ' '  suministro, " + ' autdet."cantidadSolicitada", autdet."cantidadAutorizada", autdet."valorSolicitado", autdet."valorAutorizado" , estado.nombre ,	autdet.mipres mipres ,pla.nombre usuarioRegistro from autorizaciones_autorizacionesdetalle autdet,	autorizaciones_estadosAutorizacion estado , planta_planta pla 	where autdet.autorizaciones_id = ' + "'" + str(autorizacionId) + "'" + ' and 	autdet.cums_id is null and  autdet.cums_id is  null and estado.id=autdet."estadoAutorizacion_id" AND pla.id = autdet."usuarioRegistro_id" AND 	autdet."estadoAutorizacion_id" != ' + "'" + str(autorizado.id) + "'"
+
 
     print(detalle)
 
@@ -272,13 +270,11 @@ def ActualizarAutorizacionDetalle(request):
 
 	
 
-    datosHc = Historia.objects.get(id=datosAut.historia_id)
-    print ("TipoDoc Paciente = ", datosHc.tipoDoc_id)
-    print ("Paciente Cedula= ", datosHc.documento_id)
-    print ("Paciente Ingreso= ", datosHc.consecAdmision)
+    print("que pasa")
+    print("datosAut1.observaciones = ",datosAut.observaciones)
+    print("estadoAutorizacionAutorizado.id = ",estadoAutorizacionAutorizado.id)
 
-
-    if (datosAut1.observaciones == 'AUTORIZACION HOSPITALARIA' and estadoAutorizacionAutorizado.id== estadoAutorizacion):
+    if (datosAut.observaciones.strip() == "AUTORIZACION HOSPITALARIA" and estadoAutorizacionAutorizado.id == int(estadoAutorizacion)):
 
         print ("es una autorizacion Hospitalaria")
         miConexiont = None
@@ -287,7 +283,7 @@ def ActualizarAutorizacionDetalle(request):
 
             miConexiont = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432", user="postgres", password="123456")
             curt=miConexiont.cursor()
-            comando = 'UPDATE admisiones_ingresos set "autoriacionDetalle_id" = ' + "'" + str(autorizacionDetalle_id) + "'" + ' WHERE id = ' + "'" + str(datosAut1.ingreso_id) + "'"
+            comando = 'UPDATE admisiones_ingresos set "autorizacionesHospitalDetalle_id" = ' + "'" + str(autorizacionDetalleId) + "'" + ' WHERE id = ' + "'" + str(datosAut.ingreso_id) + "'"
 
             print("comando = ", comando)
             curt.execute(comando)
@@ -295,6 +291,11 @@ def ActualizarAutorizacionDetalle(request):
             detalle = 'UPDATE autorizaciones_autorizacionesdetalle SET  "estadoAutorizacion_id" =   ' + "'" + str(estadoAutorizacion) + "'," + ' "numeroAutorizacion" = ' + "'" + str(numeroAutorizacion) + "'," + ' "fechaRegistro" = ' + "'" + str(fechaRegistro) + "'" + ' WHERE id = ' + "'" + str(autorizacionDetalleId) + "'"
             print("detalle = ", detalle)
             curt.execute(detalle)
+
+            detalle = 'UPDATE autorizaciones_autorizaciones SET  "estadoAutorizacion_id" =   ' + "'" + str(estadoAutorizacion) + "'," + ' "fechaRegistro" = ' + "'" + str(fechaRegistro) + "'" + ' WHERE id = ' + "'" + str(datosAut.id) + "'"
+            print("detalle = ", detalle)
+            curt.execute(detalle)
+
 
             miConexiont.commit()
             miConexiont.close()
@@ -317,6 +318,74 @@ def ActualizarAutorizacionDetalle(request):
                 curt.close()
                 miConexiont.close()
 
+    if (datosAut.observaciones.strip() == "AUTORIZACION DE CIRUGIA" and estadoAutorizacionAutorizado.id == int(
+            estadoAutorizacion)):
+
+        print("es una autorizacion de cirugia")
+
+        ingresoQxId = Ingresos.objects.get(id=datosAut.ingreso_id)
+        print("Aquip vamos_1 ingreso  # : ", ingresoQxId.id)
+
+        cirugiaId=Cirugias.objects.get(tipoDoc_id=ingresoQxId.tipoDoc_id,documento_id=ingresoQxId.documento_id,consecAdmision=ingresoQxId.consec)
+
+        print("Aquip vamos_2 documeto_id : ", cirugiaId.documento_id)
+        print("Aquip vamos_2 cirugiaId.id : ", cirugiaId.id)
+        print("Aquip vamos_2 examen.id : ", examenId)
+
+        cirugiasProcId = CirugiasProcedimientos.objects.get(cirugia_id=cirugiaId.id, cups_id=examenId)
+
+        print("Aquip vamos_3: ")
+        miConexiont = None
+
+        try:
+
+            miConexiont = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432",
+                                           user="postgres", password="123456")
+            curt = miConexiont.cursor()
+            comando = 'UPDATE cirugia_cirugiasprocedimientos  set "autorizacionDetalle_id" = ' + "'" + str(autorizacionDetalleId) + "'" + ' WHERE id = ' + "'" + str(cirugiasProcId.id) + "'"
+
+            print("comando = ", comando)
+            curt.execute(comando)
+
+            detalle = 'UPDATE autorizaciones_autorizacionesdetalle SET  "estadoAutorizacion_id" =   ' + "'" + str(
+                estadoAutorizacion) + "'," + ' "numeroAutorizacion" = ' + "'" + str(
+                numeroAutorizacion) + "'," + ' "fechaRegistro" = ' + "'" + str(
+                fechaRegistro) + "'" + ' WHERE id = ' + "'" + str(autorizacionDetalleId) + "'"
+            print("detalle = ", detalle)
+            curt.execute(detalle)
+
+            detalle = 'UPDATE autorizaciones_autorizaciones SET  "estadoAutorizacion_id" =   ' + "'" + str(
+                estadoAutorizacion) + "'," + ' "fechaRegistro" = ' + "'" + str(
+                fechaRegistro) + "'" + ' WHERE id = ' + "'" + str(datosAut.id) + "'"
+            print("detalle = ", detalle)
+            curt.execute(detalle)
+
+            miConexiont.commit()
+            miConexiont.close()
+
+            return JsonResponse({'success': True, 'Mensajes': 'Autorizacion de cirugia realizada con exito'})
+
+
+        except psycopg2.DatabaseError as error:
+            print("Entre por rollback", error)
+            if miConexiont:
+                print("Entro ha hacer el Rollback")
+                miConexiont.rollback()
+
+            return JsonResponse({'success': False, 'Mensajes': message_error})
+
+        finally:
+
+            if miConexiont:
+                curt.close()
+                miConexiont.close()
+
+
+    print("Aqui de nuevo") 
+    datosHc = Historia.objects.get(id=datosAut.historia_id)
+    print ("TipoDoc Paciente = ", datosHc.tipoDoc_id)
+    print ("Paciente Cedula= ", datosHc.documento_id)
+    print ("Paciente Ingreso= ", datosHc.consecAdmision)
 
 
     if (datosHc.consecAdmision!=0):

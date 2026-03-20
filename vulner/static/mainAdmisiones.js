@@ -762,13 +762,15 @@ window.addEventListener('load', async () => {
 
 
 	alert("aqui disparo el evento click");
-	const boton = document.querySelector(".miIngresoId");
-	const evento = new MouseEvent("click", {
-	  view: window,
-	  bubbles: true,
-	  cancelable: true
-	});
+	// const boton = document.querySelector(".miIngresoId");
+	// const evento = new MouseEvent("click", {
+	//  view: window,
+	//  bubbles: true,
+	//  cancelable: true
+//	});
 		// boton.dispatchEvent(evento);
+$('#tablaDatos tbody tr:eq(0) .miIngresoId').trigger('click');
+
 
 });
 

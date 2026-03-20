@@ -317,6 +317,7 @@ font-size: 1.1em;
 #flex-container-editarConvenio{
   display: flex;
   justify-content: left;
+ gap: 10px;
 }
 
 #flex-container-editarConvenio div{
@@ -332,6 +333,9 @@ font-size: 1.1em;
   /* background-color: #9B59B6;*/
   /* margin:10 */
 }
+
+.form-container-editaConvenio { display: flex; flex-direction: column; }
+.form-container-editaConvenio input { width: 100%; box-sizing: border-box; }
 
 
 #flex-container-crearConvenio{
@@ -354,3 +358,21 @@ font-size: 1.1em;
   /* margin:10 */
 }
 
+#flex-container-botonesConvenio{
+  display: flex;
+  justify-content: center;
+}
+
+#flex-container-botonesConvenio div{
+  width: 800px;
+  height: 30px;
+  color: #FFF;
+  flex-wrap: wrap;
+  text-align: left;
+  line-height: 15px;
+  /* margin: 10px; */
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  /* background-color: #9B59B6;*/
+  /* margin:10 */
+}

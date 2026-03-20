@@ -2231,6 +2231,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
         ## FIN CONTEXTO
 
    	# Combo salas
+        #
 
         miConexiont = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432", user="postgres",
                                        password="123456")
@@ -2352,19 +2353,22 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
 
         # Fin combo especialidadesCirugia
 
-	# Combo cupsCirugia
+        print ("como vamos aquip1")
+
+    	# Combo cupsCirugia
 
         miConexiont = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432", user="postgres",
                                        password="123456")
         curt = miConexiont.cursor()
+        print ("como vamos aquip2")
 
-        comando = 'SELECT p.id id, p.nombre||' + "' '||" + '"codigoCups" nombre FROM  clinico_examenes  p ORDER BY nombre'
-
+        #comando = 'SELECT p.id id, p.nombre||' + "' '||" + '"codigoCups" nombre FROM  clinico_examenes  p WHERE p."TiposExamen_id" IN (select x.id FROM clinico_tiposexamen x WHERE x.nombre= ' + "'" + str('PROCEDIMIENTO QX') + "'" + ' order by p.nombre '
+        comando = 'SELECT p.id id, p.nombre||' + "' '||" + '"codigoCups" nombre FROM  clinico_examenes  p  order by p.nombre'
+        print ("como vamos aquip3")
         curt.execute(comando)
         print(comando)
 
         cupsCirugia = []
-
 
         for id, nombre in curt.fetchall():
             cupsCirugia.append({'id': id, 'nombre': nombre})
@@ -2376,7 +2380,7 @@ def escogeAcceso(request, Sede, Username, Profesional, Documento, NombreSede, es
 
         # Fin combo cupsCirugia
 
-	# Combo finalidadCirugia
+	    # Combo finalidadCirugia
 
         miConexiont = psycopg2.connect(host="192.168.79.133", database="vulner7Particionado", port="5432", user="postgres",
                                        password="123456")

@@ -413,14 +413,12 @@ function RefrescarPantalla() {
 			</div>
 		
                         <div class="modal-body">
-                            <div class="alert alert-danger error-msg" style="display:none">
-                                <ul class="mb-0"></ul>
-                            </div>
+                            
 			
   			  <form id="postFormProcedimientosCirugia" name="postFormSolicitudCirugia">
 
                                 <input type="hidden" name="post_id" id="post_id">
-			     <input type="hidden" class="form-control" id="sedesClinicaModalProcedimientos_id" name="sedesClinicaModalProcedimientos_id"  readonly></input>
+			     <input type="hidden" class="form-control" id="sedesClinicaModalProcedimientos_id" name="sedesClinicaModalProcedimientos_id" value="{{Sede}}" readonly></input>
 
 	   <div id="flex-procedimientosCirugia">
 				<div>
@@ -430,7 +428,7 @@ function RefrescarPantalla() {
 			<input type="text"  id="cirugiaIdModalProcedimientos" name="cirugiaIdModalProcedimientos"  readonly></input>
 
                                         Cups:
-                                            <select class="select-css h-40 w-20" id="cups"  tabindex= "0"  name="cups"  required>
+                                            <select class="select-css h-40 w-20" id="cupsProc"  name="cupsProc"  required>
                                                 {% for cupsCirugia in CupsCirugia %}
                                                 <option value="{{cupsCirugia.id}}"> {{cupsCirugia.nombre}}</option>
                                                 {% endfor %}
@@ -450,7 +448,7 @@ function RefrescarPantalla() {
 
 			</div>
 		</div>
-			
+			       </form>
 			<!-- Aqui Data Table  -->
 				 <div class="row">
 				
@@ -480,7 +478,7 @@ function RefrescarPantalla() {
 			
                             
 
-                            </form>
+                     
 
                         </div> <!-- CIERRA BODY -->
 			<div class="modal-footer">

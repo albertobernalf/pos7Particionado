@@ -1566,8 +1566,9 @@ const initDataTableProgramacionCirugia = async () => {
  // COMIENZA ONLOAD
 
 window.addEventListener('load', async () => {
+
     await  initDataTableProgramacionCirugia();
-	 $('#tablaProgramacionCirugia tbody tr:eq(0) .miSol').prop('checked', true);  // Checkprimera fila el checkbox creo solo javascript
+	 //$('#tablaProgramacionCirugia tbody tr:eq(0) .miSol').prop('checked', true);  // Checkprimera fila el checkbox creo solo javascript
 
 });
 
@@ -1964,23 +1965,20 @@ function GuardarEstadoCirugia()
 
 $('#tablaSolicitudCirugia tbody').on('click', '.miAdicionarProcedimientos', function() {
 
-		// alert("ENTRE miAdicionarProcedimientos");
 
 	     var post_id = $(this).data('pk');
 	cirugiaIdModalProcedimientos =   post_id;
-	// alert("cirugiaIdModalProcedimientos = " +  cirugiaIdModalProcedimientos);
 	
 
             $('#postFormProcedimientosCirugia').trigger("reset");
 
-            $('#modelHeadingProcedimientosCirugia').html("Detalle Procedimientos Cirugia");
+            $('#modelHeadingProcedimientosCirugia').html("Detalle Procedimientos");
             $('#crearModelProcedimientosCirugia').modal('show');
 		document.getElementById("cirugiaIdModalProcedimientos").value = cirugiaIdModalProcedimientos ;
 		document.getElementById("cirugiaIdModalInformeProcedimientos").value = cirugiaIdModalProcedimientos ;
 
 		username_id = document.getElementById("username_id").value   ;
-		// alert("username_id = " + username_id );
-		// document.getElementById("username4_id").value = username_id ;
+
 	document.getElementById("usernameProcedimientosCirugia_id").value = username_id;
 
 
@@ -2760,14 +2758,12 @@ function CrearSolicitudCirugia()
 function CrearProcedimientosCirugia()
 {
 
-	// alert("CrearProcedimientosCirugia");
+	 alert("CrearProcedimientosCirugia");
 
 	var sede = document.getElementById("sede").value;
 	document.getElementById("sedesClinica_id").value =  sede;
 	var cirugiaIdModalProcedimientos  = document.getElementById("cirugiaIdModalProcedimientos").value ;
 	var user  = document.getElementById("usernameProcedimientosCirugia_id").value ;
-
-	// alert("user = " + user);
 
 
             $.ajax({
@@ -2781,6 +2777,7 @@ function CrearProcedimientosCirugia()
 
 	document.getElementById("cirugiaIdModalProcedimientos").value  = cirugiaIdModalProcedimientos ;
 	document.getElementById("usernameProcedimientosCirugia_id").value = user;
+	document.getElementById("sedesClinicaModalProcedimientos_id").value = sede;
 
 
 		var data =  {}   ;

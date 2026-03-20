@@ -75,12 +75,16 @@ function RefrescarPantalla() {
 
             <!-- INICIO TABLE DE  EL DATATABLE  -->
 
-		<div class="container my-2">
+		 <!--  <div class="container my-2"> -->
             
-		<div align="right" height="15px" width="50px">
-               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnAdicionarConvenio"  name="BtnAdicionarConvenio" value="Adicionar" onclick= "AdicionarConvenio()" >
-		<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
-		</div>
+		 <!-- <div align="right" height="15px" width="50px"> -->
+			<div id="flex-container-botonesConvenio">  
+			<div>
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="20px" id="BtnAdicionarConvenio"  name="BtnAdicionarConvenio" value="Adicionar" onclick= "AdicionarConvenio()" >
+		<input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="20px" onclick="RefrescarPantalla()">
+		 <!-- </div> -->
+			</div>
+			 </div> 
    			   <div class="row">
                                         <table  id= "tablaConvenios" class=" display table table-striped  table-sm fs-6 nowrap" style="width: 100%";>
                                            <thead>
@@ -108,7 +112,7 @@ function RefrescarPantalla() {
                                             </tbody>                                       
                                        </table>
                                     </div>  <!-- cierra row -->
-                                </div>  <!-- cierra container  -->
+                           <!--     </div>   cierra container  -->
 
 	<!-- Espacio para Modales  -->
 
@@ -125,13 +129,12 @@ function RefrescarPantalla() {
                   
 			  </div>
                         <div class="modal-body">
+
                  	
-  			  <form id="postFormEditarConvenios" name="postFormEditarConvenios">
+  			  <form id="postFormEditarConvenios" name="postFormEditarConvenios" class="form-container-editaConvenio"  style="display: flex; flex-direction: column; gap: 10px;">
 
                                 <input type="text" name="postConvenio_id" id="postConvenio_id">
-
-		<!--	<div id="flex-container-editarConvenio">  -->
-		<!--		 <div> -->
+	
 
                                         <label for="serviciosAdministrativos_id" >ServiciosAdmon:</label>
                                             <select class="select-css" id="serviciosAdministrativos_id"   name="serviciosAdministrativos_id"
@@ -143,8 +146,10 @@ function RefrescarPantalla() {
                                    		
 				 <label  for="nombreConvenio">Convenio:</label>
                                     <input type="text" id="nombreConvenio" name="nombreConvenio" value="0" placeholder="nombreConvenio:" readonly></input>
-                                </div>
+                            
 				
+
+
  				<label  for="vigenciaDesde">VigenciaDesde:</label>
                                
 					 <input type="date"  id="vigenciaDesde" name="vigenciaDesde" placeholder="vigenciaDesde"  >
@@ -252,10 +257,9 @@ function RefrescarPantalla() {
                                     <input type="checkbox"  id="particular" name="particular"></input>
 
 
-                            <!--    </div> -->
-                           <!--     </div>  --><!-- cierra flexbox -->
 
                             </form>
+
 
                         </div> <!-- CIERRA BODY -->
 
@@ -290,7 +294,7 @@ function RefrescarPantalla() {
                         <div class="modal-body">
                            
 			
-  			  <form id="postFormCrearConvenios" name="postFormCrearConvenios">
+  			  <form id="postFormCrearConvenios" name="postFormCrearConvenios" style="display: flex; flex-direction: column; gap: 10px;">
 
                                 <input type="text" name="postConvenioC_id" id="postConvenioC_id" readonly>
 
@@ -448,7 +452,7 @@ function RefrescarPantalla() {
 					</center> 
 
 
-                                </div> <!-- -->
+                                </div> <!-- cierra el div -->
                                 </div> <!-- CIERRA flexbox  -->
 
 
@@ -556,7 +560,7 @@ function RefrescarPantalla() {
    </table>
 
 
-	</div> <!--  Cierra el Div -->
+	</div> <!--  Cierra el Div Container -->
 
 
 </article>
@@ -612,7 +616,7 @@ function RefrescarPantalla() {
 					
    </table>
 
-	</div> <!--  Cierra el Div -->
+	</div> <!--  Cierra el Div Container-->
 
 
 </article>
@@ -626,7 +630,6 @@ function RefrescarPantalla() {
 <div class="marco">
 	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
 	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
-
 </div>
 {% endblock %}
 
