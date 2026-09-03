@@ -1,0 +1,4 @@
+{"tipoDocumento": "01","numero":"8", "fecha": "2026-03-06 08:59:12.246286-05","moneda": "COP", "emisor": {"nit":	"830507718-8", "dv":"8","nombreRazonSocial": "CLINICA MEDICAL S.A.S","tipoPersona":"1","direccion":{"codigomunicipio":"11001","direccion":"Calle 36 Sur 77 -33","departamento":"CUNDINAMARCA"}}, "receptor": {"nit": "51872242", "dv" : "0", "nombreRazonSocial": "EUMELIA CAMACHO CELY","tipoPersona": "2","tipoDocumentoIdentificacion": "13","direccion" : {"codigomunicipio":"11001","direccion": "CALLE 87 NRO 103C-50","departamento":"ANTIOQUIA"}}, "items": [{"codigoProducto":"1980578-1","nombreProducto": "6- COPIN 1,6MG2ML SOLUCIoN INYECTABLE", "cantidad": 1.00,"unidadMedida": "94", "valorUnitario":"12000","valorTotal":"12000","impuestos": [{"tipo": "01", 
+          "porcentaje": 19.0,
+          "valor": 19000.00
+        }]}], "totales": {"valorBruto": "6869265","valorNeto": 6869265,"valorTotalImpuestos": 0.00,"valorTotal":6869265}}

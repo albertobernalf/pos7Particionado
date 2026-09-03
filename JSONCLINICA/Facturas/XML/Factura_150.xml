@@ -1,0 +1,1163 @@
+<Invoice xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:xades141="http://uri.etsi.org/01903/v1.4.1#" xmlns:sts="http://www.dian.gov.co/contratos/facturaelectronica/v1/Structures" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+<ext:UBLExtensions>
+<ext:UBLExtension>
+<ext:ExtensionContent>
+<sts:DianExtensions>
+<sts:InvoiceControl>
+<sts:InvoiceAuthorization>18764097108185</sts:InvoiceAuthorization>
+<sts:AuthorizationPeriod>
+<cbc:StartDate>2025-08-15</cbc:StartDate>
+<cbc:EndDate>2027-08-15</cbc:EndDate>
+</sts:AuthorizationPeriod>
+<sts:AuthorizedInvoices>
+<sts:Prefix>CME</sts:Prefix>
+<sts:From>500001</sts:From>
+<sts:To>1000000</sts:To>
+</sts:AuthorizedInvoices>
+</sts:InvoiceControl>
+<sts:InvoiceSource>
+<cbc:IdentificationCode listSchemeURI="urn:oasis:names:specification:ubl:codelist:gc:CountryIdentificationCode-2.1" listAgencyName="United Nations Economic Commission for Europe" listAgencyID="6">CO</cbc:IdentificationCode>
+</sts:InvoiceSource>
+<sts:SoftwareProvider>
+<sts:ProviderID schemeName="31" schemeID="8" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeAgencyID="195">830507718</sts:ProviderID>
+<sts:SoftwareID schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeAgencyID="195">a2bea1e4-29b7-4994-8024-9d6f6be2c53d</sts:SoftwareID>
+</sts:SoftwareProvider>
+<sts:SoftwareSecurityCode schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeAgencyID="195">b0b894a74295a2f461119ebd0fa0c05db9c2439bf2ad6d6b057aecce2f18d4c3446482f6ac16bfc66799384b1ba85ec5</sts:SoftwareSecurityCode>
+<sts:AuthorizationProvider>
+<sts:AuthorizationProviderID schemeName="31" schemeID="4" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)" schemeAgencyID="195">800197268</sts:AuthorizationProviderID>
+</sts:AuthorizationProvider>
+<sts:QRCode>https://catalogo‐vpfe.dian.gov.co/document/searchqr?documentkey=NumFac: CME514128FecFac: 2025-10-06HoraFac: 08:43:00-05:00NitFac: 830507718DocAdq: 860002400ValFac: 13103611,00ValIva: 0.00ValOtroIm: 0.00ValTotFac: 13103611.00CUFE: 8b024dd2e4566388f5ff8f762afe3dc6b4d63ba3cf19725c2b7fa163b57311ffe2844c4eb7daf89fc5d0b2c903c13648https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey=8b024dd2e4566388f5ff8f762afe3dc6b4d63ba3cf19725c2b7fa163b57311ffe2844c4eb7daf89fc5d0b2c903c13648</sts:QRCode>
+</sts:DianExtensions>
+</ext:ExtensionContent>
+</ext:UBLExtension>
+<ext:UBLExtension>
+<ext:ExtensionContent>
+<CustomTagGeneral>
+<Name>Responsable</Name>
+<Value>www.minsalud.gov.co</Value>
+<Name>Tipo, identificador:a?o del acto administrativo</Name>
+<Value>Resolucion 00002275:2023</Value>
+<Interoperabilidad>
+<Group schemeName="Sector Salud">
+<Collection schemeName="Usuario">
+<AdditionalInformation>
+<Name>CODIGO_PRESTADOR</Name>
+<Value>1100122150</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>MODALIDAD_PAGO</Name>
+<Value schemeID="04" schemeName="salud_modalidad_pago.gc">Pago por evento.</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>COBERTURA_PLAN_BENEFICIOS</Name>
+<Value schemeID="04" schemeName="salud_cobertuta.gc">Cobertura Poliza SOAT</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>NUMERO_CONTRATO</Name>
+<Value/>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>NUMERO_POLIZA</Name>
+<Value>4308007000931000</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>COPAGO</Name>
+<Value>0</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>CUOTA_MODERADORA</Name>
+<Value>0.00</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>CUOTA_RECUPERACION</Name>
+<Value>0.00</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>PAGOS_COMPARTIDOS</Name>
+<Value>0.00</Value>
+</AdditionalInformation>
+<AdditionalInformation>
+<Name>ANTICIPOS</Name>
+<Value>0.00</Value>
+</AdditionalInformation>
+</Collection>
+</Group>
+</Interoperabilidad>
+</CustomTagGeneral>
+</ext:ExtensionContent>
+</ext:UBLExtension>
+<ext:UBLExtension>
+<ext:ExtensionContent/>
+</ext:UBLExtension>
+</ext:UBLExtensions>
+<cbc:UBLVersionID>UBL 2.1</cbc:UBLVersionID>
+<cbc:CustomizationID>SS-CUFE</cbc:CustomizationID>
+<cbc:ProfileID>DIAN 2.1: Factura Electrónica de Venta</cbc:ProfileID>
+<cbc:ProfileExecutionID>1</cbc:ProfileExecutionID>
+<cbc:ID>CME514128</cbc:ID>
+<cbc:UUID schemeID="1" schemeName="CUFE-SHA384">8b024dd2e4566388f5ff8f762afe3dc6b4d63ba3cf19725c2b7fa163b57311ffe2844c4eb7daf89fc5d0b2c903c13648</cbc:UUID>
+<cbc:IssueDate>2025-10-06</cbc:IssueDate>
+<cbc:IssueTime>08:43:00-05:00</cbc:IssueTime>
+<cbc:DueDate>2026-01-04</cbc:DueDate>
+<cbc:InvoiceTypeCode>01</cbc:InvoiceTypeCode>
+<cbc:Note/>
+<cbc:DocumentCurrencyCode>COP</cbc:DocumentCurrencyCode>
+<cbc:LineCountNumeric>46</cbc:LineCountNumeric>
+<cac:InvoicePeriod>
+<cbc:StartDate>2025-09-25</cbc:StartDate>
+<cbc:StartTime>14:04:00-05:00</cbc:StartTime>
+<cbc:EndDate>2025-10-02</cbc:EndDate>
+<cbc:EndTime>08:43:00-05:00</cbc:EndTime>
+</cac:InvoicePeriod>
+<cac:AccountingSupplierParty>
+<cbc:AdditionalAccountID>1</cbc:AdditionalAccountID>
+<cac:Party>
+<cac:PartyName>
+<cbc:Name>CLINICA MEDICAL S.A.S.</cbc:Name>
+</cac:PartyName>
+<cac:PhysicalLocation>
+<cac:Address>
+<cbc:ID>11001</cbc:ID>
+<cbc:CityName>BOGOTA D.C.</cbc:CityName>
+<cbc:CountrySubentity>BOGOTA D.C.</cbc:CountrySubentity>
+<cbc:CountrySubentityCode>11</cbc:CountrySubentityCode>
+<cac:AddressLine>
+<cbc:Line>Calle 36 Sur No. 77-33 Barrio Kennedy</cbc:Line>
+</cac:AddressLine>
+<cac:Country>
+<cbc:IdentificationCode>CO</cbc:IdentificationCode>
+<cbc:Name languageID="es">Colombia</cbc:Name>
+</cac:Country>
+</cac:Address>
+</cac:PhysicalLocation>
+<cac:PartyTaxScheme>
+<cbc:RegistrationName>CLINICA MEDICAL S.A.S.</cbc:RegistrationName>
+<cbc:CompanyID schemeID="8" schemeName="31" schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">830507718</cbc:CompanyID>
+<cbc:TaxLevelCode listName="No Aplica">O-13;O-15</cbc:TaxLevelCode>
+<cac:RegistrationAddress>
+<cbc:ID>11001</cbc:ID>
+<cbc:CityName>BOGOTA D.C.</cbc:CityName>
+<cbc:CountrySubentity>BOGOTA D.C.</cbc:CountrySubentity>
+<cbc:CountrySubentityCode>11</cbc:CountrySubentityCode>
+<cac:AddressLine>
+<cbc:Line>Calle 36 Sur No. 77-33 Barrio Kennedy</cbc:Line>
+</cac:AddressLine>
+<cac:Country>
+<cbc:IdentificationCode>CO</cbc:IdentificationCode>
+<cbc:Name languageID="es">Colombia</cbc:Name>
+</cac:Country>
+</cac:RegistrationAddress>
+<cac:TaxScheme>
+<cbc:ID>01</cbc:ID>
+<cbc:Name>IVA</cbc:Name>
+</cac:TaxScheme>
+</cac:PartyTaxScheme>
+<cac:PartyLegalEntity>
+<cbc:RegistrationName>CLINICA MEDICAL S.A.S.</cbc:RegistrationName>
+<cbc:CompanyID schemeID="8" schemeName="31" schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">830507718</cbc:CompanyID>
+<cac:CorporateRegistrationScheme>
+<cbc:ID>CME</cbc:ID>
+<cbc:Name/>
+</cac:CorporateRegistrationScheme>
+</cac:PartyLegalEntity>
+<cac:Contact>
+<cbc:Name/>
+<cbc:Telephone/>
+<cbc:ElectronicMail>fact.electronica@clinicamedical.com.co</cbc:ElectronicMail>
+</cac:Contact>
+</cac:Party>
+</cac:AccountingSupplierParty>
+<cac:AccountingCustomerParty>
+<cbc:AdditionalAccountID>1</cbc:AdditionalAccountID>
+<cac:Party>
+<cac:PartyIdentification>
+<cbc:ID schemeID="2" schemeName="31">860002400</cbc:ID>
+</cac:PartyIdentification>
+<cac:PartyName>
+<cbc:Name>SEGUROS LA PREVISORA</cbc:Name>
+</cac:PartyName>
+<cac:PhysicalLocation>
+<cac:Address>
+<cbc:ID>11001</cbc:ID>
+<cbc:CityName>BOGOTA D.C.</cbc:CityName>
+<cbc:CountrySubentity>BOGOTA D.C.</cbc:CountrySubentity>
+<cbc:CountrySubentityCode>11</cbc:CountrySubentityCode>
+<cac:AddressLine>
+<cbc:Line/>
+</cac:AddressLine>
+<cac:Country>
+<cbc:IdentificationCode>CO</cbc:IdentificationCode>
+<cbc:Name languageID="es"/>
+</cac:Country>
+</cac:Address>
+</cac:PhysicalLocation>
+<cac:PartyTaxScheme>
+<cbc:RegistrationName>SEGUROS LA PREVISORA</cbc:RegistrationName>
+<cbc:CompanyID schemeID="2" schemeName="31" schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">860002400</cbc:CompanyID>
+<cbc:TaxLevelCode listName="No Aplica">O-13</cbc:TaxLevelCode>
+<cac:RegistrationAddress>
+<cbc:ID>11001</cbc:ID>
+<cbc:CityName>BOGOTA D.C.</cbc:CityName>
+<cbc:CountrySubentity>BOGOTA D.C.</cbc:CountrySubentity>
+<cbc:CountrySubentityCode>11</cbc:CountrySubentityCode>
+<cac:AddressLine>
+<cbc:Line/>
+</cac:AddressLine>
+<cac:Country>
+<cbc:IdentificationCode>CO</cbc:IdentificationCode>
+<cbc:Name languageID="es">Colombia</cbc:Name>
+</cac:Country>
+</cac:RegistrationAddress>
+<cac:TaxScheme>
+<cbc:ID>01</cbc:ID>
+<cbc:Name>IVA</cbc:Name>
+</cac:TaxScheme>
+</cac:PartyTaxScheme>
+<cac:PartyLegalEntity>
+<cbc:RegistrationName>SEGUROS LA PREVISORA</cbc:RegistrationName>
+<cbc:CompanyID schemeID="2" schemeName="31" schemeAgencyID="195" schemeAgencyName="CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)">860002400</cbc:CompanyID>
+<cac:CorporateRegistrationScheme>
+<cbc:Name/>
+</cac:CorporateRegistrationScheme>
+</cac:PartyLegalEntity>
+<cac:Contact>
+<cbc:Name>SIN INFORMACION</cbc:Name>
+<cbc:Telephone/>
+<cbc:ElectronicMail>recepcionsoatap@previsora.gov.co</cbc:ElectronicMail>
+</cac:Contact>
+</cac:Party>
+</cac:AccountingCustomerParty>
+<cac:PaymentMeans>
+<cbc:ID>2</cbc:ID>
+<cbc:PaymentMeansCode>47</cbc:PaymentMeansCode>
+<cbc:PaymentDueDate>2025-11-05</cbc:PaymentDueDate>
+</cac:PaymentMeans>
+<cac:LegalMonetaryTotal>
+<cbc:LineExtensionAmount currencyID="COP">13103611.00</cbc:LineExtensionAmount>
+<cbc:TaxExclusiveAmount currencyID="COP">0.00</cbc:TaxExclusiveAmount>
+<cbc:TaxInclusiveAmount currencyID="COP">13103611.00</cbc:TaxInclusiveAmount>
+<cbc:AllowanceTotalAmount currencyID="COP">0</cbc:AllowanceTotalAmount>
+<cbc:ChargeTotalAmount currencyID="COP">0.00</cbc:ChargeTotalAmount>
+<cbc:PayableAmount currencyID="COP">13103611.00</cbc:PayableAmount>
+</cac:LegalMonetaryTotal>
+<cac:InvoiceLine>
+<cbc:ID>1</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">10.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">74500</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>ACETAMINOFEN + TRAMADOL TABLETA 325 MG + 37,5 MG</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>ACET018</cbc:ID>
+<cbc:ExtendedID>ACET018</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">ACET018</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">7450</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">10.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>2</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">3488</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>CANULA NASAL PARA OXIGENO ADULTO</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>CANU004</cbc:ID>
+<cbc:ExtendedID>CANU004</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">CANU004</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">3488</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>3</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">3.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">16902</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>CATETER INTRAVENOSO No. 18 G</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>CATE002</cbc:ID>
+<cbc:ExtendedID>CATE002</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">CATE002</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">5634</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">3.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>4</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">16.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">237536</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>ceFAZolina 1 G POLVO RECONSTITUIR</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>CEFA003</cbc:ID>
+<cbc:ExtendedID>CEFA003</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">CEFA003</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">14846</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">16.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>5</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">3.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">483804</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>CLAVO KIRSCHNER 2.0 X230MM</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID/>
+<cbc:ExtendedID/>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999"/>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">161268</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">3.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>6</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">85900</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>CONSULTA DE URGENCIAS</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>39145</cbc:ID>
+<cbc:ExtendedID>39145</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">39145</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">85900</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>7</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">20900</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>CREATININA EN SUERO ORINA Y OTROS</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>19290</cbc:ID>
+<cbc:ExtendedID>19290</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">19290</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">20900</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>8</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">36200</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>CUADRO HEMATICO O HEMOGRAMA HEMATOCRITO Y LEUCOGRAMA</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>19304</cbc:ID>
+<cbc:ExtendedID>19304</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">19304</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">36200</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>9</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">100700</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>DERECHOS DE SALA DE YESOS</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>39221</cbc:ID>
+<cbc:ExtendedID>39221</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">39221</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">100700</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>10</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">10.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">67770</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>DEXKETOPROFENO 25 MG TABLETA</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>DEXKE002</cbc:ID>
+<cbc:ExtendedID>DEXKE002</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">DEXKE002</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">6777</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">10.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>11</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">13.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">36881</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>DICLOFENACO SODICO 75 MG / 3 ML SOLUCION INYECTABLE</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>DICL002</cbc:ID>
+<cbc:ExtendedID>DICL002</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">DICL002</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">2837</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">13.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>12</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">512600</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>DRENAJE CURETAJE SECUESTRECTOMIA DE TIBIA O PERONE</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>13500</cbc:ID>
+<cbc:ExtendedID>13500</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">13500</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">512600</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>13</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">2.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">139566</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>EQUIPO BOMBA NIPRO</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>EQUI001</cbc:ID>
+<cbc:ExtendedID>EQUI001</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">EQUI001</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">69783</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">2.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>14</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">2.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">22218</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>EQUIPO BURETROL 150 ML</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>EQUI002</cbc:ID>
+<cbc:ExtendedID>EQUI002</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">EQUI002</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">11109</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">2.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>15</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">2.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">10592</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>EQUIPO DE EXTENSION DE ANESTESIA</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>EQUI003</cbc:ID>
+<cbc:ExtendedID>EQUI003</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">EQUI003</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">5296</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">2.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>16</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">4.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">25412</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>EQUIPO VENOCLISIS MACROGOTEO SIN AGUJA</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>EQUI151</cbc:ID>
+<cbc:ExtendedID>EQUI151</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">EQUI151</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">6353</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">4.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>17</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">683800</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>EXTRACCION QUIRURGICA DE MATERIAL DE OSTEOSINTESIS EN PIERNA TOBILLO O PIE</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>13513</cbc:ID>
+<cbc:ExtendedID>13513</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">13513</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">683800</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>18</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">732991</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>GUIA CON OJAL 300MM</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID/>
+<cbc:ExtendedID/>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999"/>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">732991</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>19</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">6.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">2880600</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>HABITACION BIPERSONAL III NIVEL</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>38132</cbc:ID>
+<cbc:ExtendedID>38132</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">38132</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">480100</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">6.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>20</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">359500</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>HABITACION DE CUATRO O MAS CAMAS III NIVEL</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>38134</cbc:ID>
+<cbc:ExtendedID>38134</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">38134</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">359500</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>21</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">22344</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>HUMIDIFICADOR DE OXIGENO</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>HUMI001</cbc:ID>
+<cbc:ExtendedID>HUMI001</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">HUMI001</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">22344</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>22</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">32384</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>INCENTIVO RESPIRATORIO ( SPIROMETER )</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>INCE001</cbc:ID>
+<cbc:ExtendedID>INCE001</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">INCE001</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">32384</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>23</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">82000</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>INMOVILIZACION MIEMBRO SUPERIOR O INFERIOR TOTAL O PARCIAL</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>37206</cbc:ID>
+<cbc:ExtendedID>37206</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">37206</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">82000</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>24</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">38.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">56468</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>JERINGA 10 ML</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>JERI002</cbc:ID>
+<cbc:ExtendedID>JERI002</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">JERI002</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">1486</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">38.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>25</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">3.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">19461</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>LLAVE DE TRES VIAS</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>LLAV001</cbc:ID>
+<cbc:ExtendedID>LLAV001</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">LLAV001</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">6487</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">3.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>26</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">17.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">140947</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>MORFINA 10 MG SOLUCION INYECTABLE</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>MORF001</cbc:ID>
+<cbc:ExtendedID>MORF001</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">MORF001</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">8291</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">17.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>27</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">210779</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>MULETA TALLA M</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>MULE001</cbc:ID>
+<cbc:ExtendedID>MULE001</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">MULE001</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">210779</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>28</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">10.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">686420</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>Nadroparina Calcica 3800 UI/ 0,4 ML (Heparina Glicosamino Glicano) 3800 UI Anti Axa SOLUCIÓN INYECTABLE - JERINGA PRELLENA 0,4 ml</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>NADR003</cbc:ID>
+<cbc:ExtendedID>NADR003</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">NADR003</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">68642</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">10.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>29</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">19.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">50787</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>OMEPRAZOL 20 mg CAPSULA</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>OMEP001</cbc:ID>
+<cbc:ExtendedID>OMEP001</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">OMEP001</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">2673</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">19.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>30</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">2.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">442800</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>PORTÁTILES CON FLUOROSCOPIA Y/O INTENSIFICADOR DE IMAGEN (PRACTICADO EN QUIRÓFANOS)</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>21602</cbc:ID>
+<cbc:ExtendedID>21602</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">21602</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">221400</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">2.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>31</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">211000</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>REDUCCION CERRADA DE LUXACION TRAUMATICA CUELLO DE PIE</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>13756</cbc:ID>
+<cbc:ExtendedID>13756</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">13756</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">211000</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>32</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">2184700</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>REDUCCION CERRADA LUXO FRACTURA CUELLO PIE</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>13565</cbc:ID>
+<cbc:ExtendedID>13565</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">13565</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">2184700</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>33</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">95400</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>RX. BRAZO PIERNA RODILLA FEMUR HOMBRO OMOPLATO</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>21102</cbc:ID>
+<cbc:ExtendedID>21102</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">21102</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">95400</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>34</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">95400</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>RX. BRAZO PIERNA RODILLA FEMUR HOMBRO OMOPLATO</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>21102</cbc:ID>
+<cbc:ExtendedID>21102</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">21102</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">95400</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>35</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">3.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">220500</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>RX. MANO DEDOS PUO (MUECA) CODO PIE CLAVICULA ANTEBRAZO CUELLO DE PIE (TOBILLO) EDAD OSEA (CARPOGRAMA) CALCANEO</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>21101</cbc:ID>
+<cbc:ExtendedID>21101</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">21101</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">73500</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">3.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>36</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">15.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">50685</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>SODIO CLORURO 0.9 % X 100 ML SOLUCION PARA INFUSION</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>SODI002</cbc:ID>
+<cbc:ExtendedID>SODI002</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">SODI002</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">3379</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">15.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>37</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">12.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">93708</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>SODIO CLORURO 0.9 % X 500 ML SOLUCION PARA INFUSION (FRASCO)</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>SODI004</cbc:ID>
+<cbc:ExtendedID>SODI004</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">SODI004</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">7809</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">12.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>38</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">5423</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>SONDA NELATON NO. 14</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>SOND019</cbc:ID>
+<cbc:ExtendedID>SOND019</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">SOND019</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">5423</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>39</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">1.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">211000</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>SUTURA DE FASCIA Y/O MUSCULO Y/O TENDON</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>13830</cbc:ID>
+<cbc:ExtendedID>13830</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">13830</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">211000</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">1.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>40</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">2.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">1243200</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>TAC EXTREMIDADES Y ARTICULACIONES</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>21716</cbc:ID>
+<cbc:ExtendedID>21716</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">21716</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">621600</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">2.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>41</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">2.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">67000</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>TERAPIA FISICA SESION</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>29112</cbc:ID>
+<cbc:ExtendedID>29112</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">29112</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">33500</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">2.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>42</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">3.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">100500</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>TERAPIA RESPIRATORIA HIGIENE BRONQUIAL (ESPIROMETRO INCENTIVO PERCUSION DRENAJE Y EJERCICIOS RESPIRATORIOS) SESION</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>29117</cbc:ID>
+<cbc:ExtendedID>29117</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">29117</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">33500</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">3.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>43</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">7.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">59787</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>VENDA ALGODON 5X5</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>VEND002</cbc:ID>
+<cbc:ExtendedID>VEND002</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">VEND002</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">8541</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">7.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>44</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">4.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">105188</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>VENDA DE YESO 5 PULG X 5 YDS</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>VEND005</cbc:ID>
+<cbc:ExtendedID>VEND005</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">VEND005</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">26297</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">4.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>45</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">4.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">47828</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>VENDA ELASTICA 5X5</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>VEND009</cbc:ID>
+<cbc:ExtendedID>VEND009</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">VEND009</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">11957</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">4.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+<cac:InvoiceLine>
+<cbc:ID>46</cbc:ID>
+<cbc:InvoicedQuantity unitCode="94">3.00</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="COP">36042</cbc:LineExtensionAmount>
+<cbc:FreeOfChargeIndicator>false</cbc:FreeOfChargeIndicator>
+<cac:Item>
+<cbc:Description>VENDA ELASTICA 6X5</cbc:Description>
+<cac:SellersItemIdentification>
+<cbc:ID>VEND010</cbc:ID>
+<cbc:ExtendedID>VEND010</cbc:ExtendedID>
+</cac:SellersItemIdentification>
+<cac:StandardItemIdentification>
+<cbc:ID schemeID="999">VEND010</cbc:ID>
+</cac:StandardItemIdentification>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="COP">12014</cbc:PriceAmount>
+<cbc:BaseQuantity unitCode="94">3.00</cbc:BaseQuantity>
+</cac:Price>
+</cac:InvoiceLine>
+</Invoice>

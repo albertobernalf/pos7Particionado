@@ -1,0 +1,93 @@
+{% extends "Reportes/pantallaGrupos.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+
+<input type="hidden" id="username" name="username" value="{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+
+
+<!--Inicia TITULOS       -->
+<div class="row" style=" height: 55px; width: 100vw; margin: 0; padding: 0;">
+    <div class="col" style="margin: 0; width: 100vw; padding: 0;">
+        <div class="mx-auto"
+            style="width: 100vw; background-color:#5b92b9; margin: 0; position: relative; height: 100%;">
+            <a href="/emergenteGrupos/{{Username}}, {{SedeSeleccionada}}, {{Grupo}} " class="button-link-2"
+                style="padding:0; position: absolute; top: 6px; left: 40px;">
+                <img src="{% static '/img/Regresar-blanco.svg'' %}" style="width:120px; " alt="regresar">
+            </a>
+            <center>
+                <figure class="figure" style="margin: 0;">
+                    <figcaption class="figure-caption text-center" style="margin: 0;">
+                        {% for nombreGrupoSeleccionado in NombreGrupoSeleccionado %}
+                        <H1 style="color:  #FFFFFF; margin: 0; font-size: 25px; padding: 10px;">
+                            REPORTES {{nombreGrupoSeleccionado.nombreGrupo}}
+                        </H1>
+                        {% endfor %}
+                    </figcaption>
+                </figure>
+            </center>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Fin TITULOS       -->
+
+<!--Inicia PantallaSubGrupos       -->
+
+
+<!-- <div class="row"  style=" height: 30px;">  -->
+<div class="row"
+    style="height: calc(100vh - 135px); width: 100vw; display: flex; justify-content: center; align-items: center; background-color: #eee !important; margin: 0; padding: 0;">
+    <div class="card g-1 row align-items-center justify-content-center" style="flex-direction: row; max-height: none !important;">
+        {% for subGrupos in SubGrupos %}
+
+        {% if subGrupos.nombreSubGrupo == "LABORATORIO"%}
+        <!-- <div class="col-xl-2"></div> -->
+
+        {% endif %}
+
+        {% if subGrupos.nombreSubGrupo == "ADMISIONES" %}
+
+
+
+        {% endif %}
+
+        {% if subGrupos.nombreSubGrupo == "ESTADISTICAS" %}
+        <!-- <div class="col-xl-2"></div> -->
+
+
+        {% endif %}
+
+        <div class="col-3"
+            style="display: flex; justify-content: center; align-items: center; min-width: 290px !important; margin-bottom: 10px;">
+            <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  " class="btn btn-primary" style="background-color: transparent; overflow: hidden;">
+                <figure class="figure">
+                    <img src="{% static subGrupos.logo %}" class="figure-img img-fluid rounded"
+                        style="min-width:100% !important; min-height:130px; width: 197px;" alt="...">
+                    <figcaption class="figure-caption text-center" style="margin-top:-25px">
+                        <H6 style="color: #244FA3;" >{{subGrupos.nombreSubGrupo}}</H6>
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+<!--Fin PantallaSubGrupos       -->
+{% endblock %}

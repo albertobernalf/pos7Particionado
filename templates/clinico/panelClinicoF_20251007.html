@@ -1,0 +1,313 @@
+{% extends "clinico/menuMedico1F.html" %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href={% static 'css/navegacionClinica.css' %} >
+
+
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %}>
+<script src={% static 'js/panelTabsClinico.js' %} defer>         </script>
+
+<style>
+tablaClinico td {
+
+  text-align: center;
+  padding: 1px;
+  /* Alto de las celdas */
+  height: 1px;
+  font-size:40%
+  font-weight: bold;
+}
+
+tablaClinico tr {
+  padding: 1px;
+  /* Alto de las celdas */
+  height: 1px;
+
+}
+</style>
+
+<script>
+function RefrescarPantalla() {
+	
+ 	 location.reload();
+}
+</script>
+
+{% endblock %}
+
+
+{% block indicadores %}
+
+<span style="padding-left:8px; padding-right:3px; padding-top: 3px; display:inline-block;">
+Alta Medica:  <span id="alta" name="alta" style='color:red'>{{altaMedica}} </span>
+Hospitalizados:  <span id="hosp" name="hosp" style='color:red'>{{Hospitalizados}}</span> <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPG' %}></img>
+Urgencias:  <span id="urg" name="urg" style='color:red'>{{Urgencias}} </span> <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPG' %}></img>
+Triage:  <span id="tria" name="tria" style='color:red'>{{Triage}} </span> <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPG' %}></img>
+Ambulatorios:  <span id="amb" name="amb" style='color:red'>{{Ambulatorios}} </span> <img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPG' %}></img>
+</span>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="marco">
+    <ul class="tabs">
+        <li><a href="#Clinica">	     <span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Ingresos Clinicos </a></li>
+	<li><a href="#InterConsulta"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Inter</a></li>
+	<li><a href="#ImpresionOrdenesMedicas"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Impresion Ordenes Medica</a></li>
+	<li><a href="#ConsultaFolios"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Consulta Folios</a></li>
+    </ul>
+</div>
+
+<div class="marco">
+<div class="secciones0">
+
+
+    <article id="Clinica">
+	   <form  action="/crearHistoriaClinica/" method="get" id="FormEvolucionarHistoria" name="FormEvolucionarHistoria">
+	
+		<input type="hidden" id="username" name="username" value = "{{Username}}">
+		<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+		<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+		<input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+		<input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
+		<!--  Estos si de la Aplixcacion base -->
+		<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+		<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+		<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+		<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+		<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+		<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+		<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
+		<input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+		<input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+		<input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+		<input type="hidden" id="documentoId" name="documentoId" value="">
+		<input type="hidden" id="documento2" name="documento2" value="">
+		<input type="hidden" id="consec" name="consec" value="">
+	        <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+
+		 <table class="table " id="tablaClinicobottom"  style="height: 3px; background-color:LightGray; border: 1px solid black; border-radius: 10px;width:95%;">
+                        <tr>
+                            <td>
+                                <label for="espMedico" class="col-sm-3 control-label">Especialidad :</label>
+                                <select form-select h-100 w-500" aria-label="" id="espMedico" name="espMedico">
+                                    {% for especialidadesMedicos in EspecialidadesMedicos %}
+                                    <option value="{{especialidadesMedicos.id}}"> {{especialidadesMedicos.nombre}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                             <td>
+                                <label for="tiposFolio" class="col-sm-1 control-label">Tipo de Folio : </label>
+                                <select form-select h-100 w-100" aria-label="" id="tiposFolio" name="tiposFolio">
+                                    {% for tiposFolio in TiposFolio %}
+                                    <option value="{{tiposFolio.id}}"> {{tiposFolio.nombre}}    </option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                               <input type="submit" id="btnCargaHc1" name="btnCargaHc1" value="Registrar Folio"></input>
+                            </td>
+			    <td>
+
+			       <input type="button" id="btnRefrescar" name="btnRefrescar" value="Refrescar" onclick="RefrescarPantalla()">
+                            </td>
+                        </tr>
+                    </table>
+     </form>	
+
+    <!-- INICIO TABLE DE  EL DATATABLE  -->
+   		<div class="container my-2">           
+   			   <div class="row">
+			       <table  id="tablaClinico" class="display table table-striped nowrap" style="width: 100%";>	
+			       <thead>
+                                <tr>
+			       <th>Sel</th>    
+				   <th>Hclinica</th>   
+                                    <th>id </th>
+                                    <th>TipoDoc</th>
+                                    <th>Documento</th>
+                                    <th>Paciente</th>
+                                    <th>#</th>
+                                    <th>FecIngreso</th>
+                                    <th>FecSalida</th>
+                                    <th>Servicio</th>
+                                    <th>Cama</th>
+                                    <th>Diagnostico</th>
+                                    <th>SalidaClinica</th>
+                                                      
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                </tr>
+                                </tbody>
+                              
+                            </table>
+                        </div>
+                    </div>        
+  </article>
+
+
+      <article id="InterConsulta">
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+ 		<div class="container my-2">
+   			   <div class="row">
+                                        <table  id="tablaInterConsultas" class="display nowrap table table-striped" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>      
+				     		 <th>Sel</th> 
+				     		 <th>Sel</th> 
+						<th>id</th>                              
+                                                <th>Descripcion</th>
+                                                <th>Respuesta</th> 
+                                                <th>Diagnostico</th>
+                                                <th>espConsulta</th>                                       
+                                                 <th>Historia</th>                                                                
+                                                <th>EspMedico</th>
+                                                <th>MedicoConsulta</th>
+                                                <th>MedicoConsultado</th>
+                                                <th>Tipo</th>                                 
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+ 					  </table>
+
+	</div>
+	</div>
+
+	            <!-- Espacio Modales  InterConsultas-->
+
+            <div class="modal fade" id="crearModelInterConsultas" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingInterConsultas"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormInterConsultas" name="postFormInterConsultas" class="form-horizontal"
+                                  novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" id="post_id">
+				<input type="text" name="interConsultaId" id="interConsultaId">
+                     
+				<div class="row row-cols-12" style="height=1px;">
+
+				  <div class="col">
+                                        <label for="serviciosAdministrativos" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos"  tabindex= "0"
+                                                    name="serviciosAdministrativos"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+				<div class="col">
+                                    Descripcion:
+                                    <input type="text" id="descripcionConsulta" name="descripcionConsulta"  readonly></input>
+                                </div>
+				<div class="col">
+                                    Respuesta:
+                                    <input type="text" id="respuestaConsulta" name="respuestaConsulta"  ></input>
+                                </div>
+                                <div class="col">
+                                    Diagnostico:
+                                    <input type="text" id="diagnostico" name="diagnostico" value="A"  readonly> </input>
+                                </div>
+
+                                <div class="col">
+                                    espConsulta:
+                                    <input type="text" id="espConsulta" name="espConsulta"  readonly > </input>
+                                </div>
+		
+                    		<div class="col">
+                                    especialidadMedico:
+                                    <input type="text" id="especialidadMedico" name="especialidadMedico"  readonly > </input>
+                                </div>
+
+
+                  		  <div class="col">
+                                    medicoConsulta:
+                                    <input type="text" id="medicoConsulta" name="medicoConsulta"  readonly > </input>
+                                </div>
+
+
+				 <div class="col">
+                                    medicoConsultado:
+                                    <input type="text" id="medicoConsultado" name="medicoConsultado"  readonly > </input>
+                                </div>
+
+	
+				 <div class="col">
+                                    tipo Interconsulta:
+                                    <input type="text" id="tiposNombre" name="tiposNombre"  readonly > </input>
+                                </div>
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+			  <span id="mensajesErrorModalInterConsulta" name="mensajesErrorModalInterConsulta" style= "color:red; font-size:15px; line-height:35px; font-family: Calibri;" > </span>
+
+                                    <button type="button" class="btn btn-primary" id="saveBtnResponderInterConsulta"   value="create" onclick="ResponderInterConsulta()">Guardar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 12 COLUMNAS  -->                       
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->                 
+
+     <!-- FIN Espacio Modales  -->
+
+  </article>
+
+
+<article id="ImpresionOrdenesMedicas">
+
+	impresion ordenes
+</article>
+
+
+
+<article id="ConsultaFolios">
+consulta folios
+
+</article>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+</div>
+{% endblock %}
+
+{% block footer%}
+<div class="marco">
+ 
+</div>
+
+{% endblock %}
+

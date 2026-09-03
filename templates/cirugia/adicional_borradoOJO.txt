@@ -1,0 +1,133 @@
+datatable {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.datatable-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+-----------------------------------------
+-----------------------------------------
+div.dataTables_wrapper  div.dataTables_filter input {
+   height: 2px;
+   padding:10px;
+   border-radius:8px;
+}
+
+div.dataTables_filter input {
+    width: 50px;
+  }
+
+
+#tablaProgramacionCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 50px;
+ padding: 1px;
+  height: 1px;
+    }
+
+#tablaSalasCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 50px;
+ padding: 1px;
+  height: 1px;
+    }
+#tablaIngresosCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 50px;
+ padding: 1px;
+  height: 1px;
+    }
+
+#tablaProcedimientosCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 50px;
+ padding: 1px;
+  height: 1px;
+    }
+#tablaProcedimientosInformeCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 20px;
+ padding: 1px;
+  height: 1px;
+    }
+
+#tablaParticipantesCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 50px;
+ padding: 1px;
+  height: 1px;
+    }
+#tablaParticipantesInformeCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 20px;
+ padding: 1px;
+  height: 1px;
+    }
+
+#tablaMaterialCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 50px;
+ padding: 1px;
+  height: 1px;
+    }
+
+#tablaMaterialInformeCirugia {   
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+ font-size: 20px;
+ padding: 1px;
+  height: 1px;
+    }
+
+.dataTables_wrapper {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+}
+
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+ 
+}
+
+/* Estilos adicionales para botones, etc. */
+
+
+
+table.dataTable tbody tr {
+  min-height: 60px;
+}
+
+
+.my-row-class {
+    height: 30px;
+}
+
+table {     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 8px;    margin: 20px;     width: 480px; text-align: left;    border-collapse: collapse; }
+
+th {     font-size: 8px;     font-weight: normal;     padding: 8px;     background: #b9c9fe;
+    border-top: 4px solid #aabcfe;    border-bottom: 1px solid #fff; color: #039;   text-align: left;
+    }
+
+td {   font-size: 10px;    padding: 8px;     background: #e8edff;     border-bottom: 1px solid #fff;
+    color: #669;    border-top: 1px solid transparent;   text-align: left; height: 6px;
+  }
+
+table tr {
+  height: 6px;
+  }
+

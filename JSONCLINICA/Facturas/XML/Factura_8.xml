@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <root>
+     <tipoDocumento>01</tipoDocumento>
+     <numero>8</numero>
+     <fecha>2026-03-06 08:58:19.207281-05</fecha>
+     <moneda>COP</moneda>
+     <emisor>
+         <nit>830507718-8</nit>
+         <dv>8</dv>
+         <nombreRazonSocial>CLINICA MEDICAL S.A.S</nombreRazonSocial>
+         <tipoPersona>1</tipoPersona>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>Calle 36 Sur 77 -33</direccion>
+             <departamento>CUNDINAMARCA</departamento>
+         </direccion>
+     </emisor>
+     <receptor>
+         <nit>51872242</nit>
+         <dv>0</dv>
+         <nombreRazonSocial>EUMELIA CAMACHO CELY</nombreRazonSocial>
+         <tipoPersona>2</tipoPersona>
+         <tipoDocumentoIdentificacion>13</tipoDocumentoIdentificacion>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>CALLE 87 NRO 103C-50</direccion>
+             <departamento>ANTIOQUIA</departamento>
+         </direccion>
+     </receptor>
+     <items>
+         <codigoProducto>1980578-1</codigoProducto>
+         <nombreProducto>6- COPIN 1,6MG2ML SOLUCIoN INYECTABLE</nombreProducto>
+         <cantidad>1</cantidad>
+         <unidadMedida>94</unidadMedida>
+         <valorUnitario>12000</valorUnitario>
+         <valorTotal>12000</valorTotal>
+         <impuestos>
+             <tipo>01</tipo>
+             <porcentaje>19</porcentaje>
+             <valor>19000</valor>
+         </impuestos>
+     </items>
+     <totales>
+         <valorBruto>6869265</valorBruto>
+         <valorNeto>6869265</valorNeto>
+         <valorTotalImpuestos>0</valorTotalImpuestos>
+         <valorTotal>6869265</valorTotal>
+     </totales>
+ </root>

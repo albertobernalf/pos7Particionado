@@ -1,0 +1,35 @@
+Para la facturación electrónica con la DIAN, el identificador del set de pruebas (TestSetId) no se envía dentro del archivo XML de la factura, sino en el encabezado de la petición SOAP (HTTP) al consumir el Web Service de la DIAN. Se envía a través de la cabecera TestSetId en la petición al endpoint de Documentos Electrónicos.Configuración en DjangoEn tu proyecto Django, puedes gestionar este envío utilizando la librería estándar zeep para interactuar con los Web Services de la DIAN. A continuación, se muestra un ejemplo de cómo estructurar tu cliente SOAP e inyectar el TestSetId en los encabezados de la petición para el entorno de habilitación.pythonfrom zeep import Client
+from zeep.wsse.username import UsernameToken
+
+def enviar_factura_set_ pruebas(xml_firmado_bytes, test_set_id_valor):
+    # WSDL oficial de la DIAN para el ambiente de habilitación
+    wsdl_url = "https://dian.gov.co"
+    
+    # Credenciales de Software propio (proporcionadas por la DIAN)
+    usuario = "WSCertificadodemo" # Ej: Nit + ID de software
+    password = "tu_password_aqui"
+    
+    # 1. Configurar cliente y seguridad
+    client = Client(wsdl=wsdl_url, wsse=UsernameToken(usuario, password))
+    
+    # 2. Construir los encabezados (Headers) HTTP/SOAP donde va el TestSetId
+    header_element = client.get_element('ns0:TestSetId')
+    header_value = header_element(test_set_id_valor)
+    
+    # 3. Preparar los datos que exige el método 'SendBillSync' de la DIAN
+    datos_envio = {
+        "fileName": "fv_prefijo_numero.xml", # El nombre debe coincidir con el XML
+        "contentFile": xml_firmado_bytes
+    }
+    
+    try:
+        # 4. Enviar la petición pasando el identificador en los encabezados
+        response = client.service.SendBillSync(
+            fileName=datos_envio['fileName'],
+            contentFile=datos_envio['contentFile'],
+            _soapheaders=[header_value]
+        )
+        return response
+    except Exception as e:
+        return f"Error en el envío: {str(e)}"
+Usa el código con precaución.Notas importantes:Ambiente: Asegúrate de estar utilizando el WSDL de vpfe-hab (Validación Previa Factura Electrónica - Habilitación). Una vez pases a producción, la URL cambiará y no será necesario enviar el TestSetId.Obtención del dato: Este identificador de set de pruebas se genera automáticamente en la plataforma de la DIAN cuando asocias tu modo de operación (Software Propio o Proveedor Tecnológico) y configuras los rangos de prueba

@@ -1,0 +1,45 @@
+    Firma un archivo XML para la Facturación Electrónica de la DIAN.
+    """
+    # 1. Parsear el contenido del XML generado
+    root = etree.fromstring(xml_contenido)
+    
+    # La DIAN requiere la firma estándar envelop
+    signature_node = xmlsec.template.create(
+        root,
+        xmlsec.constants.DSigExcC14NTransform,
+        xmlsec.constants.SignatureMethodRSA_SHA256
+    )
+    root.append(signature_node)
+
+    # 2. Agregar la referencia al documento completo
+    reference = xmlsec.template.add_reference(
+        signature_node, 
+        xmlsec.constants.DigestMethodSHA256,
+        uri=""
+    )
+    xmlsec.template.add_transform(reference, xmlsec.constants.TransformEnveloped)
+
+    # 3. Preparar los nodos KeyInfo (información del certificado)
+    key_info = xmlsec.template.ensure_key_info(signature_node)
+    xmlsec.template.add_x509_data(key_info)
+
+    # 4. Crear el contexto de firma
+    ctx = xmlsec.DigitalSignatureContext()
+    
+    # Cargar el certificado (soporta formatos como .pfx, .p12, .pem)
+    ctx.key = xmlsec.Key.from_file(
+        ruta_certificado, 
+        xmlsec.constants.KeyDataFormatPkcs12, 
+        password_certificado
+    )
+    
+    # Opcional pero recomendado por la DIAN: incluir el certificado en el XML
+    ctx.key.load_cert_from_file(ruta_certificado, xmlsec.constants.KeyDataFormatPkcs12)
+
+    # 5. Ejecutar la firma sobre el nodo creado
+    ctx.sign(signature_node)
+
+    # 6. Serializar el documento a una cadena de texto (bytes)
+    xml_firmado_bytes = etree.tostring(root, encoding='utf-8', xml_declaration=True)
+    
+return xml_firmado_bytes

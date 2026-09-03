@@ -1,0 +1,8 @@
+"id","documento","nombre","codigoEapb","direccion","telefono","representante","fosyga","particular","codigoPostal","responsableFiscal","identificadorDian","fechaRegistro","estadoReg","departamento_id","municipio_id","regimen_id","tipoDoc_id","tipoEmpresa_id","nivelesClinica_id","ciudad_id","correo","contacto"
+2,"12212","SURA EPS","123","Cr 21 N° 169 15/25 Bodega 2","7442565","asa","N","N","11","11","11","2026-01-23 11:13:59.337358-05","A",1,3,1,2,1,NULL,5,NULL,NULL
+4,"NUEVA EPS","NUEVA EPS",NULL,"CALLE",NULL,NULL,"N","N",NULL,NULL,NULL,"2026-01-23 11:13:59.340314-05","A",1,3,1,2,1,NULL,5,NULL,NULL
+5,"22222222","CAFESALUD",NULL,NULL,NULL,NULL,"N","N",NULL,NULL,NULL,"2026-01-23 11:13:59.341404-05","A",1,3,1,2,1,NULL,5,NULL,NULL
+6,"111111111","ECOPÉTROL",NULL,NULL,NULL,NULL,"N","N",NULL,NULL,NULL,"2026-01-23 11:13:59.342453-05","A",1,3,1,2,7,NULL,5,NULL,NULL
+7,"6565656","EPS FAMISANAR SAS",NULL,"NO SE","NO SE",NULL,"N","N",NULL,NULL,NULL,"2026-01-23 11:13:59.343491-05","A",1,3,1,2,1,NULL,5,NULL,NULL
+3,"830507718-8","CLINICA MEDICAL S.A.S",NULL,"Calle 36 Sur 77 -33","7442565",NULL,"N","N",NULL,NULL,NULL,"2026-01-23 11:13:59-05","A",1,3,1,2,4,3,5,"fact.electronica@clinicamedical.com.co",NULL
+1,"11111111","compensar eps","122","Calle 68 Avenida 26","22","asa","N","N","1","sas","1","2026-01-23 11:13:59.335201-05","A",1,3,1,2,1,NULL,5,NULL,NULL

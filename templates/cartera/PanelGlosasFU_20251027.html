@@ -1,0 +1,1042 @@
+{% extends "cartera/menuGlosasFU.html" %}
+{% load static %}
+
+{% block head %}
+
+
+<link rel="stylesheet" type="text/css" href={% static 'css/panelGlosas.css' %}>
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsGlosas.js' %} defer >         </script>
+
+<!-- Datatable extension SELECT 
+<link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+<script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+-->
+
+
+<div class="marco">
+    <ul class="tabs">
+
+        <li><a href="#Glosas"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Glosas</a></li>
+        <li><a href="#DetalleGlosas"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Detalle Glosa Clinica</a></li>
+        <li><a href="#NotasCredito"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Notas Credito</a></li>
+        <li><a href="#NotasDebito"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Nots Debito</a></li>
+
+
+    </ul>
+</div>
+
+<style>
+
+div.dataTables_filter input {
+    width: 50px;
+  }
+#tablaGlosas {
+     /*    font-family: 'Verdana', sans-serif;  */  /* Times*/
+ font-family: 'Times', 'Times New Roman',Verdana,  sans-serif;
+        font-size: 50px;
+	 padding: 1px;
+	 /* Alto de las celdas */
+	  height: 1px;
+    }
+
+table.dataTable tbody tr {
+  min-height: 60px;
+}
+
+
+.my-row-class {
+    height: 30px;
+}
+
+</style>
+
+
+{% endblock %}
+
+{% block encabezado %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <div class="secciones">
+
+        <article id="Glosas">
+      
+	
+            <form action="/glosasx/" method="get" id="FormGlosasx">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+		<input type="hidden" id="convenioId" name="convenioId" value="{{convenioId}}">
+	
+            </form>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+		<div class="container my-2">
+
+		<div align="right" height="15px" width="50px">
+               <input type="button" style="height:25px;margin-left: 0 ; margin-bottom: 0;border-top-right-radius: 0;"  size="30px" id="BtnGlosas"  name="BtnGlosas" value="Adicionar" onclick= "Glosas()" >				    
+		</div>
+
+   			   <div class="row">
+				
+                                        <table  id= "tablaGlosas" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+					      <th>Seleccionar</th> 
+                                            	<th>id</th>
+				                <th>FecRecep</th>
+				                <th>saldoFac</th>
+				                <th>Soportado</th>
+				                <th>Aceptado</th>
+						 <th>Tot.Glo</th>
+				                <th>Nc</th>
+				                <th>observa</th>
+				                <th>FecReg</th>
+				                <th>Estado</th>
+						<th>Conv</th>
+						<th>NombreConv</th>
+				                <th>usuarioReg</th>
+						<th>fact</th>
+						<th>FecResp</th>
+						<th>TipoGlosa</th>
+						<th>NombreTipo</th>
+						<th>UsuarioRecep</th>
+				                <th>UsuarioResp</th>
+				                <th>Valor</th>    
+				                <th>EstaRad</th>    
+				                <th>EstaRecep</th>    
+				                <th>NombreRecep</th>    
+				                <th>sede</th>    
+				                <th>Envio</th>
+	                                  
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                      
+                                        </table>
+                                    </div>
+                                </div>
+
+
+	            <!-- Espacio Modales  Glosas-->
+
+            <div class="modal fade" id="crearModelGlosas" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable  modal-dialog-center" role="document" modal-lg>
+                    <div class="modal-content">
+                        <div class="modal-header">
+	     <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Crear Glosa</font> </div>
+                                        <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span>  </button>
+			<button type="button" class="btn btn-primary" id="saveBtnCrearGlosas" onclick="CrearGlosas()">Grabar!</button> 
+                        </div>
+		
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormGlosas" name="postFormGlosas">
+
+                                <input type="hidden" name="post_id" id="post_id">
+
+                      <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+
+
+				  <div class="col-4">
+					                                   
+                                    <input type="hidden" class="form-control" id="sedesClinica_id" name="sedesClinica_id"  value="{{Sede}}" readonly></input>
+                                </div>
+
+				  <div class="col-8">
+                                        <label for="serviciosAdministrativos_id" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos_id"  tabindex= "0"
+                                                    name="serviciosAdministrativos_id"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+				<div class="col-12">
+                                    convenio_id:
+				<select class="select-css"  id="convenio_id"
+                                                                name="convenio_id">
+                                                            {% for convenios in Convenios %}
+                                                            <option value="{{convenios.id}}">
+                                                                {{convenios.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                </div>
+
+
+			  
+				<div class="col-12">
+					fechaRecepcion:
+                                   	 <label class="visually-hidden" for="fechaRecepcion">fechaRecepcion:</label>
+                               
+					 <input type="datetime-local"  class="form-control" id="fechaRecepcion" name="fechaRecepcion" placeholder="fechaRecepcion"  >
+                                </div>
+
+				<div class="col-12">
+                                   	 <label class="visually-hidden" for="observaciones">observaciones:</label>
+                               
+					 <input type="text"  class="form-control" id="observaciones" name="observaciones" placeholder="observaciones"  >
+                                </div>
+
+
+				<div class="col-12">
+                                   	 <label class="visually-hidden" for="factura_id">factura_id:</label>
+                               
+					 <input type="text" class="form-control" id="factura_id" name="factura_id" placeholder="factura_id"  >
+                                </div>
+
+
+
+
+				<div class="col-12">
+			Fecha Respuesta:
+				 <label class="visually-hidden" for="fechaRespuesta">Fecha Respuesta:</label>
+                                    
+					 <input type="datetime-local"  class="form-control" id="fechaRespuesta" name="fechaRespuesta" placeholder="fechaRespuesta"  readonly>
+                                </div>
+
+
+				<div class="col-12">
+                                    Tipo Glosa:
+				<select class="select-css"  id="tipoGlosa_id"  name="tipoGlosa_id">
+                                                           {% for tiposGlosas in TiposGlosas %}
+                                                            <option value="{{tiposGlosas.id}}">
+                                                                {{tiposGlosas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+                   
+				<div class="col-12">
+                                    
+				 <label  for="valorGlosa">valorGlosa:</label>
+                                    <input type="text" class="form-control" id="valorGlosa" name="valorGlosa" value="0" placeholder="valorGlosa:" ></input>
+                                </div>
+
+
+				<div class="col-12">
+                                    Estado Recepcion:
+				<select class="select-css"  id="estadoRecepcion_id"  name="estadoRecepcion_id">
+                                                           {% for estadosRecepcion in EstadosRecepcion %}
+                                                            <option value="{{estadosRecepcion.id}}">
+                                                                {{estadosRecepcion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+
+                                <div class="col-12">
+                                   
+                                    <input type="hidden" id="fechaRegistro" name="fechaRegistro" value="" > </input>
+                                </div>
+
+                                <div class="col-12">
+				 <label  for="estadoReg">EstadoRegistro:</label>
+                                    
+                                    <input type="text" class="form-control" id="estadoReg" name="estadoReg" value="A" placeholder="CantidadRechazadas:"  estadoReg> </input>
+                                </div>
+
+                                <div class="col-12">
+                                    Usuario:
+                                    <input type="text" id="usuarioRegistro_id" name="usuarioRegistro_id" value="{{Username_id}}" readonly > </input>
+                                </div>
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+			<div class="modal-footer">
+		
+		
+		<textarea id="mensajesErrorModalGlosas" name="mensajesErrorModalGlosas" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+				<button type="button" class="btn btn-primary" id="saveBtnCrearGlosas" onclick="CrearGlosas()">Grabar!</button> 
+                        
+			    </div> <!-- CIERRA FOOTER -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+     <!-- FIN Espacio Modales  -->
+
+        </article>
+
+	
+
+<article id="DetalleGlosas">
+
+		
+<!-- DESDE AQUI ENCABEZADO GLOSA-->
+	<div style="position: relative; left: 150px; width:1200px; height:110px;>
+	  <form id="postFormGlosas" name="postFormGlosas">
+		<input type="hidden" name="post_id" id="post_id">
+		
+                      <div class="row">
+
+			<div class="col-sm-1">
+			 <label for="post_idGlo">Glosa No</label>
+				<span class="miTexto" name="post_idGlo" id="post_idGlo"></span>
+
+			</div>
+
+
+			<div class="col-sm-1">		                                   
+                                   <span class="miTexto" name="sedesClinica_idGlo" id="sedesClinica_idGlo"></span>
+			</div>
+
+			<div class="col-sm-1">
+									
+					Factura:                                 	                              
+					<span class="miTexto" name="factura_idGlo" id="factura_idGlo"></span>
+				                             
+			</div>
+				<div class="col-sm-4">
+					Fecha Recepcion:    
+					<span class="miTexto" name="fechaRecepcionGlo" id="fechaRecepcionGlo"></span>                            	                               
+
+                               
+			</div>
+                    	<div class="col-sm-1">
+
+					Observaciones:
+                              	<span class="miTexto" name="observacionesGlo" id="observacionesGlo"></span>
+					<!-- <input type="text" class="form-control form-control-sm" id="observacionesGlo" name="observacionesGlo" preadonly > -->
+                                </div>
+	
+
+			   <div class="col-sm-2">
+					fecReg:
+
+                               <span class="miTexto" name="fechaRegistroGlo" id="fechaRegistroGlo"></span>
+					<!--  <input type="text" class="form-control form-control-sm" id="fechaRegistroGlo" name="fechaRegistroGlo"  readonly > -->
+                                </div>
+
+				   <div class="col-sm-1">
+					usuarioReg:
+                                   	 <label class="visually-hidden" for="usuarioRegistro_idGlo">UsuarioReg:</label>
+                               <span class="miTexto" name="usuarioRegistro_idGlo" id="usuarioRegistro_idGlo"></span>
+					<!-- <input type="text" class="form-control form-control-sm" id="usuarioRegistro_idGlo" name="usuarioRegistro_idGlo"  readonly > -->
+                                </div>
+				   <div class="col-sm-1">
+					fechaRespuesta:
+                                   	 <label class="visually-hidden" for="fechaRespuestaGlo">FecRta:</label>
+                               <span class="miTexto" name="fechaRespuestaGlo" id="fechaRespuestaGlo"></span>
+					<!--  <input type="text" class="form-control form-control-sm" id="fechaRespuestaGlo" name="fechaRespuestaGlo"  readonly > -->
+                                </div>
+
+					
+                                  <span class="miTexto" name="usuarioRecepcion_idGlo" id="usuarioRecepcion_idGlo" hidden></span>
+
+
+
+
+
+
+			</div> <!- Cierro la fila -->
+
+
+			 <div class="row">
+				TOTALES GLOSA ACTUAL
+                     				   <div class="col-sm-1">
+					ValorGlosa
+                               		<span class="miTexto" name="valorGlosaGlo" id="valorGlosaGlo"></span>
+	                              
+
+				</div>
+
+				   <div class="col-sm-1">
+					AcuGlosa
+
+                               		<span class="miTexto" name="totalGlosaGlo" id="totalGlosaGlo"></span>
+                            
+				</div>
+
+
+
+				   <div class="col-sm-1">
+					Soportado:
+                               		<span class="miTexto" name="totalSoportadoGlo" id="totalSoportadoGlo"></span>
+
+                                </div>
+
+
+				   <div class="col-sm-1">
+					Aceptado:
+                                   	
+                               	<span class="miTexto" name="totalAceptadoGlo" id="totalAceptadoGlo"></span>
+					<!--  <input type="text" class="form-control form-control-sm" id="totalAceptadoGlo" name="totalAceptadoGlo"  readonly > -->
+                                </div>
+				   <div class="col-sm-1">
+					NCredito
+
+                               		<span class="miTexto" name="totalNotasCreditoGlo" id="totalNotasCreditoGlo"></span>
+                            
+				</div>
+
+				   <div class="col-sm-1">
+					SaldoFactura:
+                               	<span class="miTexto" name="saldoFacturaGlo" id="saldoFacturaGlo"></span>
+					<!--  <input type="text" class="form-control form-control-sm" id="saldoFacturaGlo" name="saldoFacturaGlo"  readonly > -->
+                                </div>
+
+                                  <span class="miTexto" name="usuarioRespuesta_idGlo" id="usuarioRespuesta_idGlo" hidden></span>
+
+
+			
+                                   	
+                                <span class="miTexto" name="estadoRegGlo" id="estadoRegGlo" hidden></span>
+
+				TOTALES GLOSA FACTURA:
+			</div> <!- Cierro la fila -->
+
+			 <div class="row">
+
+                     				   <div class="col-sm-1">
+
+                                    EstadoRadica:
+				<select class="select-css"  id="estadoRadicacion_idGlo"  name="estadoRadicacion_idGlo">
+                                                           {% for estadosRadicacion in EstadosRadicacion %}
+                                                            <option value="{{estadosRadicacion.id}}">
+                                                                {{estadosRadicacion.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+		
+
+				<div class="col-sm-1">
+                                    Convenio:
+				<select class="select-css"  id="convenio_idGlo"  name="convenio_idGlo" disabled>
+                                                           {% for convenios in Convenios %}
+                                                            <option value="{{convenios.id}}">
+								  {{convenios.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+
+				<div class="col-sm-1">
+                                    Tipo Glosa:
+				<select class="select-css"  id="tipoGlosa_idGlo"  name="tipoGlosa_idGlo" >
+                                                           {% for tiposGlosas in TiposGlosas %}
+                                                            <option value="{{tiposGlosas.id}}">
+                                                                {{tiposGlosas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+
+			<div class="col-sm-1">
+                                    EstadoRecepcion:
+				<select class="select-css"  id="estadoRecepcion_idGlo"  name="estadoRecepcion_idGlo">
+                                                           {% for estadosRecepcion in EstadosRecepcion %}
+                                                            <option value="{{estadosRecepcion.id}}">
+								  {{estadosRecepcion.nombre}}	
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+		
+
+		<div class="col-sm-1">
+			<button type="button" class="btn btn-primary btn-sm" id="saveBtnGuardarGlosa" onclick="GuardaGlosasEstados()">Guardar !</button> 
+		 </div>
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+	</div>
+</br>
+</br>
+</br>
+ <div class="row">
+	</div>
+ <div class="row">
+	</div>
+ <div class="row">
+	</div>
+
+
+<!-- FIN ENCABEZADO -->
+		<!-- AQUI DATATABLE GENERALPARA DETALLE GLOSAS -->
+
+
+	<div class="container my-2" style="margin-top:400px;">          
+   			   <div class="row">
+                                        <table  id= "tablaGlosasDetalle" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>      
+				<th>Accion </th>                            
+				<th>tipo</th>
+				<th>id</th>
+				<th>consec</th>
+				<th>itemFactura</th>
+				<th>codigo</th>
+				<th>nombre</th>
+				<th>glosaNombre</th>
+				<th>vrServicio</th>
+			<!--	<th>valorGlosado</th>
+				<th>vAceptado</th>
+				<th>valorSoportado</th>
+				<th>notasCreditoGlosa</th>	-->
+				<th>valorGlosa</th>
+				<th>valorAceptado</th>
+				<th>valorSoportado2</th>
+				<th>valorNotasCredito</th>	
+
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                     
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+		<!-- FIN DATATABLE GENERALPARA DETALLE GLOSAS -->
+
+	            <!-- Espacio Modales Detalle Glosas -->
+
+            <div class="modal fade" id="crearModelGlosasDetalle" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog  modal-dialog-scrollable" modal-dialog-center  role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                         <div  class="modal-title" id="exampleModalLabel" style="text-align:center;"><font gont-family="Times New roman" size=5">Detalle Glosa</font> </div>
+                                        
+			<button type="button" class="btn btn-primary" id="saveBtnCrearGlosasDetalle" onclick="GuardarGlosasDetalle()">Grabar!</button> 
+			<button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                        </div>
+		<div style="width:500px; heigth:100px; ">
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+			
+  			  <form id="postFormGlosasDetalle" name="postFormGlosasDetalle">
+                               
+
+                      <div class="row">
+
+			 <div class="col-2">
+				<input type="hidden" class="form-control form-control-sm" name="post_idGloDet" id="post_idGloDet">
+			   </div>
+
+			 <div class="col-2">
+				Id:
+			 <span class="miTexto" name="glosaGloDet" id="glosaGloDet"></span>
+				<!-- <input type="text" class="form-control form-control-sm" name="glosaGloDet" id="glosaGloDet"> -->
+			   </div>
+
+				  <div class="col-1">
+					                                   
+                                    <input type="hidden" class="form-control" id="sedesClinica_id" name="sedesClinica_id"  value="{{Sede}}" readonly></input>
+                                </div>
+						  
+			 <div class="col-6">
+				tipo Rips:
+			 <span class="miTexto" name="tipoGloDet" id="tipoGloDet"></span>
+
+			   </div>
+
+
+				<div class="col-6">
+					
+                                   	 <label  for="itemFacturaGloDet">itemFactura:</label>
+                       			 <span class="miTexto" name="itemFacturaGloDet" id="itemFacturaGloDet"></span>
+					<!--  <input type="text"  class="form-control form-control-sm" id="itemFacturaGloDet" name="itemFacturaGloDet" readonly > -->
+                                </div>
+
+				<div class="col-3">
+				
+                                   	 <label  for="codigoGloDet">Codigo:</label>
+                               			 <span class="miTexto" name="codigoGloDet" id="codigoGloDet"></span>
+
+                                </div>
+
+
+				<div class="col-10">
+					
+                                   	 <label  for="nombreGloDet">Nombre:</label>
+				 <span class="miTexto" name="nombreGloDet" id="nombreGloDet"></span>
+					<!--  <input type="text" class="form-control form-control-sm" id="nombreGloDet" name="nombreGloDet"  readonly  > -->
+                                </div>
+
+
+
+                                <div class="col-1">
+                                   
+                                    <input type="hidden" id="fechaRegistroGloDet" name="fechaRegistroGloDet" value="" > </input>
+                                </div>
+
+                                <div class="col-4">
+				 <label  for="estadoRegRipsGloDet">EstadoRegistro:</label>
+                                     <span class="miTexto" name="estadoRegRipsGloDet" id="estadoRegRipsGloDet"></span>
+                                    <!-- <input type="text" class="form-control form-control-sm" id="estadoRegGloDet" name="estadoRegGloDet" value="A"  readonly> </input> -->
+                                </div>
+
+              
+				<div class="col-4">
+                                    		
+				 <label  for="vrServicioGloDet">vrServicio:</label>
+				  <span class="miTexto" name="vrServicioGloDet" id="vrServicioGloDet"></span>
+                                   <!-- <input type="text" class="form-control form-control-sm" id="vrServicioGloDet" name="vrServicioGloDet" value="0"  readonly></input> -->
+                                </div>
+
+
+
+				<div class="col-4">
+                                    		
+				 <label  for="consecutivoGloDet">consecutivoRips:</label>
+                                    <input type="text" class="form-control form-control-sm" id="consecutivoGloDet" name="consecutivoGloDet" value="0" readonly></input>
+                                </div>
+                          				
+
+				<div class="col-4">
+                                    		
+				 <label  for="valorGlosadoGloDet">valorGlosado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="valorGlosadoGloDet" name="valorGlosadoGloDet" value="0"  ></input>
+                                </div>
+
+
+				<div class="col-4">
+                                    		
+				 <label  for="vAceptadoGloDet">vAceptado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="vAceptadoGloDet" name="vAceptadoRipsMed" value="0" ></input>
+                                </div>
+
+				<div class="col-4">
+                                    		
+				 <label  for="valorSoportadoGloDet">valorSoportado:</label>
+                                    <input type="text" class="form-control form-control-sm" id="valorSoportadoGloDet" name="valorSoportadoGloDet" value="0"  ></input>
+                                </div>
+
+			<div class="col-4">
+                                    Motivo Glosa:
+				<select class="select-css"  id="motivoGlosa_idGloDet"  name="motivoGlosa_idGloDet">
+                                                           {% for motivosGlosas in MotivosGlosas %}
+                                                            <option value="{{motivosGlosas.id}}">
+                                                                {{motivosGlosas.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                          
+                                                        </select>
+                                </div>
+
+
+			<div class="col-4">
+                                    		
+				 <label  for="notasCreditoGlosaGloDet">notasCreditoGlosa:</label>
+                                    <input type="text" class="form-control form-control-sm" id="notasCreditoGlosaGloDet" name="notasCreditoGlosaGloDet" value="0"  ></input>
+                                </div>
+
+				<div class="col-4">
+                                    		
+				 <label  for="observacionesGloDet">Observaciones:</label>
+                                    <input type="text" class="form-control form-control-sm" id="observacionesGloDet" name="observacionesGloDet" value=""  ></input>
+                                </div>
+
+
+			
+			<div class="col-4">
+                                    		
+				 <label  for="mensajesGloDet">Mensajes:</label>
+				<textarea id="mensajesGloDet" name="mensajesGloDet" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+                                </div>
+
+
+                                </div> <!-- CIERRA ROW 8 COLUMNAS  -->
+
+                            </form>
+
+                        </div> <!-- CIERRA BODY -->
+     			 <div class="modal-footer">
+
+
+					<textarea id="mensajesErrorDetalleModal" name="mensajesErrorDetalleModal" style="background-color: lightred; color: navy;"  rows="1" cols="60" placeholder="Mensajes..."  wrap="hard"></textarea>				
+					  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar   </button>
+
+	<button type="button" class="btn btn-primary" id="saveBtnCrearGlosasDetalle" onclick="GuardarGlosasDetalle()">Grabar!</button> 
+
+                                    </div> <!-- CIERRA FOOTER -->
+
+			</div> <!-- CIERRA DIV TAMANO -->			
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->
+
+     <!-- FIN Espacio Modales  -->
+
+
+
+</article>
+
+<article id="RipsTransaccion">
+
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+ 	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaGlosasTransaccion" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>NumeroDocObligatorio</th>
+                                                <th>NumNota</th>
+                                                <th>FechaRegistro</th>
+                                                <th>TipoNota</th>
+                                                <th>UsuarioRegistro</th>
+                                                <th>Envio Rips # </th>
+						<th>Sedes # </th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+ 					
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+</article>
+
+
+
+<article id="RipsUsuarios">
+	<div class="container my-2">          
+   			   <div class="row">
+                                         <table  id= "tablaGlosasUsuarios" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>tipoDocumento </th>
+                                                <th>tipoUsuario </th>
+                                                <th>FechaNacimiento </th>
+                                                <th>CodSexo </th>
+                                                <th>CodZonaTerritorial </th>
+                                                <th>Incapacidad </th>
+						<th>Consecutivo </th>
+                                                <th>FechaRegistro </th>
+                                                <th>CodMunicipio</th>
+                                                <th>CodPaisOrigen </th>
+                                                <th>CodPaisResidencia </th>
+                                                <th>UsuarioRegistro </th>
+                                                <th>NumDocumentoIdentifica </th>
+                                                <th>RipsDetalleId </th>
+                                                <th>RipsTransaccionId </th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                         
+
+                                        </table>
+                                    </div>
+                                </div>
+
+</article>
+
+
+<article id="RipsHospitalizacion">
+
+	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaGlosasHospitalizacion" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>Prestador </th>
+                                                <th>fechaAtn </th>
+                                                <th>Aut </th>
+                                                <th>Egreso </th>
+                                                <th>consec </th>
+						<th>Fec.Reg </th>
+                                                <th>CausaMotivo </th>
+                                                <th>Complica</th>
+                                                <th>DxMuerte </th>
+                                                <th>DxPrincipalI </th>
+                                                <th>DxPrincipalE </th>
+                                                <th>DxRel1</th>
+                                                <th>DxRel2</th>
+                                                <th>DxRel3 </th>
+                                                <th>DestEgreso </th>
+                                                <th>UsuReg </th>
+                                                <th>ViaIngreso </th>
+                                                <th>RipsDetalle_id </th>
+                                                <th>ripsTipos_id </th>
+						<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                         
+
+                                        </table>
+                                    </div>
+                                </div>
+
+		
+
+</article>
+
+
+<article id="RipsUrgObs">
+
+	<div class="container my-2">          
+   			   <div class="row">
+
+					<table id="tablaGlosasUrgencias" class="display table table-striped table-sm fs-6 nowrap" style="width:100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                              <th>id</th>
+						<th>codPrestador</th>
+						<th>fechaInicioAtencion</th>
+						<th>fechaEgreso</th>
+						<th>consecutivo</th>
+						<th>fechaRegistro</th>
+						<th>causaMotivoAtencion_id</th>
+						<th>codDiagnosticoCausaMuerte_id</th>
+						<th>codDiagnosticoPrincipal_id</th>
+						<th>codDiagnosticoPrincipalE_id</th>
+						<th>codDiagnosticoRelacionadoE1_id</th>
+						<th>codDiagnosticoRelacionadoE2_id</th>
+						<th>codDiagnosticoRelacionadoE3_id</th>
+						<th>condicionDestinoUsuarioEgreso_id</th>
+						<th>usuarioRegistro_id</th>
+						<th>ripsDetalle_id</th>
+						<th>ripsTipos_id</th>
+						<th>ripsTransaccion_id</th>
+						<th>Accion </th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                      
+                                        </table>
+                                    </div>
+                                </div>
+  
+
+</article>
+
+<article id="RipsRecienNacido">
+
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		
+		
+		 </div>
+</article>
+
+<article id="RipsProcedimientos">
+
+	<div class="container my-2">          
+   			   <div class="row">
+
+					<table id="tablaGlosasProcedimientos" class="display table table-striped table-sm fs-6 nowrap" style="width:100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+                                                <th>id</th>
+                                                <th>Prestador </th>
+                                                <th>fechaAtn </th>
+                                                <th>MIPRES</th>
+                                                <th>Aut </th>
+                                                <th>Identif </th>
+                                                <th>vr </th>
+						<th>Moderadora </th>                                               
+                                                <th>consec</th>
+                                                <th>Complicacion </th>
+                                                <th>Principal </th>
+                                                <th>Relacionado </th>
+                                                <th>Proced</th>
+                                                <th>Servicio </th>
+                                                <th>concepto </th>
+                                                <th>FinalTecSalud </th>
+                                                <th>grupoServ </th>
+                                                <th>modGrupoServ </th>
+                                                <th>tipoIdent </th>
+                                                <th>usuario </th>
+                                                <th>viaIngreso </th>
+                                                <th>ripsDetalle </th>
+                                                <th>tipoModerado </th>
+						<th>Accion </th>
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                           
+                                        </table>
+                                    </div>
+                                </div>
+  
+
+</article>
+
+<article id="RipsMedicamentos">
+	<div class="container my-2">          
+   			   <div class="row">
+                                        <table  id= "tablaGlosasMedicamentos" class=" display table table-striped table-sm fs-6 nowrap" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>                                  
+				<th>id</th>
+			<th>itemFac</th>
+			<th>nom</th>
+			<th> MIPRES</th>
+			<th> cums</th>
+			<th> concentra</th>
+			<th> cantidad</th>
+			<th> vrUnit</th>
+			<th> vrServicio</th>
+			<th>  consRips</th>
+			<th> tipoMed</th>
+			<th> undMed_id</th>
+			<th> cantGlosada</th>
+			<th> cantAceptada</th>
+			<th> cantSoportado</th>
+			<th> valorGlosado</th>
+			<th>vAceptado</th>
+			<th> valorSoportado </th>
+			<th> motivoGlosa_id</th>
+			<th> notasCreditoGlosa</th>
+			<th> notasCreditoOtras</th>
+			<th> notasDebito</th>
+			<th>Accion </th>
+						</bold>                                  
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                       
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+
+  
+
+</article>
+
+<article id="RipsOtrosServicios">
+
+		  <div style="height: 70px;  width:100%; background-color:#EBEBEB;">
+		
+		
+		 </div>
+</article>
+
+
+
+     
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+<span> ... </span>
+ 	<textarea id="mensajes" name="mensajes" style="background-color: lightblue; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+	<textarea id="mensajesError" name="mensajesError" style="background-color: lightred; color: navy;"  rows="1" cols="180" placeholder="Mensajes..."  wrap="hard"></textarea>
+
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+<div class="marco">
+    <ul class="tabs">
+
+        <li><a href="#RipsTransaccion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Transaccion </a></li>
+        <li><a href="#RipsUsuarios"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Usuarios </a></li>
+        <li><a href="#RipsHospitalizacion"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Hospitalizacion </a></li>
+        <li><a href="#RipsUrgObs"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Urgencias Observacion </a></li>
+        <li><a href="#RipsRecienNacido"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span> Rips Recien Nacidos </a></li>
+        <li><a href="#RipsConsulta"><span class="fa-solid fa-user-doctor-message"></span> <span   class="tab-text"> </span> Rips Consulta</a></li>
+        <li><a href="#RipsProcedimientos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Procedimientos </a></li> 
+        <li><a href="#RipsMedicamentos"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Medicamentos </a></li> 
+        <li><a href="#RipsOtrosServicios"><span class="fa-solid fa-user-doctor-message"></span> <span  class="tab-text"> </span> Rips Otros Servicios </a></li> 
+    </ul>
+</div>
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,512 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src={% static 'main.js' %} defer> </script>
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom css -->
+    <link rel="stylesheet" type="text/css"  href = {% static 'css/login.css' %} >
+    <link rel="stylesheet" type="text/css"  href = {% static 'nav_sidebar.css' %} >
+    <link rel="stylesheet" type="text/css"  href = {% static 'css/base.css' %} >
+    <link rel="stylesheet" type="text/css"  href = {% static 'css/responsive.css' %} >
+
+
+
+
+</head>
+<body class=" login" data-admin-utc-offset="0"  ">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Clinica Vulnerables</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+       <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="#">Mision</a>
+              <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Citas Medicas
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Agenda Medica</a>
+          <a class="dropdown-item" href="/manejoLuz#">Registro</a>
+          <a class="dropdown-item" href="#">Traslados</a>
+
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+
+
+                          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Informes
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Reporte_1</a>
+          <a class="dropdown-item" href="/manejoLuz#">Reporte_2</a>
+          <a class="dropdown-item" href="#">Reporte_3</a>
+          <a class="dropdown-item" href="#">Reporte_4</a>
+            <a class="dropdown-item" href="/ambienteMusical#">Reporte_5</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+
+
+             <a class="nav-link" href="/salir">Salir</a>
+
+
+      </div>
+    </div>
+  </div>
+    <form class="form-inline my-2 my-lg-0">
+
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="button">MODULO CITAS MEDICAS</button>
+             </form>
+</nav>
+
+{% block content  %}
+
+
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker-standalone.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
+<script>
+
+var $ = jQuery;
+
+ $(document).ready(function(){
+
+ var exa = new FormData()
+
+ $('#id_id_especialidad').on('change', function (){
+
+
+        var id1 = $(this).val();
+
+        var select_especialidad = $['select[id="id_id_especialidad"]'];
+        var options = '<option value="=================="></option>';
+
+
+        var id =  document.getElementById("id_id_especialidad").value;
+	    var comboEspecialidad = document.getElementById("id_id_especialidad");
+	    var nombre = comboEspecialidad.options[comboEspecialidad.selectedIndex].text;
+
+
+		var datos={'action' : 'BuscaEspecialidad' , 'id':id1 };
+        exa.append('action','BuscaEspecialidad');
+        exa.append('id',id1);
+
+
+
+        $.ajax({
+            	   type: 'POST',
+ 	                url: window.location.pathname,
+  	               data: exa ,
+ 	      		success: function (respuesta2) {
+
+ 	      		          var dato = JSON.parse(respuesta2);
+                          const $id2 = document.querySelector("#id_id_medico");
+
+ 	      		           $("#id_id_medico").empty();
+
+	                      $.each(dato, function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		                });
+
+ 	      			      		},
+ 	      		error: function (request, status, error) {
+ 	      			alert(request.responseText);
+ 	      			alert (error);
+ 	      			$("#mensajes").html("Error Venta AJAX O RESPUESTA");
+ 	      		},
+ 	      		cache : false,
+ 	      		contentType : false,
+ 	      		processData: false,
+
+ 	        });
+
+
+  });
+
+
+
+
+   $('#id_id_TipoExamen').on('change', function (){
+
+
+        var id1 = $(this).val();
+
+        var select_examenes = $['select[id="id_id_examen"]'];
+        var options = '<option value="=================="></option>';
+
+
+        var id =  document.getElementById("id_id_TipoExamen").value;
+	    var comboTipoExamen = document.getElementById("id_id_TipoExamen");
+	    var nombre = comboTipoExamen.options[comboTipoExamen.selectedIndex].text;
+
+
+		var datos={'action' : 'BuscaExamenes' , 'id':id1 };
+        exa.append('action','BuscaExamenes');
+        exa.append('id',id1);
+
+
+
+        $.ajax({
+            	   type: 'POST',
+ 	                url: window.location.pathname,
+  	               data: exa ,
+ 	      		success: function (respuesta2) {
+
+ 	      		          var dato = JSON.parse(respuesta2);
+                          const $id2 = document.querySelector("#id_id_examen");
+
+ 	      		           $("#id_id_examen").empty();
+
+	                      $.each(dato, function(key,value) {
+                                    options +='<option value="' + value.id + '">' + value.nombre + '</option>';
+                                    option = document.createElement("option");
+                                    option.value = value.id;
+                                    option.text = value.nombre;
+                                    $id2.appendChild(option);
+ 	      		                });
+
+
+
+ 	      			      		},
+ 	      		error: function (request, status, error) {
+ 	      			alert(request.responseText);
+ 	      			alert (error);
+ 	      			$("#mensajes").html("Error Venta AJAX O RESPUESTA");
+ 	      		},
+ 	      		cache : false,
+ 	      		contentType : false,
+ 	      		processData: false,
+
+ 	        });
+
+
+  });
+
+$(function () {
+ var dateNow = new Date();
+
+$('#fecha').datetimepicker({
+ format: 'YYYY-MM-DD hh:mm:ss',
+ defaultDate:dateNow
+});
+$("#fecha").data('DateTimePicker').setLocalDate(new Date(year, month, day, 00, 01));
+  });
+
+
+
+
+ $("#btnTomaFoto").click(function(){
+        alert("Entre a Rutina Foto");
+
+		var nombre = document.getElementById("nombre").value
+
+  		 $.ajax({
+	           url: '/camara',
+	           type: 'GET',
+
+	           data : {nombre:nombre},
+	  		success: function (respuesta) {
+                     var data = JSON.parse(respuesta);
+
+	                      $("#mensajes").html(data.nombre + data.mensaje);
+                    },
+	   		    error: function (request, status, error) {
+
+	   			    $("#mensajes").html(" !  Fotografia con error !");
+	   	    	}
+
+	     });
+    });
+
+
+    $("#btnmotivoSeñas").click(function(){
+        alert("Entre a Motivo Señas");
+        nombre="nada";
+
+
+
+		 $.ajax({
+	           url: '/motivoSeñas',
+	           type: 'GET',
+
+	           data : {nombre:nombre},
+	  		success: function (respuesta) {
+                     var data = JSON.parse(respuesta);
+                             alert("llegue"),
+                             alert(data.mensaje);
+
+	                       document.formHistoria["motivo"].value =data.mensaje;
+                    },
+	   		    error: function (request, status, error) {
+
+	   			    $("#mensajes").html(" !  Señas  con error !");
+	   	    	}
+
+	     });
+    });
+
+  $("#btnsubjetivoSeñas").click(function(){
+        alert("Entre a Subjetivo Señas");
+        nombre="nada";
+
+
+
+		 $.ajax({
+	           url: '/subjetivoSeñas',
+	           type: 'GET',
+
+	           data : {nombre:nombre},
+	  		success: function (respuesta) {
+                     var data = JSON.parse(respuesta);
+                             alert("llegue"),
+                             alert(data.mensaje);
+
+	                       document.formHistoria["subjetivo"].value =data.mensaje;
+                    },
+	   		    error: function (request, status, error) {
+
+	   			    $("#mensajes").html(" !  Señas  con error !");
+	   	    	}
+
+	     });
+    });
+
+
+$("#btnAdicionarExamen").click(function(){
+
+     var id_tipo_doc    =  document.formHistoria["id_id_tipo_doc"].value
+     var documento      =  document.formHistoria["id_documento"].value
+     var folio          =  document.formHistoria["id_folio"].value
+     var fecha          =  document.formHistoria["fecha"].value
+     var estado_folio   =  document.formHistoria['id_estado_folio'].value
+
+    var id_cantidad=document.getElementById("id_cantidad").value;
+	var id_TipoExamen =  document.getElementById("id_id_TipoExamen").value;
+	var comboTipoExamen = document.getElementById("id_id_TipoExamen");
+	var tipoExamenNombre = comboTipoExamen.options[comboTipoExamen.selectedIndex].text;
+
+	var id_examen =  document.getElementById("id_id_examen").value;
+	var comboExamen = document.getElementById("id_id_examen");
+	var ExamenNombre = comboExamen.options[comboExamen.selectedIndex].text;
+
+
+
+		  var tds = '<tr>';
+
+		  tds += '<td class="col-xs-2">' + tipoExamenNombre + '</td>';
+		  tds += '<td class="col-xs-6">' + ExamenNombre + '</td>';
+		  tds += '<td class="col-xs-6">' + id_cantidad + '</td>';
+          tds += '<td class="col-xs-1"><a href="#">Delete</a></td>';
+
+
+          tds += '<td  style="visibility: hidden">' + id_tipo_doc + '</td>';
+		  tds += '<td  style="visibility: hidden">' + documento + '</td>';
+		  tds += '<td  style="visibility: hidden" >' + folio + '</td>';
+		  tds += '<td  style="visibility: hidden" >' + fecha + '</td>';
+		  tds += '<td  style="visibility: hidden" >' + id_TipoExamen + '</td>';
+		  tds += '<td  style="visibility: hidden" >' + id_examen + '</td>';
+		  tds += '<td  style="visibility: hidden" >' + estado_folio + '</td>';
+
+
+
+		tds += '</tr>';
+
+		$("#Examenes").append(tds);
+
+
+        datavta = $("#formClinicos").serialize();
+     	datavta1 =  JSON.stringify(datavta);
+
+	<!--	seriali.push(datavta1); -->
+
+
+	//	envio.delete('id_tipo_doc');
+	//	envio.delete('documento');
+	//    envio.delete('folio');
+	//	envio.delete('fecha');
+	//	envio.delete('id_TipoExamen');
+	//	envio.delete('id_examen');
+	//	envio.delete('cantidad');
+	//	envio.delete('estado_folio');
+
+        envio.append('id_tipo_doc', id_tipo_doc );
+        envio.append( 'documento', documento);
+        envio.append('folio', document.getElementById("folio_oculto").value);
+        envio.append('fecha', fecha);
+        envio.append('id_TipoExamen' , id_TipoExamen);
+        envio.append('id_examen' , id_examen);
+        envio.append('cantidad' , id_cantidad);
+        envio.append('estado_folio' , estado_folio);
+
+
+             for (var valores in envio.values) {
+                     console.log(valores);
+             }
+
+
+     //   var object = {};
+       //     envio.forEach(function(value, key){
+     //                 object[key] = value;
+      //                  });
+
+     //       var jsonEnvio = JSON.stringify(object);
+
+
+        seriali1.push(envio);
+
+        addAEvent();
+
+
+   });
+
+function addAEvent(){
+
+
+
+			    $('#Examenes').unbind();
+
+
+				  $('#Examenes').on('click','tr td', function(evt){
+
+
+
+				        var target,valorSeleccionado;
+
+				        var column_num = parseInt( $(this).index() + 1 ) ;
+
+				        var row_num = parseInt( $(this).parent().index() + 1 );
+
+				  	   target = $(evt.target);
+						   valorSeleccionado = target.text();
+
+
+
+					        if(column_num == 4)
+					        	{
+
+                                seriali.splice(row_num-3, 1);
+					        	    $(this).closest('tr').remove();
+
+
+
+  	                            event.preventDefault();
+
+					        	}
+
+				    });
+		  			}
+
+
+
+$("#btnResmotivoInvidente").click(function(){
+        alert("Entre a Rutina Respuesta Motivo Paciente");
+
+
+  		 $.ajax({
+	           url: '/resMotivoInvidente',
+	           type: 'GET',
+
+	           data : {},
+	  		success: function (respuesta) {
+                     var data = JSON.parse(respuesta);
+
+
+	                    document.getElementById("id_motivo").value = data.Respuesta;
+                    },
+	   		    error: function (request, status, error) {
+
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+
+	     });
+    });
+
+
+
+$("#btnmotivoInvidente").click(function(){
+        alert("Entre a Rutina Reproducir Audio Motivo");
+
+		var nombre = " Cual es el motivo de consulta "
+
+  		 $.ajax({
+	           url: '/motivoInvidente',
+	           type: 'GET',
+
+	           data : {nombre:nombre},
+	  		success: function (respuesta) {
+                     var data = JSON.parse(respuesta);
+
+	                   //   $("#mensajes").html(data.nombre + data.mensaje);
+                    },
+	   		    error: function (request, status, error) {
+
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+
+	     });
+    });
+
+
+
+    $("#btnReproducir").click(function(){
+        alert("Entre a Rutina Reproducir Audio");
+
+		var nombre = document.getElementById("nombre").value
+
+  		 $.ajax({
+	           url: '/reproduceAudio',
+	           type: 'GET',
+
+	           data : {nombre:nombre},
+	  		success: function (respuesta) {
+                     var data = JSON.parse(respuesta);
+
+	                      $("#mensajes").html(data.nombre + data.mensaje);
+                    },
+	   		    error: function (request, status, error) {
+
+	   			    $("#mensajes").html(" !  Reproduccion  con error !");
+	   	    	}
+
+	     });
+    });
+
+ });
+
+
+
+
+</script>
+</body>
+
+</html>
+

@@ -1,0 +1,4 @@
+{"tipoDocumento": "01","numero":"7", "fecha": "2026-03-06 09:41:42.341817-05","moneda": "COP", "emisor": {"nit":	"830507718-8", "dv":"8","nombreRazonSocial": "CLINICA MEDICAL S.A.S","tipoPersona":"1","direccion":{"codigomunicipio":"11001","direccion":"Calle 36 Sur 77 -33","departamento":"CUNDINAMARCA"}}, "receptor": {"nit": "51017", "dv" : "0", "nombreRazonSocial": "luis ernesto bernal romero","tipoPersona": "2","tipoDocumentoIdentificacion": "13","direccion" : {"codigomunicipio":"11001","direccion": "CALLE 47 / 59-80","departamento":"CUNDINAMARCA"}}, "items": [{"codigoProducto":"CUPS02","nombreProducto": "SOMATOMEDINA C", "cantidad": 1.00,"unidadMedida": "94", "valorUnitario":"7700","valorTotal":"7700","impuestos": [{"tipo": "01", 
+          "porcentaje": 19.0,
+          "valor": 19000.00
+        }]}], "totales": {"valorBruto": "7700","valorNeto": 7700,"valorTotalImpuestos": 0.00,"valorTotal":7700}}

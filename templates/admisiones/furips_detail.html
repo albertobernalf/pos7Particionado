@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ furip.name }}</h1>
+<p>Fecha de inicio: <i>{{ furip.start_date }}</i></p>
+<p>Fecha de fin: <i>{{ furip.end_date }}</i></p>
+<p>
+    <a href="{% url "furips:list" %}">Regresar</a>
+</p>
+</body>
+</html>

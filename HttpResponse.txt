@@ -1,0 +1,13 @@
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
+
+response    = HttpResponse(content_type='application/pdf')
+
+        nombreReporteFinal = nombreReporte + ".pdf"
+        response['Content-Disposition'] = 'attachment; filename= '  + nombreReporteFinal
+
+            response.write(buff.getvalue())
+            buff.close()
+
+
+return response

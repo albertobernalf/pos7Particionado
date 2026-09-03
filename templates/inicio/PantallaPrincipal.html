@@ -1,0 +1,54 @@
+{% extends "Reportes/cabeza.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+<input type="hidden" id="username" name="username" value = "{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+
+<!--  Estos creo son del Reporteador -->
+
+<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
+
+<!--  Estos si de la Aplicacion base -->
+
+<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+
+
+<div class="row" style="height: 300px;">
+
+
+      {% for permisosGrales in PermisosGrales %}
+  <div class="col-xl-1"></div>
+      <div class="col-xl-3" style="width:100px;height:100px;">
+
+        <figure class="figure">
+
+            <img src="{% static permisosGrales.logo %}" class="figure-img img-fluid rounded"
+                 style="width:30px;height:30px;" alt="...">
+            <figcaption class="figure-caption text-center">
+                <a href="/escoge/{{Sede}}, {{Username}}, {{Profesional}}, {{Documento}} ,{{NombreSede}} ,{{permisosGrales.modulo_nombre}} ">
+                    <button type="button" class="btn btn-primary"  style="background-color:#244FA3"><H6>{{permisosGrales.nombre}}</H6></button>
+                     </a>
+            </figcaption>
+        </figure>
+
+        </div>
+
+    {% endfor %}
+
+    <div class="col-xl-2"></div>
+ </div>
+<br>
+<br>
+<br>
+{% endblock %}

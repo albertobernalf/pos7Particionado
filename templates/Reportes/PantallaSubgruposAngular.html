@@ -1,0 +1,73 @@
+{% load static %}
+
+       <input type="hidden" id="reporteSeleccionado" name="reporteSeleccionado" value="nada">
+   <input type="hidden" id="username" name="username" value="{{Username}}">
+                                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+                                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada"
+                                       value="{{SedeSeleccionada}}">
+                                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                                <!--  Estos si de la Aplixcacion bse -->
+
+
+                                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                                <input type="hidden" id="permisosGrales" name="permisosGrales"
+                                       value="{{PermisosGrales}}">
+                                <input type="hidden" id="permisosDetalle" name="permisosDetalle"
+                                       value="{{PermisosDetalle}}">
+                                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+
+
+<style>
+    div img {
+        border: 0;
+        vertical-align: middle;
+        max-width: 100%;
+    }
+</style>
+  <body style="background-color: #EEEEEE;">
+    <nav style="background-color: #0D2053;height: 6em;text-align: center;" class="navbar">
+        <span  class="navbar-text">
+            <div>
+                <p style="color: white;  text-align: center;font-weight: 600;font-size: calc(1em + 1vw);font-family: sans-serif;margin: 0.5em;padding-top: 25px">CLINIREPORT</p>
+            </div>
+
+        </span>
+    </nav>
+    <nav style="background-color: #284596;height: 6em; margin-bottom: 20px;margin-top: 10px;text-align: center;padding-top: 25px" class="navbar2">
+        <div>
+            <span class="navbar-text">
+
+  {% for nombreGrupoSeleccionado in NombreGrupoSeleccionado %}
+                <p style="color: white;  text-align: center;font-weight: 600;font-size: calc(1em + 1vw);font-family: sans-serif;margin: 0.5em;">REPORTES {{nombreGrupoSeleccionado.nombreGrupo}}  <a id="navbar-login" href="/emergenteGrupos/{{Username}}, {{SedeSeleccionada}}, {{Grupo}} "><button style="background-color: #0D2053;border-radius: 30px;height: 50px;width: 150px;color: #FFFFFF;font-size: 15px;" type="button" class="btn btn-outline-primary">INICIO</button></a></p>
+	{% endfor %}
+
+            </span>
+        </div>
+    </nav>
+    <div style="width: 80%;margin: 0 auto;background-color: #E5E5E5;padding: 20px;display: grid;line-height: 100px;"
+         class="container"> <!-- Grid layout-->
+
+        <div class="row">
+            {% for subGrupos in SubGrupos %}
+            <div style="display: inline-block; text-align: left; width:30%; background-color: #FFFFFF; border: 1px solid grey;border-radius: 10px;margin: 15px " class="col-md menuItem">
+                <div >
+                    <img style="width: 20%;" src="{% static subGrupos.logo %}" class="figure-img img-fluid rounded"
+                         alt="...">
+                    <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}} ">
+                        {{subGrupos.nombreSubGrupo}}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</body>
+
+
+

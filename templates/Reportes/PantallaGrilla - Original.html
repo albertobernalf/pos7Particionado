@@ -1,0 +1,308 @@
+{% extends "Reportes/PantallaSubGrupos.html" %}
+{% load static %}
+<head>
+    <style type="text/css">
+        thead tr th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+
+        .table-responsive {
+            height:200px;
+            overflow:scroll;
+        }
+    </style>
+
+</head>
+
+{% block content %}
+
+<input type="hidden" id="username" name="username" value="{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+
+
+<!--Inicia PantallaGrupos       -->
+
+
+<div class="row" style=" height: 60px;">
+
+    <div class="col-xl-3"></div>
+
+    {% for grupos in Grupos %}
+ {% if grupos.nombreGrupo == 'ASISTENCIAL' %}
+
+    <div class="col-xl-3" style="width:50px;height:10px;">
+        <figure class="figure">
+
+            <img src="{% static '/img/ASISTENCIAL.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/pantallaSubgrupos/{{Username}}, {{SedeSeleccionada}}, {{grupos.id}} ">
+                    {{grupos.nombreGrupo}} </a>
+            </figcaption>
+        </figure>
+        {{grupos.grupo}}
+    </div>
+
+    {% endif %}
+
+
+    {% if grupos.nombreGrupo == 'ADMINISTRATIVO' %}
+
+    <div class="col-xl-3" style="width:50px;height:10px;">
+        <figure class="figure">
+
+            <img src="{% static '/img/ADMINISTRATIVO.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/pantallaSubgrupos/{{Username}}, {{SedeSeleccionada}}, {{grupos.id}} ">
+                    {{grupos.nombreGrupo}} </a>
+            </figcaption>
+        </figure>
+        {{grupos.grupo}}
+    </div>
+
+    {% endif %}
+
+    {% endfor %}
+
+
+    <div class="col-xl-3"></div>
+
+
+</div>
+<br>
+<br>
+<br>
+
+
+<!--Fin PantallaGrupos       -->
+
+<!--Inicia PantallaSubGrupos       -->
+
+
+<div class="row" style=" height: 30px;">
+
+    <div class="col-xl-1"></div>
+
+    {% for subGrupos in SubGrupos %}
+
+
+    <div class="col-xl-2" style="width:50px;height:10px;">
+
+                {% if subGrupos.nombreSubGrupo == 'HOSPITALIZACION' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/HOSPITALIZACION.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+
+        {% if subGrupos.nombreSubGrupo == 'CIRUGIA' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/CIRUGIA.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+        {% if subGrupos.nombreSubGrupo == 'UCI' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/UCI.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+        {% if subGrupos.nombreSubGrupo == 'URGENCIAS' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/URGENCIAS.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+        {% if subGrupos.nombreSubGrupo == 'FARMACIA' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/FARMACIA.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+
+        {% if subGrupos.nombreSubGrupo == 'FACTURACION' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/FACTURACION.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+         {% if subGrupos.nombreSubGrupo == 'CARTERA' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/CARTERA.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+         {% if subGrupos.nombreSubGrupo == 'GLOSAS' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/GLOSAS.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+          {% if subGrupos.nombreSubGrupo == 'ESTADISTICAS' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/Estadisticas.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+          {% if subGrupos.nombreSubGrupo == 'CALIDAD' %}
+
+        <figure class="figure">
+
+            <img src="{% static '/img/Calidad.jpg' %}" class="figure-img img-fluid rounded"
+                 style="width:200px;height:100px;"
+                 alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/combo/{{Username}}, {{SedeSeleccionada}}, {{Grupo}}, {{subGrupos.id}}  ">
+                    {{subGrupos.nombreSubGrupo}} </a>
+            </figcaption>
+        </figure>
+        {% endif %}
+
+
+
+
+
+    </div>
+
+    {% endfor %}
+
+
+
+
+
+    <div class="col-xl-1"></div>
+
+
+</div>
+<br>
+<br>
+<br>
+<br>
+
+
+<!--Fin PantallaSubGrupos       -->
+
+<div class="row" style=" height: 150px;">
+
+    <div class="col-xl-12">
+
+        <div class="card-block">
+            <div style="height: 450px; overflow: auto">
+                <table id="grilla" class="table table-hover"
+                       style="height: 300px , background-color:LightGray; border: 3px solid black; border-radius: 10px; width:99%;">
+                    <thead class="thead-dark">
+
+                    <bold>
+                        {% for lasColumnas in LasColumnas %}
+                        <th class="header" scope="col">
+                            {{lasColumnas}}
+                        </th>
+
+                        {% endfor %}
+                    </bold>
+                    </thead>
+
+                    {% for grilla in Grilla %}
+
+
+                    <tr style="color:blue; height:5px ; font-size: 12px">
+                        {% for value in grilla %}
+
+                        <td class="w-10" style="color:#3366BC; width:10 ; font-size: 12px; white-space: nowrap;"  >
+
+                            {{ value }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+
+                    {% endfor %}
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <root>
+     <tipoDocumento>01</tipoDocumento>
+     <numero>7</numero>
+     <fecha>2026-03-06 09:40:31.940175-05</fecha>
+     <moneda>COP</moneda>
+     <emisor>
+         <nit>830507718-8</nit>
+         <dv>8</dv>
+         <nombreRazonSocial>CLINICA MEDICAL S.A.S</nombreRazonSocial>
+         <tipoPersona>1</tipoPersona>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>Calle 36 Sur 77 -33</direccion>
+             <departamento>CUNDINAMARCA</departamento>
+         </direccion>
+     </emisor>
+     <receptor>
+         <nit>51017</nit>
+         <dv>0</dv>
+         <nombreRazonSocial>luis ernesto bernal romero</nombreRazonSocial>
+         <tipoPersona>2</tipoPersona>
+         <tipoDocumentoIdentificacion>13</tipoDocumentoIdentificacion>
+         <direccion>
+             <codigomunicipio>11001</codigomunicipio>
+             <direccion>CALLE 47 / 59-80</direccion>
+             <departamento>CUNDINAMARCA</departamento>
+         </direccion>
+     </receptor>
+     <items>
+         <codigoProducto>CUPS02</codigoProducto>
+         <nombreProducto>SOMATOMEDINA C</nombreProducto>
+         <cantidad>1</cantidad>
+         <unidadMedida>94</unidadMedida>
+         <valorUnitario>7700</valorUnitario>
+         <valorTotal>7700</valorTotal>
+         <impuestos>
+             <tipo>01</tipo>
+             <porcentaje>19</porcentaje>
+             <valor>19000</valor>
+         </impuestos>
+     </items>
+     <totales>
+         <valorBruto>7700</valorBruto>
+         <valorNeto>7700</valorNeto>
+         <valorTotalImpuestos>0</valorTotalImpuestos>
+         <valorTotal>7700</valorTotal>
+     </totales>
+ </root>

@@ -1,0 +1,79 @@
+from django.http import JsonResponse
+import base64
+
+def retornar_lista_blobs_json(request):
+    # 1. Simulación de datos (ej: imágenes binarias en bytes)
+    # En producción, esto vendría de un modelo FileField o base de datos
+    blob_data1 = b'\x89PNG\r\n\x1a\n...' # Imagina bytes reales aquí
+    blob_data2 = b'\x89PNG\r\n\x1a\n...'
+
+    # 2. Convertir binarios a Base64 string para JSON
+    encoded1 = base64.b64encode(blob_data1).decode('utf-8')
+    encoded2 = base64.b64encode(blob_data2).decode('utf-8')
+
+    # 3. Estructurar el arreglo (lista)
+    data = [
+        {"id": 1, "filename": "imagen1.png", "blob": encoded1},
+        {"id": 2, "filename": "imagen2.png", "blob": encoded2}
+    ]
+
+    # 4. Devolver respuesta JSON (safe=False es necesario para listas)
+    return JsonResponse(data, safe=False)
+
+
+-- otra voz
+
+Ejemplo de Vista (views.py)
+python
+import base64
+from django.http import JsonResponse
+
+def devolver_blobs_json(request):
+    # Supongamos que tienes una lista de objetos con datos binarios
+    # o archivos leídos del sistema
+    archivos_binarios = [
+        b"contenido binario del archivo 1",
+        b"datos de imagen o pdf 2"
+    ]
+    
+    lista_blobs = []
+    
+    for datos in archivos_binarios:
+        # 1. Codificar bytes a Base64
+        # 2. Decodificar a string utf-8 para que sea serializable en JSON
+        encoded_string = base64.b64encode(datos).decode('utf-8')
+        lista_blobs.append({
+            "nombre": "archivo.bin",
+            "contenido_base64": encoded_string,
+            "tipo": "application/octet-stream"
+        })
+
+    # 'safe=False' permite devolver una lista en lugar de un diccionario
+    return JsonResponse(lista_blobs, safe=False)
+
+
+- ojo otra voz de functio a funnction python djangpo
+
+from io import BytesIO
+from django.core.files.base import ContentFile
+# Supongamos que esta es la función que genera el blob
+def generar_blob_func():
+    # Simulando datos binarios (ej. una imagen o PDF generado)
+    datos_binarios = b"Contenido del archivo blob"
+    return datos_binarios
+
+# Función que recibe el blob
+def procesar_archivo_func(request):
+    # 1. Obtener el blob de la otra función
+    blob = generar_blob_func()
+    
+    # 2. Procesar o convertir si es necesario
+    # Convertir a un objeto de archivo Django para guardarlo en un modelo
+    file_content = ContentFile(blob, name='archivo.txt')
+    
+    # Ejemplo de uso: Modelo.objects.create(campo_archivo=file_content)
+    
+    return "Procesamiento exitoso"
+Puntos clave:
+
+

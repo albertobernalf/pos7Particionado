@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Furips</h1>
+
+<p>
+    <a href="{% url "furips:new" %}">Agregar Furips</a>
+</p>
+
+<ul>
+    {% for furip in object_list %}
+        <li>
+            <p>{{ furip.name }}</p>
+            <p>
+                <a href="{% url "furips:detail" furip.id %}">Ver</a> |
+                <a href="{% url "furips:edit" furip.id %}">Editar</a> |
+                <a href="{% url "furips:delete" furip.id %}">Borrar</a>
+            </p>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
+
+

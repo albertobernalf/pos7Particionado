@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src={% static 'mainTarifas.js' %} defer> </script>
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom css -->
+    <link rel="stylesheet" type="text/css"  href = {% static 'css/login.css' %} >
+ <link rel="stylesheet" type="text/css" href={% static 'css/panelTarifas.css' %}
+    <link rel="stylesheet" type="text/css"  href = {% static 'nav_sidebar.css' %} >
+    <link rel="stylesheet" type="text/css"  href = {% static 'css/base.css' %} >
+    <link rel="stylesheet" type="text/css"  href = {% static 'css/responsive.css' %} >
+     <link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+
+    <!-- De DATA TABLE -->
+
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <!-- FIN De DATA TABLE -->
+
+     <!-- Custom css -->
+    <link rel="stylesheet" type="text/css"  href = {% static 'css/styleTab.css' %} >
+
+        <script src={% static 'js/styleTab.js' %} defer> </script>
+
+    <!-- Fin Custom css -->
+
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+    <style type="text/css">
+        thead tr th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+
+        .table-responsive {
+            height:200px;
+            overflow:scroll;
+        }
+
+        .button {
+             border: none;
+             width: 580%;
+             height: 90%;
+             padding: 15px 32px;
+             display: inline-block;
+
+        }
+
+        .button1 {
+             background-color: #f44336;
+             color: white;
+             border: none;
+             width: 300%;
+             height: 50%;
+             display: inline-block;
+
+        }
+
+    </style>
+
+</head>
+
+<body class=" login" data-admin-utc-offset="0">
+
+<input type="hidden" id="username" name="username" value = "{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value = "{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value = "{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value = "{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value = "{{SubGrupo}}">
+<!--  Estos si de la Aplixcacion bse -->
+
+
+<input type="hidden" id="sede" name="sede" value = "{{Sede}}">
+<input type="hidden" id="documento" name="documento" value = "{{Documento}}">
+<input type="hidden" id="nombreSede" name="nombreSede" value = "{{NombreSede}}">
+<input type="hidden" id="profesional" name="profesional" value = "{{Profesional}}">
+<input type="hidden" id="permisosGrales" name="permisosGrales" value = "{{PermisosGrales}}">
+<input type="hidden" id="permisosDetalle" name="permisosDetalle" value = "{{PermisosDetalle}}">
+<input type="hidden" id="escogeModulo" name="escogeModulo" value = "{{EscogeModulo}}">
+
+{% block menu  %}
+<div class="marco">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Clinica Vulnerables</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#">Mision</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admisiones
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Mecanicos Pacientes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Manejo cama</a>
+                        <a class="dropdown-item" href="/manejoLuz#">Luz de habitacion</a>
+                        <a class="dropdown-item" href="#">Televisor</a>
+                        <a class="dropdown-item" href="#">Calefaccion</a>
+                        <a class="dropdown-item" href="/ambienteMusical#">Ambientacion Musical</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Informes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Reporte_1</a>
+                        <a class="dropdown-item" href="/manejoLuz#">Reporte_2</a>
+                        <a class="dropdown-item" href="#">Reporte_3</a>
+                        <a class="dropdown-item" href="#">Reporte_4</a>
+                        <a class="dropdown-item" href="/ambienteMusical#">Reporte_5</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+         <li>
+		        <form class="form-inline my-2 my-lg-0">
+         	   <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+	            <a class="nav-link" href="/retornarMen/{{Sede}}, {{Username}}, {{Documento}}, {{NombreSede}}, {{Profesional}}">Retornar</a>
+		        </form>
+
+		    </li>
+            </div>
+        </div>
+    </div>
+   
+</nav>
+</div>
+{% endblock %}
+
+
+
+{% block head  %}
+<script>
+window.onload = function(){
+  var fecha = new Date(); //Fecha actual
+  var mes = fecha.getMonth()+1; //obteniendo mes
+  var dia = fecha.getDate(); //obteniendo dia
+  var ano = fecha.getFullYear(); //obteniendo año
+  if(dia<10)
+    dia='0'+dia; //agrega cero si el menor de 10
+  if(mes<10)
+    mes='0'+mes //agrega cero si el menor de 10
+  document.getElementById('busDesde').value=ano+"-"+mes+"-"+dia;
+  document.getElementById('busHasta').value=ano+"-"+mes+"-"+dia;
+}
+</script>
+
+
+{% endblock %}
+
+<div class="marco">
+    {% block usuarios %}
+
+            Sede: {{NombreSede}} Colaborador : {{Profesional}} Modulo: {{EscogeModulo}}
+
+    {% endblock %}
+</div>
+
+
+
+{% block content  %}
+
+{% endblock %}
+
+{% block mensajeria  %}
+
+{% endblock %}
+
+
+
+{% block footer  %}
+
+{% endblock %}
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker-standalone.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src={% static 'js/menuTarifas.js' %} defer >         </script>
+
+</body>
+</html>
+

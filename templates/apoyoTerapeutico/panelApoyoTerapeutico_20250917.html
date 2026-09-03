@@ -1,0 +1,684 @@
+{% extends "apoyoTerapeutico/menuApoyoTerapeutico.html" %}
+{% load static %}
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href={% static 'css/navegacionApoyoTerapeutico.css' %} >
+<link rel="stylesheet" type="text/css" href={% static 'css/fontawesome.css' %}>
+<link rel="stylesheet" type="text/css"  href = {% static 'css/litle.css' %} >
+<script src={% static 'js/panelTabsApoyoTerapeutico.js' %} defer>         </script>
+<script src="https://kit.fontawesome.com/5d0337a043.js" crossorigin="anonymous"></script>
+
+<style>
+tablaApoyoTerapeutico td {
+
+  text-align: center;
+  padding: 1px;
+  /* Alto de las celdas */
+  height: 1px;
+  font-size:40%
+  font-weight: bold;
+}
+
+tablaApoyoTerapeutico tr {
+  padding: 1px;
+  /* Alto de las celdas */
+  height: 1px;
+
+}
+</style>
+<script>
+
+function RefrescarPantalla() {
+ 	 location.reload();
+}
+</script>
+
+{% endblock %}
+
+{% block indicadores %}
+
+<span style="padding-right:3px; padding-top: 3px; display:inline-block; margin-left: 250px;">
+1 dia
+<img class="manImg" src={% static 'img/iloveimg-converted/poste-indicador31.JPG' %}></img>
+</span>
+
+<span style="padding-right:3px; padding-top: 3px; display:inline-block; margin-left: 270px;">
+Mayor a un dia
+<img class="manImg" src={% static 'img/iloveimg-converted/icons8-enfermera-48_X.JPG' %}></img>
+</span>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="marco">
+    <ul class="tabs">
+        <li><a href="#ApoyoTerapeutico"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Ingresos Apoyo Terapeutico </a></li>
+	 <li><a href="#RespuestasApoTerap"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Responder Examenes</a></li>
+	 <li><a href="#ConsultaResultados"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+            Resultados</a></li>
+	 <li><a href="#DetalleResultados"><span class="fa-solid fa-user-doctor-message"></span> <span class="tab-text"> </span>
+             Detalle Resultados </a></li>
+
+
+    </ul>
+</div>
+
+<div class="marco">
+    <div class="secciones">
+        <article id="ApoyoTerapeutico">
+            <form action="/crearApoyoTerapeutico/" method="get" id="FormApoyoTerapeutico">
+
+                <input type="hidden" id="username" name="username" value="{{Username}}">
+                <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+                <input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+                <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                <!--  Estos si de la Aplixcacion base -->
+                <input type="hidden" id="sede" name="sede" value="{{Sede}}">
+                <input type="hidden" id="documento" name="documento" value="{{Documento}}">
+                <input type="hidden" id="nombreSede" name="nombreSede" value="{{NombreSede}}">
+                <input type="hidden" id="profesional" name="profesional" value="{{Profesional}}">
+                <input type="hidden" id="permisosGrales" name="permisosGrales" value="{{PermisosGrales}}">
+                <input type="hidden" id="permisosDetalle" name="permisosDetalle" value="{{PermisosDetalle}}">
+                <input type="hidden" id="escogeModulo" name="escogeModulo" value="{{EscogeModulo}}">
+                <input type="hidden" id="username_id" name="username_id" value="{{Username_id}}">
+                <input type="hidden" id="tipoDocId" name="tipoDocId" value="">
+                <input type="hidden" id="nombreTipoDoc" name="nombreTipoDoc" value="">
+                <input type="hidden" id="documentoId" name="documentoId" value="">
+                <input type="hidden" id="documento2" name="documento2" value="">
+                <input type="hidden" id="consec" name="consec" value="">
+                <input type="hidden" id="tipoIng" name="tipoIng" value="{{tipoIng}}">
+            </form>
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+          		<div class="container my-2" style="width:100%">
+          		   <div class="row" style="width:100%">
+ 				    <table  id= "tablaApoyoTerapeutico" class="display table table-striped table-sm fs-6 nowrap" style="width:100%;">                                    
+                                        <thead>
+                                        <tr>
+                                            <th style="width:5%;">Action</th>
+                                            <th style="width:5%;">id</th>
+                                            <th style="width:5%;">TipoDoc</th>
+                                            <th style="width:12%;">Documento</th>
+                                            <th style="width:20%;">Paciente</th>
+                                            <th style="width:3%;">#</th>
+                                            <th style="width:3%;">FecExamen</th>
+                                            <th style="width:12%;">TipoExamen</th>
+                                            <th style="width:12%;">Examen</th>
+                                            <th style="width:12%;">Estado</th>
+                                            <th style="width:12%;">Cantidad</th>
+                                            <th style="width:12%;">Folio</th>
+                         
+                                        </tr>
+                                        </thead>
+                                        <tbody style="margin-left:0">
+                                        </tbody>
+                                    </table>
+                                </div> 
+                            </div> 
+        </article>
+
+       <article id="RespuestasApoTerap">
+            <center>
+                <h3>Ingresar resultados Examenes</h3></center>
+   <div style="height: 1px;  width:90%;">  
+                            <form class="form-inline" action="/crearApoyoTerapeutico/" method="POST"
+                                  id="ApoyoTerapeuticoForma">
+
+                                <input type="hidden" id="examId" name="examId" value="">
+
+                                    <input type="hidden" class="form-control form-control-sm" id="tipoExamenId"    name="tipoExamenId" value="" readonly>
+
+                                <div class="row row-cols-9">
+
+				     <div class="col">
+					TipoDoc:
+					<span id="tipoDocPaci" name="tipoDocPaci"></span>
+                                    </div>
+
+				     <div class="col">
+					Documento:
+					<span id="documentoPaci" name="documentoPaci"></span>
+                                    </div>
+
+				     <div class="col">
+					Paciente:
+					<span id="nombrePaciente" name="nombrePaciente"></span>
+
+                                    </div>
+
+                                    <div class="col">
+					<span id="tipoExamen" name="tipoExamen"></span>
+					TipoExamen:
+                                    </div>
+
+                                    <div class="col">
+					CupsId :
+					<span id="CupsId" name="CupsId"></span>
+                                        
+                                    </div>
+
+                                    <div class="col">
+					Examen:
+					<span id="nombreExamen" name="nombreExamen"></span>
+                                        
+
+                                    </div>
+
+				  <div class="col">
+                                        <label for="serviciosAdministrativos" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos"  tabindex= "0"
+                                                    name="serviciosAdministrativos" required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+				
+                                    <div class="col">
+					Cantidad:
+					<span id="cantidad" name="cantidad"></span>
+                                   
+
+                                    </div>
+			 <div class="col">
+                                         Folio:
+                                        <input type="text" class="form-control form-control-sm" id="folio" name="folio" size="2"
+                                               value="" readonly>
+
+                                    </div>
+                                 
+
+                                </div>
+
+                                <div class="row">
+				  
+
+                                        <div class="col">
+                                        Estado:
+
+                                        <select class="select-css  h-40 w-10" id="estadoExamen"
+                                                name="estadoExamen">
+                                            {% for estadosExamenes in EstadosExamenes %}
+                                            <option value="{{estadosExamenes.id}}">
+                                                {{estadosExamenes.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+
+
+                                    <div class="col">
+                                         Observa:
+                                        <input type="text" class="form-control form-control-sm" id="observaciones"
+                                               name="observaciones" size="6" value="" readonly>
+
+                                    </div>
+
+                                    <div class="col">
+                                        Interpreta1:
+                                        <input type="text" class="form-control form-control-sm" id="interpretacion1"
+                                               name="interpretacion1" size="6" value="">
+
+                                    </div>
+                                    <div class="col">
+                                        Medico:
+
+                                        <select class="select-css  h-40 w-10" id="medicoInterpretacion1"
+                                                name="medicoInterpretacion1">
+                                            {% for medicoInterpretacion1 in MedicoInterpretacion1 %}
+                                            <option value="{{medicoInterpretacion1.id}}">
+                                                {{medicoInterpretacion1.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col">
+                                     Interpreta2:
+                                        <input type="text" class="form-control form-control-sm" id="interpretacion2"
+                                               name="interpretacion2" value="">
+
+                                    </div>
+
+                                    <div class="col">
+                                       Medico:
+
+                                        <select class="select-css  h-40 w-10" id="medicoInterpretacion2"
+                                                name="medicoInterpretacion2">
+                                            {% for medicoInterpretacion2 in MedicoInterpretacion2 %}
+                                            <option value="{{medicoInterpretacion2.id}}">
+                                                {{medicoInterpretacion2.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col">
+                                       MedReporte:
+
+                                        <select class="select-css" id="medicoReporte" name="medicoReporte" >
+                                            {% for medicoReporte in MedicoReporte %}
+                                            <option value="{{medicoReporte.id}}"> {{medicoReporte.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col">
+                                         Imagen :
+                                        <input type="text" class="form-control form-control-sm" id="rutaImagen"
+                                               name="rutaImagen" value="" size="4">
+                                    </div>
+                                    <div class="col">
+                                        Video :
+                                        <input type="text" class="form-control form-control-sm" id="rutaVideo"
+                                               name="rutaVideo" value="" size="4">
+                                    </div>
+
+                                </div>
+
+				 </form>
+                                <!-- DESDE AQUIP DATATABLE  -->
+
+
+                                <!-- INICIO TABLE DE  EL DATATABLE  -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card" style="width=100%;">
+                                            <div class="card-header" style="height:30px;width=100%;">
+                                                <div class="row">
+
+
+                                                    <div class="col">
+                                                        RazgoClinico:
+
+                                                        <select class="form-select  h-10 w-10" id="rasgosClinicos"
+                                                                name="rasgosClinicos">
+                                                            {% for rasgosClinicos in RasgosClinicos %}
+                                                            <option value="{{rasgosClinicos.id}}">
+                                                                {{rasgosClinicos.nombre}}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+ 						 <div class="col"> Observa:
+                                                        <input type="text" id="observa" name="observa" value="">
+                                                    </div>
+
+                                                    <div class="col">
+                                                       Resultado:
+                                                        <input type="text" id="valor" name="valor" value="">
+                                                    </div>
+
+						 
+
+                                                    <div class="col">
+                                                        <span class="text-secondary">Crear Resultado</span>
+                                                        <a class="btn btn-success" href="javascript:void(0)"
+                                                           id="createNewResultadoRasgo"> <i class="fa fa-plus"></i></a>
+                                                    </div>
+                                                    <div class="col">
+                                                      
+
+							<span style="padding-right:3px; padding-top: 3px; display:inline-block; ">
+							<img class="manImg" src={% static 'img/iloveimg-converted/icons8-guardar-48.JPG' %}></img>
+								  <input type="button" id="btn-rango" name="btn-rango"
+                                                               value="Guardar ¡" onClick="guardarResultado()">
+							</span>
+
+                                                    </div>
+
+
+                                                </div> <!-- Cierra el row -->
+                                            </div>  <!-- Cierra el header -->
+						<br>
+						<br>
+
+                                            <div class="card-body" style="height:30px;width=100%;">
+                                                <div class="row">
+                                                     <div class="col-sm-12"> 
+
+                                                         <table id=tablaRasgos  class="display nowrap table table table-bordered  tablaRasgos table-hover table-sm dtr-inline " >  
+                                                      <!--  <table id=tablaRasgos  class="display nowrap table table table-bordered  tablaRasgos table-hover "> -->
+
+                                                            <thead>
+                                                            <tr>
+                                                             <!--    <th>id</th> -->
+                                                                <th>Codigo Cups</th>
+                                                                <th>Nombre Rasgo</th>
+                                                                <th style="width:25%;">Unidad</th>
+                                                                <th style="width:12%;">Minimo</th>
+                                                                <th style="width:30%;">Maximo</th>
+                                                                <th style="width:30%;">Valor</th>
+								 <th style="width:30%;">Observacion</th>
+                                                                <th style="width:3%;">Borrar</th>
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align:bottom">
+                                                            <tr style="height:5%">
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                     </div>  <!-- cierra el col -->
+                                                </div> <!-- cierra el row -->
+                                            </div> <!-- cierra el body -->
+                                        </div> <!-- cierra el card -->
+                                    </div> <!-- cierra el col -->
+                                </div> <!-- cierra el row -->
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                  </div>  <!-- cierra el div papa -->
+            <!-- HASTA AQUI DATATABLE -->
+
+                   
+         </article>
+  <article id="ConsultaResultados">
+            <center>
+                <h3>Consulta de Resultados</h3></center>
+
+           <!-- INICIO TABLE DE  EL DATATABLE  -->
+          		<div class="container my-2" style="width:100%">
+          		   <div class="row" style="width:100%">
+ 				    <table  id= "tablaTerapeuticoConsulta" class="display table table-striped table-sm fs-6 nowrap" style="width:100%;">                                    
+                                       <thead>
+                                        <tr>
+                                            <th>Action</th>
+                                            <th>id</th>
+                                            <th>TipoDoc</th>
+                                            <th>Documento</th>
+                                            <th>Paciente</th>
+                                            <th>#</th>
+                                            <th>FecExamen</th>
+                                            <th>TipoExamen</th>
+                                            <th>Examen</th>
+                                            <th>Estado</th>
+                                            <th>Cantidad</th>
+                                            <th>Folio</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div> 
+            </div>  
+
+        </article>
+	<!-- Aqui  Otro Article de consultaDetallado  -->
+
+        <article id="DetalleResultados">
+            <center>
+                <h3>Detalle Resultados </h3></center>
+            <table class="table" style="height: 80px; background-color:LightGray;  width:100%;">
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <!--           <table class="table" style="height: 5px;  border: 8px solid black; border-color: #96D4D4;  width:100%;">  -->
+                            <div style="height: 1px;  width:90%;">  
+                            <form class="form-inline" action="/consultaRespuestasTerapeutico/" method="POST"
+                                  id="ApoyoTerapeuticoForma">
+
+                                <input type="hidden" id="zexamId" name="zexamId" value="">
+
+                                    <input type="hidden" class="form-control form-control-sm" id="ztipoExamenId"    name="ztipoExamenId" value="" readonly>
+
+
+                                <div class="row row-cols-8">
+
+				     <div class="col">
+                                        <label for="ztipoDocPaci" class="col-sm-3 control-label"> TipoDoc:</label>
+                                        <input type="text" class="form-control form-control-sm" id="ztipoDocPaci"
+                                               name="ztipoDocPaci" value="" readonly>
+                                    </div>
+
+
+				     <div class="col">
+                                        <label for="znombrePaciente" class="col-sm-3 control-label">Paciente:</label>
+                                        <input type="text" class="form-control form-control-sm" id="znombrePaciente"
+                                               name="znombrePaciente" value="" readonly>
+                                    </div>
+
+
+
+                                    <div class="col">
+                                        <label for="ztipoExamen" class="col-sm-3 control-label"> TipoExamen:</label>
+                                        <input type="text" class="form-control form-control-sm" id="ztipoExamen"
+                                               name="ztipoExamen" value="" readonly>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="zCupsId" class="col-sm-1 control-label"> CupsId :</label>
+                                        <input type="text" class="form-control form-control-sm" id="zCupsId"
+                                               name="zCupsId" value="" readonly>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="znombreExamen" class="col-sm-6 control-label"> Examen:</label>
+                                        <input type="text" class="form-control form-control-sm" id="znombreExamen"
+                                               name="znombreExamen" value="" readonly>
+
+                                    </div>
+
+				          <div class="col">
+                                        <label for="zserviciosAdministrativos" class="col-sm-6 control-label">Servicio:</label>
+
+                                        <select class="form-select  h-40 w-10" id="zserviciosAdministrativos"
+                                                name="zserviciosAdministrativos" disabled>
+                                            {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                            <option value="{{serviciosAdministrativos.id}}">
+                                                {{serviciosAdministrativos.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+				
+                                    <div class="col">
+                                        <label for="zcantidad" class="col-sm-1 control-label"> Cantidad:</label>
+                                        <input type="text" class="form-control form-control-sm" id="zcantidad"
+                                               name="zcantidad" value="" readonly>
+
+                                    </div>
+
+                                 
+
+                                </div>
+
+                                <div class="row row-cols-8">
+				   <div class="col">
+                                        <label for="zfolio" class="col-sm-1 control-label"> Folio:</label>
+                                        <input type="text" class="form-control form-control-sm" id="zfolio" name="zfolio"
+                                               value="" readonly>
+
+                                    </div>
+
+                                        <div class="col">
+                                        <label for="zestadoExamen" class="col-sm-6 control-label">EstadoExamen:</label>
+
+                                        <select class="form-select  h-40 w-10" id="zestadoExamen"
+                                                name="zestadoExamen" disabled>
+                                            {% for estadosExamenes in EstadosExamenes %}
+                                            <option value="{{estadosExamenes.id}}">
+                                                {{estadosExamenes.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+
+
+                                    <div class="col">
+                                        <label for="zobservaciones" class="col-sm-6 control-label"> Observaciones
+                                            :</label>
+                                        <input type="text" class="form-control form-control-sm" id="zobservaciones"
+                                               name="zobservaciones" value="" readonly>
+
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="zinterpretacion1" class="col-sm-6 control-label"> Interpretacion1
+                                            :</label>
+                                        <input type="text" class="form-control form-control-sm" id="zinterpretacion1"
+                                               name="zinterpretacion1" value="" readonly>
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="zmedicoInterpretacion1" class="col-sm-6 control-label">MedicoInterpreta:</label>
+
+                                        <select class="form-select  h-40 w-10" id="zmedicoInterpretacion1"
+                                                name="zmedicoInterpretacion1" disabled>
+                                            {% for medicoInterpretacion1 in MedicoInterpretacion1 %}
+                                            <option value="{{medicoInterpretacion1.id}}">
+                                                {{medicoInterpretacion1.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="zinterpretacion2" class="col-sm-6 control-label"> Interpretacion2:</label>
+                                        <input type="text" class="form-control form-control-sm" id="zinterpretacion2"
+                                               name="zinterpretacion2" value="" readonly>
+
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="zmedicoInterpretacion2" class="col-sm-6 control-label">MedicoInterpreta:</label>
+
+                                        <select class="form-select  h-40 w-10" id="zmedicoInterpretacion2"
+                                                name="zmedicoInterpretacion2" disabled>
+                                            {% for medicoInterpretacion2 in MedicoInterpretacion2 %}
+                                            <option value="{{medicoInterpretacion2.id}}">
+                                                {{medicoInterpretacion2.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="zmedicoReporte" class="col-sm-6 control-label">MedicoReporte:</label>
+
+                                        <select class="form-select  h-40 w-10" id="zmedicoReporte" name="zmedicoReporte" disabled>
+                                            {% for medicoReporte in MedicoReporte %}
+                                            <option value="{{medicoReporte.id}}"> {{medicoReporte.nombre}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="zrutaImagen" class="col-sm-6 control-label"> RutaImagen :</label>
+                                        <input type="text" class="form-control form-control-sm" id="zrutaImagen"
+                                               name="zrutaImagen" value="" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <label for="zrutaVideo" class="col-sm-6 control-label"> RutaVideo :</label>
+                                        <input type="text" class="form-control form-control-sm" id="zrutaVideo"
+                                               name="zrutaVideo" value="" readonly>
+                                    </div>
+
+                                </div>
+
+				 </form>
+                                <!-- DESDE AQUIP DATATABLE  -->
+
+
+                                <!-- INICIO TABLE DE  EL DATATABLE  -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card" style="width=100%;">
+                                            <div class="card-header" style="height:30px;width=100%;">
+                                                <div class="row">
+                                                </div>
+                                            </div>
+                                            <div class="card-body" style="height:30px;width=100%;">
+                                                <div class="row">
+                                                     <div class="col-sm-12"> 
+
+                                                         <table id="tablaRasgosConsulta"  class="display nowrap table table table-bordered  tablaRasgosConsulta table-hover table-sm dtr-inline " >
+
+                                                            <thead>
+                                                            <tr>
+                                                           
+                                                                <th>Codigo Cups</th>
+                                                                <th>Nombre Rasgo</th>
+                                                                <th>Unidad</th>
+                                                                <th>Minimo</th>
+                                                                <th>Maximo</th>
+                                                                <th>Valor</th>
+						                 <th>Observacion</th>
+                                                                <th>Borrar</th>  
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align:bottom">
+                                                        
+                                                            </tbody>
+                                                        </table>
+                                                     </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN TABLE DE  EL DATATABLE  -->
+                  </div> 
+            </table>
+
+
+            <!-- HASTA AQUI DATATABLE -->
+
+
+    </form>
+    <!--     </table> -->
+
+
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+    </tr>
+    </form>
+
+    </table>
+    </article>
+
+	<!-- Aqui  Fin Otro Article de consultaDetallado  -->
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block mensajeria %}
+<div class="marco">
+     <span id="mensajes" name="mensajes" style= "color:blue; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+     <span id="mensajesError" name="mensajesError" style= "color:red; font-size:18px; line-height:35px; font-family: Calibri;" > </span>
+
+</div>
+{% endblock %}
+{% block footer%}
+<div class="marco">
+</div>
+{% endblock %}
+
+
+

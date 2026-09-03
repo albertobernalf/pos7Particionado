@@ -1,0 +1,244 @@
+{% extends "Reportes/cabeza.html" %}
+{% load static %}
+
+{% block content %}
+<!-- desde AQUI SI SEÑORES                      -->
+<!--Inicia PantallaGrupos       -->
+
+<input type="hidden" id="username" name="username" value="{{Username}}">
+<input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+<input type="hidden" id="numreporte" name="numreporte" value="{{numreporte}}">
+<input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+<input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+<input type="hidden" id="reporteSeleccionado" name="reporteSeleccionado" value="nada">
+<input type="hidden" id="parametrosSeleccionado" name="parametrosSeleccionado" value="{{Parametros}}">
+
+<div class="container">
+    <center>
+        <div class="card">
+            <div class="card-block" align="center">
+                <div id="grilla_data" class="mt-5">      </div>
+
+                <table>
+                    <center>
+
+                        <tr>
+                            <div class="mx-auto" style="width: 1100px; background-color:#808B96  ">
+
+                                <figure class="figure">
+                                    <figcaption class="figure-caption text-right">
+                                        <H1>
+                                              {% for nombreSubGrupoSeleccionado in NombreSubGrupoSeleccionado %}
+                                            <p style="height:50px;font-style:font-size:40px"><b><FONT COLOR="white">REPORTES
+                                                {{nombreSubGrupoSeleccionado.nombreSubGrupo}} </FONT> </b></p>
+                                               {% endfor %}
+                                        </H1>
+
+                                    </figcaption>
+                                </figure>
+
+                            </div>
+
+                        </tr>
+                        <tr>
+                            <!-- INSERTO EL COMBO -->
+
+                            <div class="col-xl-4"></div>
+
+                            <div class="col-xl-4">
+                                <form id="combo" action="/Reporte1" method="GET">
+
+                                    <br>
+                                    <br>
+
+                                    <div class="form-row">
+
+
+                                        <div class="form-group col-md-9">
+
+
+                                            Seleccione el reporte a revizar
+
+                                            <select class="form-control" id="reportesUsuarioSel"
+                                                    name="reportesUsuarioSel" style="width:250px;height:50px;">
+                                                {% for reportesUsuario in ReportesUsuario %}
+                                                <option value="{{reportesUsuario.numreporte}}">
+                                                    {{reportesUsuario.reporte}}
+                                                </option>
+
+                                                {% endfor %}
+                                            </select>
+
+
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <br>
+
+                                            <span id="vale"> <button type="button" id="boton1" onclick="dispara()"> BUSCAR</button> </span>
+
+                                        </div>
+
+
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- FIN INSERTO COMBO -->
+
+                        </tr>
+                    </center>
+                </table>
+                <br>
+
+                <form id="Parametros" method="post">
+                    <input type="hidden" id="grupo" name="grupo" value="{{Grupo}}">
+                    <input type="hidden" id="subGrupo" name="subGrupo" value="{{SubGrupo}}">
+                    <div class="myDiv" id="mensajes"> {{mensaje.mensaje}}</div>
+
+                    {% for parametrosSeleccionado in ParametrosSeleccionado %}
+
+                    <div class="form-group">
+                        {{parametrosSeleccionado.param_texto }}
+
+                        <label for="{{parametrosSeleccionado.parametro}}"></label>
+                        <input type="{{parametrosSeleccionado.param_tipocampo}}" class="form-control"
+                               id="{{parametrosSeleccionado.parametro}}"
+                               placeholder="{{parametrosSeleccionado.param_texto }}"
+                               name="{{parametrosSeleccionado.parametro}}" value=""/>
+
+
+                    </div>
+
+                    {% endfor %}
+
+                    <p>
+                        <br>
+
+                        <br>
+
+                        {% for reporteSeleccionado in ReporteSeleccionado %}
+
+                        {%if reporteSeleccionado.excel == 'A' %}
+                        <input type="radio" name="tipoArchivo" value="excel"></input>
+                        <img src="{% static '/img/EXCEL.JPG' %}" class="figure-img img-fluid rounded"
+                             style="width:150px;height:50px;" alt="...">
+                        {% endif %}
+
+                        {%if reporteSeleccionado.pdf == 'A' %}
+                        <input type="radio" name="tipoArchivo" value="pdf"></input>
+                        <img src="{% static '/img/PDF1.JPG' %}" class="figure-img img-fluid rounded" style="width:150px;height:50px;" alt="...">
+                        {% endif %}
+
+                        {%if reporteSeleccionado.csv == 'A' %}
+                        <input type="radio" name="tipoArchivo" value="csv"></input>
+                        <img src="{% static '/img/CSV.JPG' %}" class="figure-img img-fluid rounded" style="width:150px;height:50px;" alt="...">
+                        {% endif %}
+
+                        {%if reporteSeleccionado.grilla == 'A' %}
+                        <input type="radio" name="tipoArchivo" value="grilla"></input>
+                        <img src="{% static '/img/VISUALIZAR.JPG' %}" class="figure-img img-fluid rounded"
+                             style="width:150px;height:50px;" alt="...">
+                        {% endif %}
+
+
+                        {% endfor %}
+
+                     <input type="submit" value="DESCARGAR" onclick="return mandoEjecutar();"> <span id="proceso"></span>
+
+
+                    </p>
+
+                    {% for reporteSeleccionado in ReporteSeleccionado %}
+
+                    <input type="hidden" id="cuerpoSql" name="cuerpoSql" value="{{reporteSeleccionado.cuerpo_sql}}">
+                    <input type="hidden" id="encabezados" name="encabezados"
+                           value="{{reporteSeleccionado.encabezados}}">
+                    <input type="hidden" id="numReporte" name="numReporte" value="{{reporteSeleccionado.numreporte}}">
+                    <input type="hidden" id="nombreReporte" name="nombreReporte"
+                           value="{{reporteSeleccionado.reporte}}">
+
+                    <input type="hidden" id="username" name="username" value="{{Username}}">
+                    <input type="hidden" id="sedeSeleccionada" name="sedeSeleccionada" value="{{SedeSeleccionada}}">
+
+
+                    {% endfor %}
+
+
+                       <div class="form-group">
+
+                        <figure class="figure">
+
+            <img src="{% static '/img/inicio.jpg'' %}" class="figure-img img-fluid rounded" style="width:150px;height:50px;" alt="...">
+            <figcaption class="figure-caption text-right">
+                <a href="/emergenteGrupos/{{Username}}, {{SedeSeleccionada}}, {{Grupo}} ">  Retorno </a>
+            </figcaption>
+        </figure>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+
+        <br>
+
+        <center>
+
+            {% for reporteSeleccionado in ReporteSeleccionado %}
+            Informe: {{reporteSeleccionado.reporte}}
+            {% endfor %}
+            <br>
+
+            {% for nombreUsuario in NombreUsuario %}
+            Usuario: {{nombreUsuario.nom_usuario}}
+            {% endfor %}
+
+        </center>
+
+    </center>
+</div>
+
+
+<script>
+
+function mandoEjecutar() {
+
+
+   document.getElementById('proceso').innerHTML='Procesando ...';
+   document.getElementById('proceso').style.color = '#3380FF';
+   return true;
+}
+
+
+function dispara()
+{
+
+    username = document.getElementById("username").value;
+    sedeSeleccionada=  document.getElementById("sedeSeleccionada").value;
+     grupo = document.getElementById("grupo").value;
+      subGrupo = document.getElementById("subGrupo").value;
+
+
+        var reporteSeleccionado =  document.getElementById("reportesUsuarioSel").value;
+
+
+
+        document.getElementById("numreporte").value = reporteSeleccionado;
+
+        var final = "/Reporte1/" + reporteSeleccionado + "," + username +"," + sedeSeleccionada + "," + grupo + "," + subGrupo ;
+
+
+    document.getElementById("vale").innerHTML=    "<a href ='"  + final + "'>Ingresa Aqui</a>";
+
+
+    }
+
+
+
+</script>
+
+
+{% endblock %}

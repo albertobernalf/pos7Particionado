@@ -1,0 +1,123 @@
+
+  <article id="InterConsultas">
+
+            <!-- INICIO TABLE DE  EL DATATABLE  -->
+
+ 		<div class="container my-2">
+   			   <div class="row">
+                                        <table  id="tablaInterConsultas" class="display nowrap table table-striped" style="width: 100%";>
+                                           <thead>
+                                            <tr>    
+						<bold>      
+				     		 <th>Sel</th> 
+				     		 <th>Sel</th> 
+						<th>id</th>                              
+                                                <th>Descripcion</th>
+                                                <th>Respuesta</th> 
+                                                <th>Diagnostico</th>
+                                                <th>espConsulta</th>                                       
+                                                 <th>Historia</th>                                                                
+                                                <th>EspMedico</th>
+                                                <th>MedicoConsulta</th>
+                                                <th>MedicoConsultado</th>
+                                                <th>Tipo</th>                                 
+						</bold>                                  
+                                            </tr>
+                                            </thead>
+                                            <tbody style="vertical-align:bottom; horizontal-align:left">
+                                            </tbody>
+ 					  </table>
+
+	</div>
+	</div>
+
+	            <!-- Espacio Modales  InterConsultas-->
+
+            <div class="modal fade" id="crearModelInterConsultas" tabindex="-1" role="dialog"  style="overflow-y:scroll;" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modelHeadingInterConsultas"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger error-msg" style="display:none">
+                                <ul class="mb-0"></ul>
+                            </div>
+                            <form id="postFormInterConsultas" name="postFormInterConsultas" class="form-horizontal"
+                                  novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" id="post_id">
+				<input type="hidden" name="interconsultaId" id="interconsultaId">
+                     
+				<div class="row row-cols-12" style="height=1px;">
+
+				  <div class="col">
+                                        <label for="serviciosAdministrativos" class="col-sm-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SeviciosAdmon:</label>
+                                        <div class="col-sm-8">
+                                            <select class="select-css h-40 w-20" id="serviciosAdministrativos"  tabindex= "0"
+                                                    name="serviciosAdministrativos"
+                                                    required>
+                                                {% for serviciosAdministrativos in ServiciosAdministrativos %}
+                                                <option value="{{serviciosAdministrativos.id}}"> {{serviciosAdministrativos.nombre}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+				<div class="col">
+                                    Descripcion:
+                                    <input type="text" id="descripcionConsulta" name="descripcionConsulta" value="0" readonly></input>
+                                </div>
+				<div class="col">
+                                    Respuesta:
+                                    <input type="text" id="respuestaConsulta" name="respuestaConsulta" value="" ></input>
+                                </div>
+                                <div class="col">
+                                    Diagnostico:
+                                    <input type="text" id="diagnostico" name="diagnostico" value="A"  readonly> </input>
+                                </div>
+
+                                <div class="col">
+                                    espConsulta:
+                                    <input type="text" id="espConsulta" name="espConsulta" value="" readonly > </input>
+                                </div>
+		
+                    		<div class="col">
+                                    especialidadMedico:
+                                    <input type="text" id="especialidadMedico" name="especialidadMedico" value="" readonly > </input>
+                                </div>
+
+
+                  		  <div class="col">
+                                    medicoConsulta:
+                                    <input type="text" id="medicoConsulta" name="medicoConsulta" value="" readonly > </input>
+                                </div>
+
+
+				 <div class="col">
+                                    medicoConsultado:
+                                    <input type="text" id="medicoConsultado" name="medicoConsultado" value="" readonly > </input>
+                                </div>
+
+	
+				 <div class="col">
+                                    tipo Interconsulta:
+                                    <input type="text" id="tiposNombre" name="tiposNombre" value="" readonly > </input>
+                                </div>
+
+                                <div class="col-sm-offset-2 col-sm-10 mt-2">
+                                    <button type="button" class="btn btn-primary" id="saveBtnResponderInterConsulta"   value="create" onclick="ResponderInterConsulta()">Guardar </button>
+                                </div>
+                                </div> <!-- CIERRA ROW 12 COLUMNAS  -->                       
+                            </form>
+                        </div> <!-- CIERRA BODY -->
+                        </div> <!-- CIERRA MODAL CONTENTE -->
+                    </div> <!-- CIERRA MODAL DIALOG -->
+                </div>  <!-- CIERRA MODAL FADE -->                 
+
+     <!-- FIN Espacio Modales  -->
+
+  </article>
+
+
